@@ -15,6 +15,7 @@ html{forced-color-adjust:none}
   --nav-h:50px;--bar-h:44px;
   --mono:"Space Mono",monospace;
   --safe-bottom:0px;
+  --app-height:100vh;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{
@@ -44,10 +45,10 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1}
 
-#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
 #page::-webkit-scrollbar{display:none}
 
-.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
 .sec>.sec-bar{flex-shrink:0}
 
 .sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
@@ -141,6 +142,14 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 
 .hero-nfo,.btxt,.ins-body{
   -webkit-overflow-scrolling:touch;
+}
+
+@supports (height:100svh){
+  :root{--app-height:100svh}
+}
+
+@supports (height:100dvh){
+  :root{--app-height:100dvh}
 }
 
 .film-wrap{flex:1;min-height:0;background:#000}
