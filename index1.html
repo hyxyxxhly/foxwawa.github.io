@@ -131,44 +131,58 @@ transition:opacity .32s .1s,transform .32s .1s;
 #lp-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border:.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);font-size:10px;color:#888;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .28s .1s}
 #lp.open #lp-close{opacity:1;pointer-events:all}
 #lp-close:hover{background:rgba(255,255,255,.12);color:#ccc}
-#lp-cat{font-family:‘Bebas Neue’,sans-serif;font-size:22px;letter-spacing:2px;color:#e8e8e6;opacity:0;transform:translateY(8px);transition:opacity .3s .08s,transform .3s .08s}
+#lp-cat{font-family:‘Bebas Neue’,sans-serif;font-size:34px;letter-spacing:2.5px;color:#e8e8e6;opacity:0;transform:translateY(8px);transition:opacity .3s .08s,transform .3s .08s}
 #lp.open #lp-cat{opacity:1;transform:translateY(0)}
-#lp-sub{font-size:7px;letter-spacing:2.5px;color:#555;text-transform:uppercase;margin-bottom:2.8rem;opacity:0;transition:opacity .3s .12s}
+#lp-sub{font-size:9px;letter-spacing:2.5px;color:#666;text-transform:uppercase;margin-bottom:3.2rem;opacity:0;transition:opacity .3s .12s}
 #lp.open #lp-sub{opacity:1}
-#lp-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.8rem 2.6rem;max-width:600px;padding:0 1rem;opacity:0;transform:translateY(14px);transition:opacity .32s .14s,transform .32s .14s}
+#lp-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:2.6rem 4rem;max-width:1120px;padding:0 3rem;opacity:0;transform:translateY(14px);transition:opacity .32s .14s,transform .32s .14s}
 #lp.open #lp-grid{opacity:1;transform:translateY(0)}
-.lp-icon{display:flex;flex-direction:column;align-items:center;gap:.5rem;cursor:pointer}
-.lp-art{filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));transition:transform .22s cubic-bezier(.34,1.56,.64,1),filter .22s}
-.lp-icon:hover .lp-art{transform:scale(1.1);filter:drop-shadow(0 16px 32px rgba(0,0,0,.5))}
-.lp-name{font-size:8px;letter-spacing:.3px;color:#aaa;text-align:center;white-space:nowrap}
-.lp-year{font-size:6.5px;letter-spacing:1.5px;color:#555;text-transform:uppercase}
+.lp-icon{display:flex;flex-direction:column;align-items:center;gap:.9rem;cursor:pointer;min-width:180px}
+.lp-art{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 12px 28px rgba(0,0,0,.32));transition:transform .22s cubic-bezier(.34,1.56,.64,1),filter .22s}
+.lp-icon:hover .lp-art{transform:scale(1.06);filter:drop-shadow(0 18px 36px rgba(0,0,0,.42))}
+.lp-name{font-size:12px;letter-spacing:.4px;color:#d6d6d2;text-align:center;white-space:nowrap}
+.lp-year{font-size:8px;letter-spacing:2px;color:#787878;text-transform:uppercase}
+.art-box{display:flex;align-items:center;justify-content:center;background:transparent;overflow:hidden}
+.art-box img,.art-box svg{display:block;max-width:100%;max-height:100%;background:transparent}
+.art-box.cover img{width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
 
 /* ── DETAIL ── */
 #det{position:absolute;inset:0;z-index:600;background:#f7f7f5;opacity:0;pointer-events:none;transition:opacity .28s;overflow-y:auto}
 #det.open{opacity:1;pointer-events:all}
 #det-back{position:absolute;top:14px;left:14px;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#aaa;cursor:pointer;padding:6px 10px;border:.5px solid rgba(0,0,0,.1);background:#fff;transition:background .2s;z-index:10}
 #det-back:hover{background:#f0f0ee}
-#det-in{padding:3rem 1.8rem 3rem;max-width:520px;margin:0 auto}
-.d-hero{display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.1rem;padding-top:1rem}
+#det-in{padding:4.5rem 2.4rem 4rem;max-width:920px;margin:0 auto}
+.d-hero{display:flex;gap:2.2rem;align-items:flex-start;margin-bottom:1.6rem;padding-top:1.4rem}
 .d-art{display:flex;align-items:center;justify-content:center;flex-shrink:0;filter:drop-shadow(0 6px 18px rgba(0,0,0,.1))}
-.d-title{font-family:‘Bebas Neue’,sans-serif;font-size:34px;line-height:1;color:#1a1a1a;margin-bottom:4px}
-.d-meta{font-size:7.5px;letter-spacing:2px;color:#bbb;text-transform:uppercase;margin-bottom:.6rem}
-.d-badge{display:inline-block;font-size:6.5px;padding:2px 8px;border:.5px solid rgba(0,0,0,.1);color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem}
+.d-title{font-family:‘Bebas Neue’,sans-serif;font-size:52px;line-height:.96;color:#1a1a1a;margin-bottom:8px}
+.d-meta{font-size:10px;letter-spacing:2px;color:#bbb;text-transform:uppercase;margin-bottom:.9rem}
+.d-badge{display:inline-block;font-size:8px;padding:4px 10px;border:.5px solid rgba(0,0,0,.1);color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-bottom:.9rem}
 .d-tags{display:flex;gap:3px;flex-wrap:wrap}
-.d-tag{font-size:6.5px;padding:2px 6px;border:.5px solid rgba(0,0,0,.08);color:#bbb;letter-spacing:1px;text-transform:uppercase}
-.div{height:.5px;background:rgba(0,0,0,.06);margin:.8rem 0}
-.d-media{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:.85rem}
-.d-cell{aspect-ratio:4/3;background:rgba(0,0,0,.03);display:flex;align-items:center;justify-content:center;font-size:6px;letter-spacing:1.5px;color:#ccc;text-transform:uppercase}
+.d-tag{font-size:8px;padding:3px 8px;border:.5px solid rgba(0,0,0,.08);color:#bbb;letter-spacing:1px;text-transform:uppercase}
+.div{height:.5px;background:rgba(0,0,0,.06);margin:1.2rem 0}
+.d-media{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.2rem}
+.d-cell{aspect-ratio:4/3;background:rgba(0,0,0,.03);display:flex;align-items:center;justify-content:center;font-size:8px;letter-spacing:1.5px;color:#ccc;text-transform:uppercase}
 .d-cell.vid{background:#0d0d0d}
 .pr{width:28px;height:28px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center}
 .pt{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid rgba(255,255,255,.7);margin-left:2px}
-.d-desc{font-size:10.5px;line-height:2.1;color:#555;font-style:italic;margin-bottom:.85rem}
-.d-ar{display:flex;align-items:center;gap:10px;padding:9px 12px;border:.5px solid rgba(0,0,0,.14);background:transparent;width:100%;font-family:‘Space Mono’,monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#333;cursor:pointer;margin-bottom:.85rem;transition:background .2s}
+.d-desc{font-size:13px;line-height:2;color:#555;font-style:italic;margin-bottom:1.1rem}
+.d-ar{display:flex;align-items:center;gap:10px;padding:12px 14px;border:.5px solid rgba(0,0,0,.14);background:transparent;width:100%;font-family:‘Space Mono’,monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#333;cursor:pointer;margin-bottom:1rem;transition:background .2s}
 .d-ar:hover{background:rgba(0,0,0,.02)}
-.d-ari{width:18px;height:18px;border:1px solid #555;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;flex-shrink:0}
+.d-ari{width:22px;height:22px;border:1px solid #555;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}
 .d-acts{display:flex;gap:5px;flex-wrap:wrap}
-.d-btn{padding:6px 12px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:‘Space Mono’,monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
+.d-btn{padding:8px 14px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:‘Space Mono’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
 .d-btn:hover{background:rgba(0,0,0,.03)}
+@media (max-width:760px){
+  #lp-cat{font-size:26px}
+  #lp-sub{font-size:8px;margin-bottom:2.2rem}
+  #lp-grid{gap:1.8rem 2rem;max-width:100%;padding:0 1.25rem}
+  .lp-icon{min-width:136px;gap:.7rem}
+  .lp-name{font-size:10px}
+  .lp-year{font-size:7px}
+  #det-in{padding:4rem 1.2rem 2.4rem}
+  .d-hero{flex-direction:column;gap:1.2rem}
+  .d-title{font-size:38px}
+}
 </style>
 
 <div id="vp">
@@ -348,22 +362,30 @@ function pilePos(ci){
   const cx=WW/2,cy=WH/2;
   if(ratio<0.75){
     // tall/narrow (phone): vertical stack
-    const span=Math.min(vh*.52,360),gap=n>1?span/(n-1):0;
+    const span=Math.min(vh*.6,420),gap=n>1?span/(n-1):0;
     return{x:cx,y:cy-span/2+ci*gap};
   }else if(ratio<1.3){
     // squarish: 2-column grid
     const cols=2,rows=Math.ceil(n/cols);
     const col=ci%cols,row=Math.floor(ci/cols);
-    const gx=Math.min(vw*.34,220),gy=Math.min(vh*.24,160);
+    const gx=Math.min(vw*.42,300),gy=Math.min(vh*.3,210);
     return{x:cx-gx/2+col*gx,y:cy-gy*(rows-1)/2+row*gy};
   }else{
     // wide (desktop): horizontal row
-    const span=Math.min(vw*.56,520),gap=n>1?span/(n-1):0;
+    const span=Math.min(vw*.72,820),gap=n>1?span/(n-1):0;
     return{x:cx-span/2+ci*gap,y:cy};
   }
 }
 
-function iSVG(w,size=88){if(w.img){const sc=size/Math.max(w.w,w.h);return`<img src="${w.img}" width="${Math.round(w.w*sc)}" height="${Math.round(w.h*sc)}" style="display:block">`;}const body=w.svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'');const sc=size/Math.max(w.w,w.h);return`<svg viewBox="0 0 ${w.w} ${w.h}" width="${Math.round(w.w*sc)}" height="${Math.round(w.h*sc)}" xmlns="http://www.w3.org/2000/svg">${body}</svg>`;}
+function iSVG(w,size=88,mode='fit'){
+  const sc=size/Math.max(w.w,w.h),rw=Math.round(w.w*sc),rh=Math.round(w.h*sc);
+  if(w.img){
+    const cls=mode==='cover'?'art-box cover':'art-box';
+    return`<div class="${cls}" style="width:${rw}px;height:${rh}px"><img src="${w.img}" alt="${w.t}"></div>`;
+  }
+  const body=w.svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'');
+  return`<div class="art-box" style="width:${rw}px;height:${rh}px"><svg viewBox="0 0 ${w.w} ${w.h}" width="${rw}" height="${rh}" xmlns="http://www.w3.org/2000/svg">${body}</svg></div>`;
+}
 
 // pile labels
 CATS.forEach((c,i)=>{
@@ -459,14 +481,14 @@ bioClose.addEventListener('click',()=>bio.classList.remove('open'));
 bio.addEventListener('click',e=>{if(e.target===bio)bio.classList.remove('open');});
 
 // ── launchpad ──
-function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w)}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
+function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'cover')}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
 lpClose.addEventListener('click',()=>lp.classList.remove('open'));
 lp.addEventListener('click',e=>{if(e.target===lp)lp.classList.remove('open');});
 
 // ── detail ──
 function openDetail(w,fromLp){
   detBack.textContent=fromLp?t('backCat'):t('back');
-  const sm=iSVG(w);
+  const sm=iSVG(w,220,'cover');
   let h=`<div class="d-hero"><div class="d-art">${sm}</div><div><div class="d-title">${w.t}</div><div class="d-meta">${w.y} · ${w.m}</div><div class="d-badge">${w.cat}</div><div class="d-tags">${w.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div></div></div><div class="div"></div>`;
   h+=`<div class="d-media">${w.video?`<div class="d-cell vid"><div class="pr"><div class="pt"></div></div></div>`:`<div class="d-cell">${t('img')} 01</div>`}<div class="d-cell">${t('img')} 02</div><div class="d-cell">${t('img')} 03</div></div>`;
   h+=`<div class="div"></div><p class="d-desc">${w.desc}</p><div class="div"></div>`;
