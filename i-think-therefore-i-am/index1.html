@@ -15,6 +15,8 @@ html{forced-color-adjust:none}
   --nav-h:50px;--bar-h:44px;
   --mono:"Space Mono",monospace;
   --safe-bottom:0px;
+  --browser-bottom-gap:0px;
+  --bottom-clearance:0px;
   --app-height:100vh;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -102,6 +104,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
 .hero-nfo::-webkit-scrollbar{display:none}
+.hero-nfo::after{content:"";display:block;flex:0 0 0}
 
 .htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
 .h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
@@ -177,21 +180,23 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 
 @media(max-width:768px){
   :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
+  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
   .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
   .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
   .hero-img{border-right:none}
   .b-half .bcell:first-child{border-right:none}
-  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--safe-bottom))}
+  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
   .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
   .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
   .h-ttl{font-size:clamp(38px,10vw,60px)}
   .nx-t{font-size:clamp(28px,10vw,52px)}
 
   /* safe-area: keep bottom text clear of iPhone home indicator */
-  .hero-nfo{padding-bottom:var(--safe-bottom)}
-  .ins-body{padding-bottom:calc(2rem + var(--safe-bottom))}
-  .h-hint{padding-bottom:calc(.5rem + var(--safe-bottom))}
-  #s-back{padding-bottom:var(--safe-bottom)}
+  .hero-nfo{padding-bottom:0}
+  .hero-nfo::after{flex-basis:calc(4.5rem + var(--bottom-clearance))}
+  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
+  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
+  #s-back{padding-bottom:var(--bottom-clearance)}
 
   /* larger fonts for mobile readability */
   .bp{font-size:15px;line-height:2.06;color:#222}
@@ -659,6 +664,25 @@ const cycleBtn=document.getElementById("lang-cycle-btn");
 const langs=["ja","zh","en"];
 function cycleLang(){const idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length])}
 if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
+
+function syncViewportVars(){
+  const root=document.documentElement;
+  const vv=window.visualViewport;
+  const viewportHeight=vv?vv.height:window.innerHeight;
+  const viewportTop=vv?vv.offsetTop:0;
+  const layoutHeight=Math.max(root.clientHeight,window.innerHeight);
+  const browserBottom=Math.max(0,layoutHeight-viewportHeight-viewportTop);
+  root.style.setProperty("--app-height",`${Math.round(viewportHeight)}px`);
+  root.style.setProperty("--browser-bottom-gap",`${Math.round(browserBottom)}px`);
+}
+
+syncViewportVars();
+window.addEventListener("resize",syncViewportVars,{passive:true});
+window.addEventListener("orientationchange",syncViewportVars,{passive:true});
+if(window.visualViewport){
+  window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
+  window.visualViewport.addEventListener("scroll",syncViewportVars,{passive:true});
+}
 
 function initTrack(id){
   const track=document.getElementById("track-"+id);if(!track)return;

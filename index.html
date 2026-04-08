@@ -135,16 +135,18 @@ transition:opacity .32s .1s,transform .32s .1s;
 #lp.open #lp-cat{opacity:1;transform:translateY(0)}
 #lp-sub{font-size:9px;letter-spacing:2.5px;color:#666;text-transform:uppercase;margin-bottom:3.2rem;opacity:0;transition:opacity .3s .12s}
 #lp.open #lp-sub{opacity:1}
-#lp-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:2.6rem 4rem;max-width:1120px;padding:0 3rem;opacity:0;transform:translateY(14px);transition:opacity .32s .14s,transform .32s .14s}
+#lp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,240px));justify-content:center;align-items:start;gap:2.8rem 3rem;max-width:1120px;width:min(1120px,calc(100vw - 6rem));padding:0;opacity:0;transform:translateY(14px);transition:opacity .32s .14s,transform .32s .14s}
 #lp.open #lp-grid{opacity:1;transform:translateY(0)}
-.lp-icon{display:flex;flex-direction:column;align-items:center;gap:.9rem;cursor:pointer;min-width:180px}
-.lp-art{display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 12px 28px rgba(0,0,0,.32));transition:transform .22s cubic-bezier(.34,1.56,.64,1),filter .22s}
+.lp-icon{display:flex;flex-direction:column;align-items:center;gap:1rem;cursor:pointer;width:240px}
+.lp-art{width:240px;height:176px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 12px 28px rgba(0,0,0,.32));transition:transform .22s cubic-bezier(.34,1.56,.64,1),filter .22s}
 .lp-icon:hover .lp-art{transform:scale(1.06);filter:drop-shadow(0 18px 36px rgba(0,0,0,.42))}
 .lp-name{font-size:12px;letter-spacing:.4px;color:#d6d6d2;text-align:center;white-space:nowrap}
 .lp-year{font-size:8px;letter-spacing:2px;color:#787878;text-transform:uppercase}
 .art-box{display:flex;align-items:center;justify-content:center;background:transparent;overflow:hidden}
 .art-box img,.art-box svg{display:block;max-width:100%;max-height:100%;background:transparent}
-.art-box.cover img{width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.lp-art .art-box{width:100%!important;height:100%!important}
+.lp-art .art-box img{width:100%;height:100%;object-fit:contain}
+.lp-art .art-box svg{width:100%!important;height:100%!important}
 
 /* ── DETAIL ── */
 #det{position:absolute;inset:0;z-index:600;background:#f7f7f5;opacity:0;pointer-events:none;transition:opacity .28s;overflow-y:auto}
@@ -175,8 +177,9 @@ transition:opacity .32s .1s,transform .32s .1s;
 @media (max-width:760px){
   #lp-cat{font-size:26px}
   #lp-sub{font-size:8px;margin-bottom:2.2rem}
-  #lp-grid{gap:1.8rem 2rem;max-width:100%;padding:0 1.25rem}
-  .lp-icon{min-width:136px;gap:.7rem}
+  #lp-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.8rem 1.2rem;width:calc(100vw - 2.5rem)}
+  .lp-icon{width:100%;gap:.7rem}
+  .lp-art{width:100%;height:120px}
   .lp-name{font-size:10px}
   .lp-year{font-size:7px}
   #det-in{padding:4rem 1.2rem 2.4rem}
@@ -301,23 +304,23 @@ document.getElementById('lang-cycle-btn').addEventListener('click',()=>{
 
 /* ── WORKS DATA ── */
 const WORKS=[
-  {t:"自分勝手",y:"2024",m:"総合材料インスタレーション",cat:"装置",tags:["機械","金属"],video:true,ar:false,w:220,h:180,url:"jibunkatte/index.html",img:"jibunkatte.png",
+  {t:"自分勝手",y:"2024",m:"総合材料インスタレーション",cat:"装置",tags:["機械","金属"],video:true,ar:false,w:250,h:152,url:"jibunkatte/index.html",img:"jibunkatte-trim.png",
     desc:"身体の再構築の可能性を出発点とし、緻密な計算によって組み立てられたインスタレーションは壮大な定められた運命を象徴する。",
     svg:`...`},
 
-  {t:"我思う故に我在り",y:"2024",m:"総合材料インスタレーション・パフォーマンス",cat:"装置",tags:["パフォーマンス","映像"],video:true,ar:false,w:200,h:195,url:"i-think-therefore-i-am/index.html",img:"watashi.png",
+  {t:"我思う故に我在り",y:"2024",m:"総合材料インスタレーション・パフォーマンス",cat:"装置",tags:["パフォーマンス","映像"],video:true,ar:false,w:250,h:110,url:"i-think-therefore-i-am/index.html",img:"watashi-trim.png",
     desc:"現実と存在は流動的で多次元的であり、人間の思考の投影と現実の物体は常に重ね合わされ再構築される。",
     svg:`...`},
 
-  {t:"消失",y:"2023",m:"鋼板・電源指示ランプ・ドライブボード",cat:"装置",tags:["LED","データ"],video:true,ar:false,w:210,h:155,url:"kieru/index.html",img:"kieru.png",
+  {t:"消失",y:"2023",m:"鋼板・電源指示ランプ・ドライブボード",cat:"装置",tags:["LED","データ"],video:true,ar:false,w:220,h:124,url:"kieru/index.html",img:"kieru.png",
     desc:"装置は毎年絶滅する植物種の数を呈示する。鋼板上の数万個の緑色インジケーターランプは実際の絶滅ペースに従って順次消灯される。",
     svg:`...`},
 
-  {t:"海",y:"2023",m:"Cinema 4D · Final Cut Pro · AR",cat:"新媒体艺术",tags:["AR","映像"],video:true,ar:true,w:230,h:165,url:"umi/index.html",img:"umi.png",
+  {t:"海",y:"2023",m:"Cinema 4D · Final Cut Pro · AR",cat:"新媒体艺术",tags:["AR","映像"],video:true,ar:true,w:230,h:134,url:"umi/index.html",img:"umi-trim.png",
     desc:"この作品を通じて、自然の景観と人との感情的なつながり、そして美の主観性を探求する。",
     svg:`...`},
 
-  {t:"対話",y:"2023",m:"3DS MAX · Reality Composer · AR",cat:"新媒体艺术",tags:["AR","アニメーション"],video:true,ar:true,w:200,h:170,url:"dialogue/index.html",img:"dialogue.png",
+  {t:"対話",y:"2023",m:"3DS MAX · Reality Composer · AR",cat:"新媒体艺术",tags:["AR","アニメーション"],video:true,ar:true,w:215,h:140,url:"dialogue/index.html",img:"dialogue.png",
     desc:"人間の交流方式を異なる物体間に適用することで、観者は観察者であり同時に参加者として作品に介入できる。",
     svg:`...`},
 
@@ -346,11 +349,11 @@ sizeWorld();clamp();applyC();
 window.addEventListener('resize',()=>{
   sizeWorld();
   // update pile labels + hits
-  CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);if(lbl){lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';}});
+  CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);if(lbl){lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+126)+'px';}});
   updateHits();
   // reposition piles if sorted
   if(sorted){
-    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);s.x=pp.x-s.w.w/2+s.pileDx;s.y=pp.y-s.w.h/2+s.pileDy;s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';placeSh(s);});
+    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);applyPileLayout(s,pp);s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);});
     let ax=0,ay=0;CATS.forEach((_,i)=>{const pp=pilePos(i);ax+=pp.x;ay+=pp.y;});ax/=CATS.length;ay/=CATS.length;
     camX=ax-vp.offsetWidth/2;camY=ay-vp.offsetHeight/2;
   }
@@ -380,8 +383,7 @@ function pilePos(ci){
 function iSVG(w,size=88,mode='fit'){
   const sc=size/Math.max(w.w,w.h),rw=Math.round(w.w*sc),rh=Math.round(w.h*sc);
   if(w.img){
-    const cls=mode==='cover'?'art-box cover':'art-box';
-    return`<div class="${cls}" style="width:${rw}px;height:${rh}px"><img src="${w.img}" alt="${w.t}"></div>`;
+    return`<div class="art-box" style="width:${rw}px;height:${rh}px"><img src="${w.img}" alt="${w.t}"></div>`;
   }
   const body=w.svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'');
   return`<div class="art-box" style="width:${rw}px;height:${rh}px"><svg viewBox="0 0 ${w.w} ${w.h}" width="${rw}" height="${rh}" xmlns="http://www.w3.org/2000/svg">${body}</svg></div>`;
@@ -391,18 +393,18 @@ function iSVG(w,size=88,mode='fit'){
 CATS.forEach((c,i)=>{
   const pp=pilePos(i),lbl=document.createElement('div');
   lbl.className='pile-lbl';lbl.id=`lbl-${i}`;lbl.textContent=c;
-  lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';
+  lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+126)+'px';
   world.appendChild(lbl);
 });
 
 // pile hits
 const pileHits=CATS.map((_,i)=>{
   const el=document.createElement('div');el.className='pile-hit';
-  el.style.cssText=`width:180px;height:230px;position:absolute;display:none`;
+  el.style.cssText=`width:360px;height:250px;position:absolute;display:none`;
   el.addEventListener('click',()=>{if(sorted)openLP(i);});
   world.appendChild(el);return el;
 });
-function updateHits(){CATS.forEach((_,i)=>{const pp=pilePos(i),h=pileHits[i];h.style.left=(pp.x-90)+'px';h.style.top=(pp.y-115)+'px';h.style.display=sorted?'block':'none';});}
+function updateHits(){CATS.forEach((_,i)=>{const pp=pilePos(i),h=pileHits[i];h.style.left=(pp.x-180)+'px';h.style.top=(pp.y-70)+'px';h.style.display=sorted?'block':'none';});}
 
 // non-overlapping scatter placement
 function scatterAll(){
@@ -426,13 +428,16 @@ function scatterAll(){
   });
 }
 const initPos=scatterAll();
+const WORKS_BY_CAT=Object.fromEntries(CATS.map(cat=>[cat,WORKS.filter(w=>w.cat===cat)]));
 
 // build states
 const states=WORKS.map((w,i)=>{
   const sp=initPos[i];
   const shEl=document.createElement('div');shEl.className='shadow nd';shEl.style.cssText=`width:${w.w*.6}px;height:20px;z-index:1;position:absolute`;world.appendChild(shEl);
   const el=document.createElement('div');el.className='obj nd';el.style.cssText=`left:${sp.x}px;top:${sp.y}px;width:${w.w}px;position:absolute;z-index:${objZ++}`;el.innerHTML=w.img?`<img src="${w.img}" style="width:100%;display:block;pointer-events:none">`:w.svg;el.style.transform=`rotate(${sp.rot}deg)`;el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';world.appendChild(el);
-  const s={w,el,shEl,x:sp.x,y:sp.y,rot:sp.rot,hx:sp.x,hy:sp.y,hrot:sp.rot,pileRot:(Math.random()-.5)*18,pileDx:(Math.random()-.5)*50,pileDy:(Math.random()-.5)*38,grabbed:false,dist:0,mode:'scatter',lx:0,ly:0};
+  const pileIndex=WORKS_BY_CAT[w.cat].findIndex(item=>item.t===w.t);
+  const pileCenter=pileIndex-(WORKS_BY_CAT[w.cat].length-1)/2;
+  const s={w,el,shEl,x:sp.x,y:sp.y,rot:sp.rot,hx:sp.x,hy:sp.y,hrot:sp.rot,pileIndex,pileCount:WORKS_BY_CAT[w.cat].length,pileRot:pileCenter*3.5,pileDx:pileCenter*18,pileDy:Math.abs(pileCenter)*8,grabbed:false,dist:0,mode:'scatter',lx:0,ly:0};
   requestAnimationFrame(()=>{el.classList.remove('nd');shEl.classList.remove('nd');});
   el.addEventListener('mouseenter',()=>{if(s.mode==='pile')return;el.style.filter='drop-shadow(0 16px 32px rgba(0,0,0,.14))';});
   el.addEventListener('mouseleave',()=>{el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';s.lx=0;s.ly=0;setT(s);});
@@ -443,7 +448,12 @@ const states=WORKS.map((w,i)=>{
 });
 
 function setT(s,sc=1){s.el.style.transform=`rotate(${s.rot}deg) scale(${sc}) perspective(600px) rotateX(${s.lx}deg) rotateY(${s.ly}deg)`;}
-function placeSh(s){const lift=s.mode==='pile'?6:14,shsc=.58;s.shEl.style.left=(s.x+s.w.w*(1-shsc)/2)+'px';s.shEl.style.top=(s.y+s.w.h+lift)+'px';s.shEl.style.width=(s.w.w*shsc)+'px';s.shEl.style.opacity=s.mode==='pile'?'.12':'.2';}
+function placeSh(s){const lift=s.mode==='pile'?8:14,shsc=.58;s.shEl.style.left=(s.x+s.w.w*(1-shsc)/2)+'px';s.shEl.style.top=(s.y+s.w.h+lift)+'px';s.shEl.style.width=(s.w.w*shsc)+'px';s.shEl.style.opacity=s.mode==='pile'?'.08':'.2';}
+function applyPileLayout(s,pp){
+  s.x=pp.x-s.w.w/2+s.pileDx;
+  s.y=pp.y-s.w.h/2+s.pileDy;
+  s.rot=s.pileRot;
+}
 
 vp.addEventListener('mousedown',e=>{if(e.target.closest('#toggle,#topbar'))return;isPanning=true;panSX=e.clientX;panSY=e.clientY;panCX=camX;panCY=camY;vp.classList.add('panning');});
 vp.addEventListener('touchstart',e=>{if(e.target.closest('#toggle,#topbar'))return;if(e.touches.length===1){isPanning=true;panSX=e.touches[0].clientX;panSY=e.touches[0].clientY;panCX=camX;panCY=camY;}},{passive:true});
@@ -463,12 +473,12 @@ toggleEl.addEventListener('click',()=>{
   updateHits();
   if(sorted){
     const baseZ=objZ+1,pC=CATS.map(()=>0);
-    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);s.x=pp.x-s.w.w/2+s.pileDx;s.y=pp.y-s.w.h/2+s.pileDy;s.rot=s.pileRot;s.lx=0;s.ly=0;s.mode='pile';s.el.style.zIndex=baseZ+ci*20+pC[ci]++;s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);s.el.style.filter='drop-shadow(0 5px 14px rgba(0,0,0,.25))';});
+    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);applyPileLayout(s,pp);s.lx=0;s.ly=0;s.mode='pile';s.el.style.zIndex=baseZ+ci*20+pC[ci]++;s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);s.el.style.filter='drop-shadow(0 5px 14px rgba(0,0,0,.2))';});
     objZ=baseZ+CATS.length*20+5;
     const vpW=vp.offsetWidth,vpH=vp.offsetHeight;
     let ax=0,ay=0;CATS.forEach((_,i)=>{const pp=pilePos(i);ax+=pp.x;ay+=pp.y;});ax/=CATS.length;ay/=CATS.length;
     camX=ax-vpW/2;camY=ay-vpH/2;clamp();applyC();
-    CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';lbl.style.opacity='1';});
+    CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+126)+'px';lbl.style.opacity='1';});
   } else {
     states.forEach(s=>{s.x=s.hx;s.y=s.hy;s.rot=s.hrot;s.lx=0;s.ly=0;s.mode='scatter';s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);s.el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';});
     CATS.forEach((_,i)=>document.getElementById(`lbl-${i}`).style.opacity='0');
@@ -481,14 +491,14 @@ bioClose.addEventListener('click',()=>bio.classList.remove('open'));
 bio.addEventListener('click',e=>{if(e.target===bio)bio.classList.remove('open');});
 
 // ── launchpad ──
-function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'cover')}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
+function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'fit')}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
 lpClose.addEventListener('click',()=>lp.classList.remove('open'));
 lp.addEventListener('click',e=>{if(e.target===lp)lp.classList.remove('open');});
 
 // ── detail ──
 function openDetail(w,fromLp){
   detBack.textContent=fromLp?t('backCat'):t('back');
-  const sm=iSVG(w,220,'cover');
+  const sm=iSVG(w,220,'fit');
   let h=`<div class="d-hero"><div class="d-art">${sm}</div><div><div class="d-title">${w.t}</div><div class="d-meta">${w.y} · ${w.m}</div><div class="d-badge">${w.cat}</div><div class="d-tags">${w.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div></div></div><div class="div"></div>`;
   h+=`<div class="d-media">${w.video?`<div class="d-cell vid"><div class="pr"><div class="pt"></div></div></div>`:`<div class="d-cell">${t('img')} 01</div>`}<div class="d-cell">${t('img')} 02</div><div class="d-cell">${t('img')} 03</div></div>`;
   h+=`<div class="div"></div><p class="d-desc">${w.desc}</p><div class="div"></div>`;
