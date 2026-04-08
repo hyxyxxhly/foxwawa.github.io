@@ -14,6 +14,7 @@ html{forced-color-adjust:none}
   --rule:rgba(0,0,0,.12);
   --nav-h:50px;--bar-h:44px;
   --mono:"Space Mono",monospace;
+  --safe-bottom:0px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{
@@ -166,20 +167,22 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 #lb-x:hover{color:#fff}
 
 @media(max-width:768px){
+  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
   .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
   .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
   .hero-img{border-right:none}
   .b-half .bcell:first-child{border-right:none}
-  .btxt{padding:2.2rem 1.8rem 2.8rem}
+  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--safe-bottom))}
   .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
   .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
   .h-ttl{font-size:clamp(38px,10vw,60px)}
   .nx-t{font-size:clamp(28px,10vw,52px)}
 
-  /* safe-area: prevent iPhone home indicator from covering inspiration */
-  .hero-nfo{padding-bottom:env(safe-area-inset-bottom,20px)}
-  .h-hint{padding-bottom:calc(env(safe-area-inset-bottom,20px) + .5rem)}
-  .ins-det{margin-bottom:env(safe-area-inset-bottom,20px)}
+  /* safe-area: keep bottom text clear of iPhone home indicator */
+  .hero-nfo{padding-bottom:var(--safe-bottom)}
+  .ins-body{padding-bottom:calc(2rem + var(--safe-bottom))}
+  .h-hint{padding-bottom:calc(.5rem + var(--safe-bottom))}
+  #s-back{padding-bottom:var(--safe-bottom)}
 
   /* larger fonts for mobile readability */
   .bp{font-size:15px;line-height:2.06;color:#222}
