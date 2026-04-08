@@ -345,20 +345,21 @@ window.addEventListener('resize',()=>{
 
 function pilePos(ci){
   const WW=getWW(),WH=getWH(),vw=vp.offsetWidth,vh=vp.offsetHeight,ratio=vw/vh,n=CATS.length;
+  const cx=WW/2,cy=WH/2;
   if(ratio<0.75){
     // tall/narrow (phone): vertical stack
-    const margin=WH*.1,gap=(WH-margin*2)/(n-1);
-    return{x:WW*.5,y:margin+ci*gap};
+    const span=Math.min(vh*.52,360),gap=n>1?span/(n-1):0;
+    return{x:cx,y:cy-span/2+ci*gap};
   }else if(ratio<1.3){
     // squarish: 2-column grid
     const cols=2,rows=Math.ceil(n/cols);
     const col=ci%cols,row=Math.floor(ci/cols);
-    const gx=WW*.3,gy=WH*.25;
-    return{x:WW*.5-gx/2+col*gx,y:WH*.38-gy*(rows-1)/2+row*gy};
+    const gx=Math.min(vw*.34,220),gy=Math.min(vh*.24,160);
+    return{x:cx-gx/2+col*gx,y:cy-gy*(rows-1)/2+row*gy};
   }else{
     // wide (desktop): horizontal row
-    const margin=WW*.12,gap=(WW-margin*2)/(n-1);
-    return{x:margin+ci*gap,y:WH*.44};
+    const span=Math.min(vw*.56,520),gap=n>1?span/(n-1):0;
+    return{x:cx-span/2+ci*gap,y:cy};
   }
 }
 
@@ -384,15 +385,22 @@ function updateHits(){CATS.forEach((_,i)=>{const pp=pilePos(i),h=pileHits[i];h.s
 // non-overlapping scatter placement
 function scatterAll(){
   const WW=getWW(),WH=getWH(),placed=[];
+  const isMobile=WW<768;
+  const spreadW=Math.min(WW*(isMobile?.62:.74),isMobile?500:920);
+  const spreadH=Math.min(WH*(isMobile?.58:.7),isMobile?580:720);
+  const minX=Math.max(20,(WW-spreadW)/2);
+  const minY=Math.max(24,(WH-spreadH)/2);
+  const maxX=WW-minX;
+  const maxY=WH-minY;
   return WORKS.map(w=>{
-    const pad=30;
+    const pad=isMobile?20:24;
     for(let tries=0;tries<200;tries++){
-      const x=WW*.06+Math.random()*(WW*.78),y=WH*.06+Math.random()*(WH*.76),rot=(Math.random()-.5)*14;
+      const x=minX+Math.random()*Math.max(1,maxX-minX-w.w),y=minY+Math.random()*Math.max(1,maxY-minY-w.h),rot=(Math.random()-.5)*12;
       const ok=placed.every(p=>Math.abs(x-p.x)>(w.w+p.w)/2+pad||Math.abs(y-p.y)>(w.h+p.h)/2+pad);
       if(ok){placed.push({x,y,w:w.w,h:w.h});return{x,y,rot};}
     }
-    const x=WW*.06+Math.random()*(WW*.78),y=WH*.06+Math.random()*(WH*.76);
-    placed.push({x,y,w:w.w,h:w.h});return{x,y,rot:(Math.random()-.5)*14};
+    const x=minX+Math.random()*Math.max(1,maxX-minX-w.w),y=minY+Math.random()*Math.max(1,maxY-minY-w.h);
+    placed.push({x,y,w:w.w,h:w.h});return{x,y,rot:(Math.random()-.5)*12};
   });
 }
 const initPos=scatterAll();
