@@ -396,7 +396,7 @@ function pilePos(ci){
   const cx=WW/2,cy=WH/2;
   if(ratio<0.75){
     // tall/narrow (phone): vertical stack
-    const span=Math.min(vh*.6,420),gap=n>1?span/(n-1):0;
+    const span=Math.min(vh*.74,520),gap=n>1?span/(n-1):0;
     return{x:cx,y:cy-span/2+ci*gap};
   }else if(ratio<1.3){
     // squarish: 2-column grid
@@ -450,10 +450,10 @@ function scatterAll(){
     );
   }
   function boundsFor(expand=0){
-    const spreadW=Math.min(WW*(isMobile ? .78+expand : .74+expand*.4),isMobile?860:920);
-    const spreadH=Math.min(WH*(isMobile ? .82+expand : .7+expand*.35),isMobile?980:720);
-    const minX=Math.max(20,(WW-spreadW)/2);
-    const minY=Math.max(24,(WH-spreadH)/2);
+    const spreadW=Math.min(WW*(isMobile ? .96+expand : .74+expand*.4),isMobile?1080:920);
+    const spreadH=Math.min(WH*(isMobile ? .98+expand : .7+expand*.35),isMobile?1180:720);
+    const minX=Math.max(isMobile?8:20,(WW-spreadW)/2);
+    const minY=Math.max(isMobile?12:24,(WH-spreadH)/2);
     return{
       minX,
       minY,
@@ -466,7 +466,7 @@ function scatterAll(){
   items.forEach(({w,i})=>{
     const triesMax=isMobile?900:240;
     let placedItem=null;
-    const pads=isMobile?[22,14,8,0]:[24,12,0];
+    const pads=isMobile?[42,34,26,18,10,0]:[24,12,0];
     for(let expandStep=0;expandStep<(isMobile?5:3)&&!placedItem;expandStep++){
       const b=boundsFor(expandStep*.08);
       for(const pad of pads){
@@ -504,7 +504,7 @@ const states=WORKS.map((w,i)=>{
   const el=document.createElement('div');el.className='obj nd';el.style.cssText=`left:${sp.x}px;top:${sp.y}px;width:${w.w}px;position:absolute;z-index:${objZ++}`;el.innerHTML=w.img?`<img src="${w.img}" style="width:100%;display:block;pointer-events:none">`:w.svg;el.style.transform=`rotate(${sp.rot}deg)`;el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';world.appendChild(el);
   const pileIndex=WORKS_BY_CAT[w.cat].findIndex(item=>item.t===w.t);
   const pileCenter=pileIndex-(WORKS_BY_CAT[w.cat].length-1)/2;
-  const s={w,el,shEl,x:sp.x,y:sp.y,rot:sp.rot,hx:sp.x,hy:sp.y,hrot:sp.rot,pileIndex,pileCount:WORKS_BY_CAT[w.cat].length,pileRot:pileCenter*3.5,pileDx:pileCenter*18,pileDy:Math.abs(pileCenter)*8,grabbed:false,dist:0,mode:'scatter',lx:0,ly:0};
+  const s={w,el,shEl,x:sp.x,y:sp.y,rot:sp.rot,hx:sp.x,hy:sp.y,hrot:sp.rot,pileIndex,pileCount:WORKS_BY_CAT[w.cat].length,pileCenter,grabbed:false,dist:0,mode:'scatter',lx:0,ly:0};
   requestAnimationFrame(()=>{el.classList.remove('nd');shEl.classList.remove('nd');});
   el.addEventListener('mouseenter',()=>{if(s.mode==='pile')return;el.style.filter='drop-shadow(0 16px 32px rgba(0,0,0,.14))';});
   el.addEventListener('mouseleave',()=>{el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';s.lx=0;s.ly=0;setT(s);});
@@ -516,10 +516,23 @@ const states=WORKS.map((w,i)=>{
 
 function setT(s,sc=1){s.el.style.transform=`rotate(${s.rot}deg) scale(${sc}) perspective(600px) rotateX(${s.lx}deg) rotateY(${s.ly}deg)`;}
 function placeSh(s){const lift=s.mode==='pile'?8:14,shsc=.58;s.shEl.style.left=(s.x+s.w.w*(1-shsc)/2)+'px';s.shEl.style.top=(s.y+s.w.h+lift)+'px';s.shEl.style.width=(s.w.w*shsc)+'px';s.shEl.style.opacity=s.mode==='pile'?'.08':'.2';}
+function pileMetrics(s){
+  const isMobile=vp.offsetWidth<768;
+  const spreadBoost=isMobile&&s.pileCount>3?1.2:1;
+  const dxUnit=isMobile?30:18;
+  const dyUnit=isMobile?16:8;
+  const rotUnit=isMobile?4.6:3.5;
+  return{
+    dx:s.pileCenter*dxUnit*spreadBoost,
+    dy:Math.abs(s.pileCenter)*dyUnit*spreadBoost,
+    rot:s.pileCenter*rotUnit
+  };
+}
 function applyPileLayout(s,pp){
-  s.x=pp.x-s.w.w/2+s.pileDx;
-  s.y=pp.y-s.w.h/2+s.pileDy;
-  s.rot=s.pileRot;
+  const pm=pileMetrics(s);
+  s.x=pp.x-s.w.w/2+pm.dx;
+  s.y=pp.y-s.w.h/2+pm.dy;
+  s.rot=pm.rot;
 }
 
 vp.addEventListener('mousedown',e=>{if(e.target.closest('#toggle,#topbar'))return;isPanning=true;panSX=e.clientX;panSY=e.clientY;panCX=camX;panCY=camY;vp.classList.add('panning');});
