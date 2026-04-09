@@ -74,21 +74,24 @@ pointer-events:all;
 
 /* toggle */
 #toggle{
-position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+position:absolute;bottom:max(22px,calc(env(safe-area-inset-bottom,0px) + 18px));left:50%;transform:translateX(-50%);
 display:flex;align-items:center;gap:10px;padding:9px 18px 9px 14px;
 background:#fff;border:.5px solid rgba(0,0,0,.12);
 cursor:pointer;user-select:none;pointer-events:all;
 transition:background .5s,border-color .5s;
 }
-#vp.dark-mode #toggle{background:#2a2a2a;border-color:rgba(255,255,255,.1)}
+#vp.dark-mode #toggle{background:rgba(255,255,252,.98);border-color:rgba(255,255,255,.9);box-shadow:0 10px 28px rgba(0,0,0,.12)}
 #toggle:hover{border-color:rgba(0,0,0,.3)}
-#vp.dark-mode #toggle:hover{border-color:rgba(255,255,255,.25)}
-.sw{width:28px;height:16px;background:#e0e0de;border-radius:8px;position:relative;transition:background .28s;flex-shrink:0}
-.sw.on{background:#e8e8e6}
-.sw-knob{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#1a1a1a;transition:left .25s cubic-bezier(.4,0,.2,1)}
+#vp.dark-mode #toggle:hover{border-color:rgba(255,255,255,.72)}
+.sw{width:28px;height:16px;background:#d8d8d4;border-radius:8px;position:relative;transition:background .28s;flex-shrink:0}
+.sw.on{background:#f3f3ef}
+.sw-knob{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#1a1a1a;transition:left .25s cubic-bezier(.4,0,.2,1),background .28s}
 .sw.on .sw-knob{left:14px}
 .sw-lbl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#999;white-space:nowrap;transition:color .4s}
-#vp.dark-mode .sw-lbl{color:#666}
+#vp.dark-mode .sw-lbl{color:#3d3d38}
+#vp.dark-mode .sw{background:#cfcfc9}
+#vp.dark-mode .sw.on{background:#fff}
+#vp.dark-mode .sw.on .sw-knob{background:#111}
 
 /* ── BIO OVERLAY ── */
 #bio{
@@ -175,6 +178,11 @@ transition:opacity .32s .1s,transform .32s .1s;
 .d-btn{padding:8px 14px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:‘Space Mono’,monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
 .d-btn:hover{background:rgba(0,0,0,.03)}
 @media (max-width:760px){
+  #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 34px);padding:12px 22px 12px 16px;gap:12px}
+  .sw{width:36px;height:20px;border-radius:10px}
+  .sw-knob{top:2px;left:2px;width:16px;height:16px}
+  .sw.on .sw-knob{left:18px}
+  .sw-lbl{font-size:9px;letter-spacing:2px}
   #lp-cat{font-size:26px}
   #lp-sub{font-size:8px;margin-bottom:2.2rem}
   #lp-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.8rem 1.2rem;width:calc(100vw - 2.5rem)}
@@ -417,23 +425,59 @@ function updateHits(){CATS.forEach((_,i)=>{const pp=pilePos(i),h=pileHits[i];h.s
 // non-overlapping scatter placement
 function scatterAll(){
   const WW=getWW(),WH=getWH(),placed=[];
-  const isMobile=WW<768;
-  const spreadW=Math.min(WW*(isMobile?.62:.74),isMobile?500:920);
-  const spreadH=Math.min(WH*(isMobile?.58:.7),isMobile?580:720);
-  const minX=Math.max(20,(WW-spreadW)/2);
-  const minY=Math.max(24,(WH-spreadH)/2);
-  const maxX=WW-minX;
-  const maxY=WH-minY;
-  return WORKS.map(w=>{
-    const pad=isMobile?20:24;
-    for(let tries=0;tries<200;tries++){
-      const x=minX+Math.random()*Math.max(1,maxX-minX-w.w),y=minY+Math.random()*Math.max(1,maxY-minY-w.h),rot=(Math.random()-.5)*12;
-      const ok=placed.every(p=>Math.abs(x-p.x)>(w.w+p.w)/2+pad||Math.abs(y-p.y)>(w.h+p.h)/2+pad);
-      if(ok){placed.push({x,y,w:w.w,h:w.h});return{x,y,rot};}
+  const isMobile=vp.offsetWidth<768;
+  function canPlace(x,y,w,h,pad){
+    return placed.every(p=>
+      x+w+pad<p.x||
+      x>p.x+p.w+pad||
+      y+h+pad<p.y||
+      y>p.y+p.h+pad
+    );
+  }
+  function boundsFor(expand=0){
+    const spreadW=Math.min(WW*(isMobile ? .78+expand : .74+expand*.4),isMobile?860:920);
+    const spreadH=Math.min(WH*(isMobile ? .82+expand : .7+expand*.35),isMobile?980:720);
+    const minX=Math.max(20,(WW-spreadW)/2);
+    const minY=Math.max(24,(WH-spreadH)/2);
+    return{
+      minX,
+      minY,
+      maxX:WW-minX,
+      maxY:WH-minY
+    };
+  }
+  const items=WORKS.map((w,i)=>({w,i})).sort((a,b)=>(b.w.w*b.w.h)-(a.w.w*a.w.h));
+  const result=new Array(WORKS.length);
+  items.forEach(({w,i})=>{
+    const triesMax=isMobile?900:240;
+    let placedItem=null;
+    const pads=isMobile?[22,14,8,0]:[24,12,0];
+    for(let expandStep=0;expandStep<(isMobile?5:3)&&!placedItem;expandStep++){
+      const b=boundsFor(expandStep*.08);
+      for(const pad of pads){
+        for(let tries=0;tries<triesMax;tries++){
+          const x=b.minX+Math.random()*Math.max(1,b.maxX-b.minX-w.w);
+          const y=b.minY+Math.random()*Math.max(1,b.maxY-b.minY-w.h);
+          const rot=(Math.random()-.5)*(isMobile?9:12);
+          if(canPlace(x,y,w.w,w.h,pad)){
+            placed.push({x,y,w:w.w,h:w.h});
+            placedItem={x,y,rot};
+            break;
+          }
+        }
+        if(placedItem)break;
+      }
     }
-    const x=minX+Math.random()*Math.max(1,maxX-minX-w.w),y=minY+Math.random()*Math.max(1,maxY-minY-w.h);
-    placed.push({x,y,w:w.w,h:w.h});return{x,y,rot:(Math.random()-.5)*12};
+    if(!placedItem){
+      const b=boundsFor(isMobile ? .4 : .2);
+      const x=b.minX+Math.random()*Math.max(1,b.maxX-b.minX-w.w);
+      const y=b.minY+Math.random()*Math.max(1,b.maxY-b.minY-w.h);
+      placed.push({x,y,w:w.w,h:w.h});
+      placedItem={x,y,rot:(Math.random()-.5)*(isMobile?8:12)};
+    }
+    result[i]=placedItem;
   });
+  return result;
 }
 const initPos=scatterAll();
 const WORKS_BY_CAT=Object.fromEntries(CATS.map(cat=>[cat,WORKS.filter(w=>w.cat===cat)]));
