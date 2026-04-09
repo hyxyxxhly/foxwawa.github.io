@@ -304,6 +304,17 @@ const I18N={
 };
 let lang='zh';
 function t(key){ return I18N[lang][key]||''; }
+const WORK_TITLES={
+  "自分勝手":{zh:"自作主张",en:"Self-Willed",ja:"自分勝手"},
+  "我思う故に我在り":{zh:"我思故我在",en:"I Think, Therefore I Am",ja:"我思う故に我在り"},
+  "消失":{zh:"消失",en:"Disappearance",ja:"消失"},
+  "海":{zh:"海",en:"Sea",ja:"海"},
+  "対話":{zh:"对话",en:"Dialogue",ja:"対話"},
+  "OPPO品牌设计":{zh:"OPPO品牌设计",en:"OPPO Brand Design",ja:"OPPOブランドデザイン"},
+  "GMANSIRE品牌策划":{zh:"GMANSIRE品牌策划",en:"GMANSIRE Brand Strategy",ja:"GMANSIREブランド戦略"},
+  "SeeD深圳展览":{zh:"SeeD深圳展览",en:"SeeD Shenzhen Exhibition",ja:"SeeD深圳展覧会"},
+};
+function workTitle(w){ return (WORK_TITLES[w.t]&&WORK_TITLES[w.t][lang])||w.t; }
 
 function applyLang(){
   const L=I18N[lang];
@@ -317,6 +328,8 @@ function applyLang(){
     const el=document.getElementById(`lbl-${i}`);
     if(el) el.textContent=(I18N[lang].cats&&I18N[lang].cats[c])||c;
   });
+  if(typeof currentLpCi==='number'&&lp.classList.contains('open')) openLP(currentLpCi);
+  if(currentDetail&&det.classList.contains('open')) openDetail(currentDetail,currentDetailFromLp);
 }
 
 const LANGS=['zh','en','ja'];
@@ -373,6 +386,7 @@ const lp=document.getElementById('lp'),lpClose=document.getElementById('lp-close
 const det=document.getElementById('det'),detBack=document.getElementById('det-back'),detIn=document.getElementById('det-in');
 
 let sorted=false,camX=400,camY=300,isPanning=false,panSX=0,panSY=0,panCX=0,panCY=0,objZ=10;
+let currentLpCi=null,currentDetail=null,currentDetailFromLp=false;
 
 function clamp(){const vw=vp.offsetWidth,vh=vp.offsetHeight;camX=Math.max(0,Math.min(getWW()-vw,camX));camY=Math.max(0,Math.min(getWH()-vh,camY));}
 function applyC(){world.style.transform=`translate(${-camX}px,${-camY}px)`;}
@@ -571,23 +585,24 @@ bioClose.addEventListener('click',()=>bio.classList.remove('open'));
 bio.addEventListener('click',e=>{if(e.target===bio)bio.classList.remove('open');});
 
 // ── launchpad ──
-function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'fit')}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
-lpClose.addEventListener('click',()=>lp.classList.remove('open'));
-lp.addEventListener('click',e=>{if(e.target===lp)lp.classList.remove('open');});
+function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);currentLpCi=ci;lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'fit')}</div><div class="lp-name">${workTitle(w)}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
+lpClose.addEventListener('click',()=>{lp.classList.remove('open');currentLpCi=null;});
+lp.addEventListener('click',e=>{if(e.target===lp){lp.classList.remove('open');currentLpCi=null;}});
 
 // ── detail ──
 function openDetail(w,fromLp){
+  currentDetail=w;currentDetailFromLp=fromLp;
   detBack.textContent=fromLp?t('backCat'):t('back');
   const sm=iSVG(w,220,'fit');
-  let h=`<div class="d-hero"><div class="d-art">${sm}</div><div><div class="d-title">${w.t}</div><div class="d-meta">${w.y} · ${w.m}</div><div class="d-badge">${w.cat}</div><div class="d-tags">${w.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div></div></div><div class="div"></div>`;
+  let h=`<div class="d-hero"><div class="d-art">${sm}</div><div><div class="d-title">${workTitle(w)}</div><div class="d-meta">${w.y} · ${w.m}</div><div class="d-badge">${w.cat}</div><div class="d-tags">${w.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div></div></div><div class="div"></div>`;
   h+=`<div class="d-media">${w.video?`<div class="d-cell vid"><div class="pr"><div class="pt"></div></div></div>`:`<div class="d-cell">${t('img')} 01</div>`}<div class="d-cell">${t('img')} 02</div><div class="d-cell">${t('img')} 03</div></div>`;
   h+=`<div class="div"></div><p class="d-desc">${w.desc}</p><div class="div"></div>`;
   if(w.ar)h+=`<button class="d-ar"><div class="d-ari">AR</div><span>${t('ar_launch')}</span></button>`;
   h+=`<div class="d-acts"><button class="d-btn">${t('dl')}</button><button class="d-btn">${t('share')}</button><button class="d-btn">${t('inquiry')}</button></div>`;
   detIn.innerHTML=h;det.classList.add('open');
 }
-detBack.addEventListener('click',()=>det.classList.remove('open'));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open'))det.classList.remove('open');else if(lp.classList.contains('open'))lp.classList.remove('open');else bio.classList.remove('open');}});
+detBack.addEventListener('click',()=>{det.classList.remove('open');currentDetail=null;});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open')){det.classList.remove('open');currentDetail=null;}else if(lp.classList.contains('open')){lp.classList.remove('open');currentLpCi=null;}else bio.classList.remove('open');}});
 
 updateHits();
 </script>
