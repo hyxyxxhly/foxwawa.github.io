@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="lang-zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>GMANSIRE品牌策划 — 何梁宇</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{
+  --ink:#000;--ink2:#111;--ink3:#aaa;
+  --rule:rgba(0,0,0,.12);
+  --nav-h:50px;--bar-h:44px;
+  --mono:"Space Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;overflow:hidden;
+  background:#fff !important;color:#000 !important;
+  font-family:var(--mono);-webkit-text-size-adjust:100%;
+}
+.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
+.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
+.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
+.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
+.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+
+.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+
+.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:0;background:#e8e8e8}
+.bimg.photo img{object-fit:cover;object-position:center}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+
+.btag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:3px;padding:4px 10px;text-transform:uppercase;margin-bottom:.8rem;font-weight:700;border:1px solid}
+.btag.ok{border-color:#000;color:#000}
+
+.prow{font-size:12px;line-height:1.9;color:#444;padding-left:1.2rem;position:relative;margin-bottom:.25rem}
+.prow::before{position:absolute;left:0;font-weight:700;font-family:var(--mono)}
+.pro::before{content:"+";color:#000}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"\25B6";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+.ins-meta{margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.ins-mi{font-family:var(--mono);font-size:8px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;font-weight:700}
+
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+
+/* ─ BACK ─ */
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+
+@media(max-width:768px){
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .b-half .bcell:first-child{border-right:none}
+  .btxt{padding:2rem 1.8rem}
+  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
+  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .hero-nfo{padding-bottom:env(safe-area-inset-bottom,20px)}
+  .h-hint{padding-bottom:calc(env(safe-area-inset-bottom,20px) + .5rem)}
+  .ins-det{margin-bottom:env(safe-area-inset-bottom,20px)}
+  .bp{font-size:14px;line-height:2}
+  .hcb .bp{font-size:14px;line-height:2}
+  .prow{font-size:14px;line-height:2}
+  .ins-body .note-p{font-size:14px;line-height:2}
+  .bhead{font-size:clamp(20px,5vw,28px)}
+  .hcb .bhead{font-size:clamp(16px,4vw,20px)}
+  .blbl{font-size:11px}
+  .chip{font-size:9px;padding:4px 10px}
+  .btag{font-size:9px}
+  .sp-v{font-size:14px}
+  .nav-ttl{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
+
+<div id="page">
+
+<!-- ══ HERO ══════════════════════════════ -->
+<section class="sec" id="s-hero">
+<nav>
+  <div class="nav-l">
+    <a class="nav-back" href="../index.html">&#8592;</a>
+    <span class="nav-ttl" id="nav-ttl">GMANSIRE品牌策划</span>
+  </div>
+  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</nav>
+  <div class="hero-g">
+    <div class="hero-img"><img src="hero.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="hero-nfo">
+      <div class="htb">
+        <p class="h-cat" id="h-cat">品牌设计</p>
+        <h1 class="h-ttl" id="h-ttl">GMANSIRE</h1>
+        <p class="h-sub" id="h-sub">Brand Planning / ブランドプランニング</p>
+        <div class="specs">
+          <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2021</span>
+          <span class="sp-l" id="h-ml">类别</span><span class="sp-v" id="h-med">品牌策划</span>
+          <span class="sp-l" id="h-tl">行业</span><span class="sp-v" id="h-type">时尚 / 模特经纪</span>
+        </div>
+      </div>
+      <div class="hcb">
+        <span class="blbl" id="c-lbl">概念 / Concept</span>
+        <h2 class="bhead" id="c1-head">为时尚模特经纪公司构建独特的品牌战略与视觉语言系统</h2>
+        <p class="bp" id="c1-p1">独特性、高级感、时尚度、前沿性——这四个维度构成了GMANSIRE的品牌感受。GM首先是一家在行业内无法界定的公司，拥有足够的独特性，给人以高级而不世俗的气质，有自己对时尚的理解与把控，并始终保持先锋的前沿性。</p>
+        <p class="bp" id="c1-p2">当今时尚世界正经历话语权的转移——从白人精英主义到街头文化的冲击，从大众网红经济到个体自主性的缺失。GMANSIRE是对精英主义文化的离经叛道，是将时尚民主化的旗手。</p>
+      </div>
+      <details class="ins-det">
+        <summary class="ins-sum" id="ins-sum">背景</summary>
+        <div class="ins-body">
+          <p class="note-p" id="c2-p1">现代时尚行业正处于类似传统艺术过渡到当代艺术的过程，即话语权的转移过程，也是时尚民主化的过程。网络社交媒体的KOL对时尚话语权的重新把握，与此同时人们对精英文化的不满、对网红经济的厌烦同步显现。</p>
+          <p class="note-p" id="c2-p2">GMANSIRE要以当代主义作为自己的美学理念——小理性主义取代大理性主义，观念是一切的价值，商业是最好的改造世界的方式。</p>
+          <div class="ins-meta"><span class="ins-mi">2021</span><span class="ins-mi" id="c2-med">品牌策划</span></div>
+        </div>
+      </details>
+      <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下滚动切换板块</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 品牌原则 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-principles">品牌原则</span>
+    <div class="dots" id="dots-principles"></div>
+  </div>
+  <div class="h-track" id="track-principles">
+    <!-- P1: Three principles full-width -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow">
+          <span class="blbl" id="p1-lbl">品牌原则 / Brand Principles</span>
+          <h3 class="bhead" id="p1-head">与众不同 · 追求美 · 超越专业性</h3>
+        </div>
+        <div class="brow">
+          <span class="blbl" id="p1-a-lbl">A. 与众不同</span>
+          <p class="bp" id="p1-a-p">GM在无论是在运营模式下还是在审美中都有特立独行的一面。与众不同意味着在任何一个工作时刻思维都要以原点出发重新思考，另辟蹊径。因为与众不同才有可能引领新的潮流，开发新的途径。</p>
+        </div>
+        <div class="brow">
+          <span class="blbl" id="p1-b-lbl">B. 追求美</span>
+          <p class="bp" id="p1-b-p">作为一家模特经纪公司追求美是一种必然的选择。在追求美当中要有自己的态度和表达。</p>
+        </div>
+        <div class="brow">
+          <span class="blbl" id="p1-c-lbl">C. 超越专业性</span>
+          <p class="bp" id="p1-c-p">在模特专业性的基础上还有更多元的方向性，在这种方向性后与模特形成互补，以多维多方向思维进行思考。</p>
+        </div>
+      </div>
+    </div></div>
+    <!-- P2: Brand DNA -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="brand-dna.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">brand-dna.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="p2-lbl">品牌DNA / Brand DNA</span><h3 class="bhead" id="p2-head">一切品牌决策的源头与依据</h3></div>
+        <div class="brow"><p class="bp" id="p2-p1">当我们讨论任何一项日常的品牌工作时，都可以追溯到这个源头，并以此为依据进行讨论、评判、决策。任何无法找到具体依据的工作内容，都可以追溯是否具有独特性、是否具有引领性。</p></div>
+        <div class="brow"><span class="blbl" id="p2-il">GM感受 / Brand Perception</span>
+          <div class="chips">
+            <span class="chip" id="p2-i1">独特性</span>
+            <span class="chip" id="p2-i2">高级感</span>
+            <span class="chip" id="p2-i3">时尚度</span>
+            <span class="chip" id="p2-i4">前沿性</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <!-- P3: Unique Strategy -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="strategy.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">strategy.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="p3-lbl">独特战略 / Unique Strategy</span><h3 class="bhead" id="p3-head">风格模特 · 社交发展 · 全能策划</h3></div>
+        <div class="brow"><p class="bp" id="p3-p1">培养具有非常不同时尚感和GM气质的风格模特；通过社交网络积累模特本身的人气，最终使GM成为独特感模特公司的代名词。</p></div>
+        <div class="brow"><p class="bp" id="p3-p2">同时具备策划活动、文案、整体品牌策略的全能能力，以多维多方向思维进行思考，将专业性与多元性结合。</p></div>
+      </div>
+    </div></div>
+    <!-- P4: Touchpoints -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="p4-lbl">品牌接触点 / Brand Touchpoints</span><h3 class="bhead" id="p4-head">统一而有力的品牌触达体系</h3></div>
+        <div class="brow">
+          <p class="prow pro" id="p4-r1">Logo：只作为品牌印记</p>
+          <p class="prow pro" id="p4-r2">颜色：独特的颜色，遵循二八原则</p>
+          <p class="prow pro" id="p4-r3">物料：充分表达GM品牌信息点，设计语言统一</p>
+          <p class="prow pro" id="p4-r4">社交媒体：突出品牌形象，所有内容上升到品牌层面</p>
+          <p class="prow pro" id="p4-r5">活动：内容需要强关联GM的接触点</p>
+          <p class="prow pro" id="p4-r6">模特：培养具有GM气质的模特</p>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 视觉语言 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-visual">视觉语言</span>
+    <div class="dots" id="dots-visual"></div>
+  </div>
+  <div class="h-track" id="track-visual">
+    <!-- V1: Color -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="color.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">color.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="v1-lbl">颜色 / Color</span><h3 class="bhead" id="v1-head">独特、高级、永恒的品牌色彩</h3></div>
+        <div class="brow"><p class="bp" id="v1-p1">颜色是品牌的象征，某些情况下，即使只有颜色出现，也应该让人感觉到品牌的气息。蓝色是品牌使用的第一名，需要一个非常不同的蓝色——有辨识度、好用、高级、具有前瞻性且经典永恒。</p></div>
+        <div class="brow"><p class="bp" id="v1-p2">品牌颜色需要含蓄、克制地使用，遵循二八原则——品牌色在视觉中占比不超过20%，应以点、线的形式出现，而非大面积铺开。在平面设计和空间设计中均需恪守这一原则。</p></div>
+        <div class="brow"><span class="blbl" id="v1-il">色彩原则 / Color Principles</span>
+          <div class="chips">
+            <span class="chip" id="v1-i1">独特有辨识度</span>
+            <span class="chip" id="v1-i2">好用</span>
+            <span class="chip" id="v1-i3">高级</span>
+            <span class="chip" id="v1-i4">延续性</span>
+            <span class="chip" id="v1-i5">前瞻性</span>
+            <span class="chip" id="v1-i6">经典永恒</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <!-- V2: Stretch -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="stretch.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">stretch.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="v2-lbl">拉伸 / Stretch</span><h3 class="bhead" id="v2-head">品牌核心视觉语言</h3></div>
+        <div class="brow"><p class="bp" id="v2-p1">拉伸视觉的做法将成为GM常用的视觉用法，成为品牌的重要视觉语言——简洁、独特且好用。</p></div>
+        <div class="brow"><p class="bp" id="v2-p2">这种视觉语言在不同的物料场景中均具有良好的适应性，能够在保持品牌一致性的同时，为每一次视觉呈现注入独特的张力与识别度。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 当代主义 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-contemp">当代主义</span>
+    <div class="dots" id="dots-contemp"></div>
+  </div>
+  <div class="h-track" id="track-contemp">
+    <!-- C1: Philosophy full-width -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="ct1-lbl">美学理念 / Aesthetic Philosophy</span><h3 class="bhead" id="ct1-head">以观念为核心的当代主义美学</h3></div>
+        <div class="brow"><p class="bp" id="ct1-p1">当代性可以消解科学与艺术、理性与非理性之争，因为科学唯物主义与文化唯物主义只不过是物质主义的不同形态而已。GMANSIRE要以当代主义作为自己的美学理念。</p></div>
+        <div class="brow"><p class="bp" id="ct1-p2">当代主义由现代性反思与当代性描述共同构成。前者反思社会现代化中的自我，反思惯性行动的风险，发现现代性审美化生存的策略；后者则不偏离对现实社会的描述，与只展望未来的现代性不同。</p></div>
+        <div class="brow"><span class="blbl" id="ct1-ql">观念 / Concept</span><p class="bp" id="ct1-quote">&#8220;观念是创造艺术作品的机器&#8221; — Sol LeWitt</p><p class="bp" id="ct1-p3">观念是信息时代传播的基石。商业是最好的改造世界的方式，人人参与，人人改变。生活方式最终指向的是每个人的政治态度。</p></div>
+      </div>
+    </div></div>
+    <!-- C2: Commercial Strategy -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="contemp.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">contemp.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="ct2-lbl">商业策略 / Commercial Strategy</span><h3 class="bhead" id="ct2-head">以网红的方式反对网红</h3></div>
+        <div class="brow"><p class="bp" id="ct2-p1">以网红的方式反对网红，以和大牌合作的方式反对精英主义。和大牌合作的方式是以生活博主的模特来展现的。</p></div>
+        <div class="brow"><p class="bp" id="ct2-p2">通过模特、服装、生活方式来展现观念——模特是生活方式的载体，最终所呈现的都是GMANSIRE的观念。</p></div>
+        <div class="brow"><span class="blbl" id="ct2-il">视觉维度 / Visual Dimensions</span>
+          <div class="chips">
+            <span class="chip" id="ct2-i1">当代艺术性</span>
+            <span class="chip" id="ct2-i2">疏离感</span>
+            <span class="chip" id="ct2-i3">小众文化审美</span>
+            <span class="chip" id="ct2-i4">现代主义</span>
+            <span class="chip" id="ct2-i5">简洁留白</span>
+            <span class="chip" id="ct2-i6">独立性</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 设计输出 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-output">设计输出</span>
+    <div class="dots" id="dots-output"></div>
+  </div>
+  <div class="h-track" id="track-output">
+    <!-- O1: Brand Identity -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-1.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-2.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-3.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-4.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="o1-lbl">品牌识别 / Brand Identity</span><h3 class="bhead" id="o1-head">Logo与视觉系统</h3></div>
+        <div class="brow"><p class="bp" id="o1-p1">GMANSIRE的Logo只作为品牌印记。在所有物料和社交平台中保持统一的设计语言，确保品牌形象的一致性与识别度。</p></div>
+      </div>
+    </div></div>
+    <!-- O2: Materials -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-5.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-6.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-7.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="output-8.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#f7f7f7" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="o2-lbl">品牌物料 / Brand Materials</span><h3 class="bhead" id="o2-head">充分表达品牌信息的物料设计</h3></div>
+        <div class="brow"><p class="bp" id="o2-p1">物料设计充分表达GM品牌所传达的信息点，设计语言统一。社交媒体内容需上升到品牌层面，活动内容强关联GM的各个品牌接触点。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ BACK ══════════════════════════════ -->
+<section class="sec" id="s-back">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <span id="back-lbl">返回主页</span>
+  </a>
+</section>
+
+</div>
+
+<script>
+const L={
+ja:{
+  "nav-ttl":"GMANSIREブランドプランニング",
+  "h-cat":"\u30D6\u30E9\u30F3\u30C9\u30C7\u30B6\u30A4\u30F3","h-ttl":"GMANSIRE","h-sub":"Brand Planning / \u54C1\u724C\u7B56\u5212",
+  "h-yl":"\u5E74\u5EA6","h-ml":"\u30AB\u30C6\u30B4\u30EA\u30FC","h-tl":"\u696D\u754C","h-med":"\u30D6\u30E9\u30F3\u30C9\u30D7\u30E9\u30F3\u30CB\u30F3\u30B0","h-type":"\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3 / \u30E2\u30C7\u30EB\u30A8\u30FC\u30B8\u30A7\u30F3\u30B7\u30FC",
+  "h-scroll":"\u4E0A\u4E0B\u30B9\u30AF\u30ED\u30FC\u30EB\u3067\u79FB\u52D5",
+  "c-lbl":"\u6982\u5FF5 / Concept",
+  "c1-head":"\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u30E2\u30C7\u30EB\u30A8\u30FC\u30B8\u30A7\u30F3\u30B7\u30FC\u306E\u305F\u3081\u306E\u72EC\u81EA\u306E\u30D6\u30E9\u30F3\u30C9\u6226\u7565\u3068\u30D3\u30B8\u30E5\u30A2\u30EB\u30B7\u30B9\u30C6\u30E0\u306E\u69CB\u7BC9",
+  "c1-p1":"\u72EC\u81EA\u6027\u30FB\u9AD8\u7D1A\u611F\u30FB\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u6027\u30FB\u5148\u9032\u6027\u2014\u2014\u3053\u306E\u56DB\u3064\u306E\u6B21\u5143\u304C\u30D6\u30E9\u30F3\u30C9\u306E\u9AD8\u56F3\u3092\u5F62\u6210\u3059\u308B\u3002GM\u306F\u696D\u754C\u5185\u3067\u5B9A\u7FA9\u4E0D\u53EF\u80FD\u306A\u7D20\u6674\u3089\u3057\u3044\u72EC\u81EA\u6027\u3092\u6301\u3061\u3001\u4E16\u4FD7\u3092\u8D85\u3048\u305F\u6C17\u8CEA\u3092\u653E\u3061\u3001\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u306B\u5BFE\u3059\u308B\u72EC\u81EA\u306E\u7406\u89E3\u3068\u30B3\u30F3\u30C8\u30ED\u30FC\u30EB\u3092\u6301\u3061\u3001\u5E38\u306B\u5148\u9032\u7684\u3067\u3042\u308A\u7D9A\u3051\u308B\u3002",
+  "c1-p2":"\u73FE\u4EE3\u306E\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u754C\u306F\u8A71\u8A9E\u6A29\u306E\u79FB\u884C\u6B63\u3067\u3042\u308B\u3002\u767D\u4EBA\u30A8\u30EA\u30FC\u30C8\u4E3B\u7FA9\u304B\u3089\u30B9\u30C8\u30EA\u30FC\u30C8\u30AB\u30EB\u30C1\u30E3\u30FC\u306E\u885D\u6483\u3078\u3002GMANSIRE\u306F\u30A8\u30EA\u30FC\u30C8\u6587\u5316\u3078\u306E\u53CD\u9006\u3067\u3042\u308A\u3001\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u6C11\u4E3B\u5316\u306E\u65D7\u624B\u3067\u3042\u308B\u3002",
+  "ins-sum":"\u80CC\u666F",
+  "c2-p1":"\u73FE\u4EE3\u306E\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u696D\u754C\u306F\u4F1D\u7D71\u82B8\u8853\u304B\u3089\u5F53\u4EE3\u82B8\u8853\u3078\u306E\u79FB\u884C\u904E\u7A0B\u306B\u3042\u308A\u3001KOL\u306B\u3088\u308B\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u306E\u8A9E\u308A\u65B9\u306E\u518D\u5B9A\u7FA9\u304C\u8D77\u304D\u3066\u3044\u308B\u3002\u540C\u6642\u306B\u3001\u30A8\u30EA\u30FC\u30C8\u6587\u5316\u3078\u306E\u4E0D\u6E80\u3068\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC\u7D4C\u6E08\u3078\u306E\u5AD8\u6050\u304C\u540C\u6642\u306B\u98A8\u5E95\u3057\u3066\u3044\u308B\u3002",
+  "c2-p2":"GMANSIRE\u306F\u5F53\u4EE3\u4E3B\u7FA9\u3092\u81EA\u3089\u306E\u7F8E\u5B66\u7406\u5FF5\u3068\u3059\u308B\u2014\u2014\u5C0F\u7406\u6027\u4E3B\u7FA9\u304C\u5927\u7406\u6027\u4E3B\u7FA9\u3092\u7F6E\u304D\u63DB\u3048\u3001\u89B3\u5FF5\u3053\u305D\u304C\u3059\u3079\u3066\u306E\u4FA1\u5024\u3067\u3042\u308A\u3001\u5546\u696D\u306F\u4E16\u754C\u3092\u6539\u9020\u3059\u308B\u6700\u826F\u306E\u65B9\u6CD5\u3067\u3042\u308B\u3002",
+  "c2-med":"\u30D6\u30E9\u30F3\u30C9\u30D7\u30E9\u30F3\u30CB\u30F3\u30B0",
+  "ch-principles":"\u30D6\u30E9\u30F3\u30C9\u539F\u5247",
+  "p1-lbl":"\u30D6\u30E9\u30F3\u30C9\u539F\u5247 / Brand Principles","p1-head":"\u72EC\u81EA\u6027\u30FB\u7F8E\u306E\u8FFD\u6C42\u30FB\u5C02\u9580\u6027\u3092\u8D85\u3048\u3066",
+  "p1-a-lbl":"A. \u72EC\u81EA\u6027","p1-a-p":"GM\u306F\u904B\u55B6\u30E2\u30C7\u30EB\u3067\u3082\u5BE9\u7F8E\u3067\u3082\u72EC\u81EA\u306E\u9053\u3092\u6B69\u3080\u3002\u72EC\u81EA\u6027\u3068\u306F\u3069\u3093\u306A\u696D\u52D9\u306E\u5834\u9762\u3067\u3082\u539F\u70B9\u304B\u3089\u518D\u8003\u3059\u308B\u3053\u3068\u3067\u3042\u308A\u3001\u65B0\u305F\u306A\u6F6E\u6D41\u3092\u5F15\u3063\u5F35\u308B\u53EF\u80FD\u6027\u3092\u751F\u307F\u51FA\u3059\u3002",
+  "p1-b-lbl":"B. \u7F8E\u306E\u8FFD\u6C42","p1-b-p":"\u30E2\u30C7\u30EB\u30A8\u30FC\u30B8\u30A7\u30F3\u30B7\u30FC\u3068\u3057\u3066\u7F8E\u3092\u8FFD\u6C42\u3059\u308B\u3053\u3068\u306F\u5FC5\u7136\u306E\u9078\u629E\u3002\u3060\u304C\u305D\u306E\u8FFD\u6C42\u306B\u306F\u81EA\u5206\u305F\u3061\u306E\u614B\u5EA6\u3068\u8868\u73FE\u304C\u5FC5\u8981\u3067\u3042\u308B\u3002",
+  "p1-c-lbl":"C. \u5C02\u9580\u6027\u3092\u8D85\u3048\u3066","p1-c-p":"\u30E2\u30C7\u30EB\u306E\u5C02\u9580\u6027\u306E\u4E0A\u306B\u3001\u3055\u3089\u306B\u591A\u5143\u7684\u306A\u65B9\u5411\u6027\u3092\u6301\u3061\u3001\u30E2\u30C7\u30EB\u3068\u88DC\u5B8C\u7684\u306A\u95A2\u4FC2\u3092\u7BC9\u304D\u3001\u591A\u6B21\u5143\u7684\u601D\u8003\u3067\u697D\u5C1C\u7684\u306B\u5C55\u958B\u3059\u308B\u3002",
+  "p2-lbl":"\u30D6\u30E9\u30F3\u30C9DNA / Brand DNA","p2-head":"\u3059\u3079\u3066\u306E\u30D6\u30E9\u30F3\u30C9\u5224\u65AD\u306E\u6839\u62E0\u3068\u306A\u308B\u6E90\u6D41",
+  "p2-p1":"\u3069\u306E\u65E5\u5E38\u7684\u306A\u30D6\u30E9\u30F3\u30C9\u696D\u52D9\u306B\u3064\u3044\u3066\u8BF0\u308B\u969B\u306B\u3082\u3001\u3053\u306E\u6E90\u6D41\u306B\u3055\u304B\u306E\u307C\u308A\u3001\u8B70\u8AD6\u30FB\u5224\u65AD\u30FB\u610F\u601D\u6C7A\u5B9A\u306E\u62E0\u308A\u6240\u3068\u3059\u308B\u3002\u72EC\u81EA\u6027\u3068\u5148\u5C0E\u6027\u304C\u3042\u308B\u304B\u2014\u2014\u5E38\u306B\u3053\u306E\u89B3\u70B9\u304B\u3089\u8003\u3048\u308B\u3002",
+  "p2-il":"GM\u611F\u53D7 / Brand Perception","p2-i1":"\u72EC\u81EA\u6027","p2-i2":"\u9AD8\u7D1A\u611F","p2-i3":"\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u6027","p2-i4":"\u5148\u9032\u6027",
+  "p3-lbl":"\u72EC\u81EA\u6226\u7565 / Unique Strategy","p3-head":"\u30B9\u30BF\u30A4\u30EB\u30E2\u30C7\u30EB\u30FB\u30BD\u30FC\u30B7\u30E3\u30EB\u5C55\u958B\u30FB\u5168\u80FD\u30D7\u30E9\u30F3\u30CB\u30F3\u30B0",
+  "p3-p1":"GM\u306E\u6C17\u8CEA\u3092\u6301\u3064\u30B9\u30BF\u30A4\u30EB\u30E2\u30C7\u30EB\u3092\u80B2\u6210\u3057\u3001SNS\u3092\u901A\u3058\u3066\u30E2\u30C7\u30EB\u81EA\u8EAB\u306E\u77E5\u540D\u5EA6\u3092\u69CB\u7BC9\u3057\u3066\u3044\u304F\u3002\u6700\u7D42\u7684\u306BGM\u3092\u72EC\u81EA\u6027\u3042\u308B\u30E2\u30C7\u30EB\u306E\u4EE3\u540D\u8A5E\u306B\u3059\u308B\u3002",
+  "p3-p2":"\u30A4\u30D9\u30F3\u30C8\u30D7\u30E9\u30F3\u30CB\u30F3\u30B0\u30FB\u30B3\u30D4\u30FC\u30E9\u30A4\u30C6\u30A3\u30F3\u30B0\u30FB\u30D6\u30E9\u30F3\u30C9\u6226\u7565\u306E\u5168\u80FD\u80FD\u529B\u3092\u6301\u3061\u3001\u5C02\u9580\u6027\u3068\u591A\u5143\u6027\u3092\u7D50\u5408\u3057\u3066\u3044\u304F\u3002",
+  "p4-lbl":"\u30D6\u30E9\u30F3\u30C9\u63A5\u70B9 / Brand Touchpoints","p4-head":"\u7D71\u4E00\u3055\u308C\u305F\u5F37\u529B\u306A\u30D6\u30E9\u30F3\u30C9\u30BF\u30C3\u30C1\u30DD\u30A4\u30F3\u30C8\u4F53\u7CFB",
+  "p4-r1":"Logo\uFF1A\u30D6\u30E9\u30F3\u30C9\u30A4\u30F3\u30D7\u30EA\u30F3\u30C8\u306E\u307F","p4-r2":"\u30AB\u30E9\u30FC\uFF1A\u72EC\u81EA\u306E\u8272\u30D1\u30EC\u30C3\u30C8\u30FB\u4E8C\u516B\u539F\u5247\u3092\u9075\u5B88","p4-r3":"\u7269\u6599\uFF1ABM\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5145\u5206\u306B\u8868\u73FE\u3057\u30C7\u30B6\u30A4\u30F3\u8A00\u8A9E\u3092\u7D71\u4E00","p4-r4":"SNS\uFF1A\u30D6\u30E9\u30F3\u30C9\u30A4\u30E1\u30FC\u30B8\u3092\u967D\u3053\u308C\u308B\u30B3\u30F3\u30C6\u30F3\u30C4\u5C55\u958B","p4-r5":"\u30A4\u30D9\u30F3\u30C8\uFF1AGM\u30BF\u30C3\u30C1\u30DD\u30A4\u30F3\u30C8\u3068\u5F37\u95A2\u9023","p4-r6":"\u30E2\u30C7\u30EB\uFF1AGM\u6C17\u8CEA\u3092\u6301\u3064\u4EBA\u6750\u306E\u80B2\u6210",
+  "ch-visual":"\u30D3\u30B8\u30E5\u30A2\u30EB\u8A00\u8A9E",
+  "v1-lbl":"\u30AB\u30E9\u30FC / Color","v1-head":"\u72EC\u81EA\u3067\u9AD8\u7D1A\u611F\u306E\u3042\u308B\u6C38\u9060\u306E\u30D6\u30E9\u30F3\u30C9\u30AB\u30E9\u30FC",
+  "v1-p1":"\u30AB\u30E9\u30FC\u306F\u30D6\u30E9\u30F3\u30C9\u306E\u8C61\u5FB4\u3067\u3042\u308A\u3001\u305D\u308C\u3060\u3051\u3067\u30D6\u30E9\u30F3\u30C9\u3092\u611F\u3058\u3055\u305B\u308B\u3082\u306E\u3067\u306A\u304F\u3066\u306F\u306A\u3089\u306A\u3044\u3002\u30D6\u30EB\u30FC\u304C\u7B2C\u4E00\u306E\u30D6\u30E9\u30F3\u30C9\u30AB\u30E9\u30FC\u3060\u304C\u3001\u305D\u308C\u306F\u975E\u5E38\u306B\u72EC\u7279\u306A\u30D6\u30EB\u30FC\u3067\u306A\u304F\u3066\u306F\u306A\u3089\u306A\u3044\u3002",
+  "v1-p2":"\u30D6\u30E9\u30F3\u30C9\u30AB\u30E9\u30FC\u306F\u62B1\u8C37\u3084\u304B\u3067\u62B1\u5236\u3057\u305F\u5F62\u3067\u4F7F\u7528\u3059\u308B\u3002\u4E8C\u516B\u539F\u5247\u2014\u2014\u89C6\u899A\u5185\u306E\u5360\u6709\u7387\u306F20%\u4EE5\u4E0B\u3067\u3001\u70B9\u30FB\u7DDA\u306E\u5F62\u3067\u4F7F\u7528\u3059\u308B\u3002",
+  "v1-il":"\u8272\u5F69\u539F\u5247 / Color Principles","v1-i1":"\u72EC\u81EA\u6027","v1-i2":"\u4F7F\u3044\u3084\u3059\u3055","v1-i3":"\u9AD8\u7D1A\u611F","v1-i4":"\u7D99\u7D9A\u6027","v1-i5":"\u5148\u9032\u6027","v1-i6":"\u6C38\u9060\u4E0D\u5E78",
+  "v2-lbl":"\u30B9\u30C8\u30EC\u30C3\u30C1 / Stretch","v2-head":"\u30D6\u30E9\u30F3\u30C9\u306E\u30B3\u30A2\u30D3\u30B8\u30E5\u30A2\u30EB\u8A00\u8A9E",
+  "v2-p1":"\u30B9\u30C8\u30EC\u30C3\u30C1\u306E\u89C6\u899A\u8868\u73FE\u306F\u3001GM\u306E\u91CD\u8981\u306A\u30D3\u30B8\u30E5\u30A2\u30EB\u8A00\u8A9E\u3068\u306A\u308B\u2014\u2014\u30B7\u30F3\u30D7\u30EB\u3067\u72EC\u7279\u3001\u4F7F\u3044\u3084\u3059\u3044\u3002",
+  "v2-p2":"\u3053\u306E\u30D3\u30B8\u30E5\u30A2\u30EB\u8A00\u8A9E\u306F\u3055\u307E\u3056\u307E\u306A\u7269\u6599\u30B7\u30FC\u30F3\u3067\u9AD8\u3044\u9069\u5FDC\u6027\u3092\u6301\u3061\u3001\u30D6\u30E9\u30F3\u30C9\u306E\u4E00\u8CAB\u6027\u3092\u4FDD\u3061\u306A\u304C\u3089\u5F35\u308A\u3068\u8B58\u5225\u6027\u3092\u751F\u307F\u51FA\u3059\u3002",
+  "ch-contemp":"\u30B3\u30F3\u30C6\u30F3\u30DD\u30E9\u30EA\u30BA\u30E0",
+  "ct1-lbl":"\u7F8E\u5B66\u7406\u5FF5 / Aesthetic Philosophy","ct1-head":"\u89B3\u5FF5\u3092\u6838\u5FC3\u3068\u3059\u308B\u5F53\u4EE3\u4E3B\u7FA9\u7F8E\u5B66",
+  "ct1-p1":"\u5F53\u4EE3\u6027\u306F\u79D1\u5B66\u3068\u82B8\u8853\u3001\u7406\u6027\u3068\u975E\u7406\u6027\u306E\u5BFE\u7ACB\u3092\u89E3\u6D88\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u3002GMANSIRE\u306F\u5F53\u4EE3\u4E3B\u7FA9\u3092\u81EA\u3089\u306E\u7F8E\u5B66\u7406\u5FF5\u3068\u3059\u308B\u3002",
+  "ct1-p2":"\u5F53\u4EE3\u4E3B\u7FA9\u306F\u73FE\u4EE3\u6027\u306E\u53CD\u601D\u3068\u5F53\u4EE3\u6027\u306E\u8A18\u8FF0\u304B\u3089\u69CB\u6210\u3055\u308C\u308B\u3002\u524D\u8005\u306F\u793E\u4F1A\u306E\u8FD1\u4EE3\u5316\u306E\u4E2D\u306E\u81EA\u5DF1\u3092\u53CD\u601D\u3057\u3001\u5BE9\u7F8E\u7684\u3067\u3042\u308B\u751F\u5B58\u306E\u6226\u7565\u3092\u767A\u898B\u3059\u308B\u3002",
+  "ct1-ql":"\u89B3\u5FF5 / Concept","ct1-quote":"\u300C\u89B3\u5FF5\u306F\u82B8\u8853\u4F5C\u54C1\u3092\u751F\u307F\u51FA\u3059\u6A5F\u68B0\u3067\u3042\u308B\u300D \u2014 Sol LeWitt",
+  "ct1-p3":"\u89B3\u5FF5\u306F\u60C5\u5831\u6642\u4EE3\u306E\u4F1D\u64AD\u306E\u57FA\u77F3\u3067\u3042\u308B\u3002\u5546\u696D\u306F\u4E16\u754C\u3092\u6539\u9020\u3059\u308B\u6700\u826F\u306E\u65B9\u6CD5\u3067\u3042\u308A\u3001\u30E9\u30A4\u30D5\u30B9\u30BF\u30A4\u30EB\u306F\u6700\u7D42\u7684\u306B\u5404\u4EBA\u306E\u653F\u6CBB\u7684\u614B\u5EA6\u3092\u6307\u3057\u793A\u3059\u3002",
+  "ct2-lbl":"\u5546\u696D\u6226\u7565 / Commercial Strategy","ct2-head":"\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC\u306E\u65B9\u6CD5\u3067\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC\u306B\u53CD\u5C0D\u3059\u308B",
+  "ct2-p1":"\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC\u306E\u65B9\u6CD5\u3067\u30A4\u30F3\u30D5\u30EB\u30A8\u30F3\u30B5\u30FC\u306B\u53CD\u5C0D\u3057\u3001\u5927\u30D6\u30E9\u30F3\u30C9\u3068\u306E\u30B3\u30E9\u30DC\u3067\u30A8\u30EA\u30FC\u30C8\u4E3B\u7FA9\u306B\u53CD\u5C0D\u3059\u308B\u3002\u30E9\u30A4\u30D5\u30B9\u30BF\u30A4\u30EB\u30D6\u30ED\u30AC\u30FC\u306E\u30E2\u30C7\u30EB\u304C\u3053\u308C\u3092\u4F53\u73FE\u3059\u308B\u3002",
+  "ct2-p2":"\u30E2\u30C7\u30EB\u30FB\u30D5\u30A1\u30C3\u30B7\u30E7\u30F3\u30FB\u30E9\u30A4\u30D5\u30B9\u30BF\u30A4\u30EB\u3092\u901A\u3058\u3066\u89B3\u5FF5\u3092\u8868\u73FE\u3059\u308B\u3002\u30E2\u30C7\u30EB\u306F\u30E9\u30A4\u30D5\u30B9\u30BF\u30A4\u30EB\u306E\u4F53\u73FE\u8005\u3067\u3042\u308A\u3001\u6700\u7D42\u7684\u306BGMANSIRE\u306E\u89B3\u5FF5\u3092\u5448\u793A\u3059\u308B\u3002",
+  "ct2-il":"\u30D3\u30B8\u30E5\u30A2\u30EB\u6B21\u5143 / Visual Dimensions","ct2-i1":"\u5F53\u4EE3\u82B8\u8853\u6027","ct2-i2":"\u758F\u96E2\u611F","ct2-i3":"\u30B5\u30D6\u30AB\u30EB\u30C1\u30E3\u30FC\u7F8E\u5B66","ct2-i4":"\u30E2\u30C0\u30CB\u30BA\u30E0","ct2-i5":"\u30B7\u30F3\u30D7\u30EB\u3067\u4F59\u767D",  "ct2-i6":"\u72EC\u7ACB\u6027",
+  "ch-output":"\u30C7\u30B6\u30A4\u30F3\u30A2\u30A6\u30C8\u30D7\u30C3\u30C8",
+  "o1-lbl":"\u30D6\u30E9\u30F3\u30C9\u30A2\u30A4\u30C7\u30F3\u30C6\u30A3\u30C6\u30A3 / Brand Identity","o1-head":"Logo\u3068\u30D3\u30B8\u30E5\u30A2\u30EB\u30B7\u30B9\u30C6\u30E0",
+  "o1-p1":"GMANSIRE\u306ELogo\u306F\u30D6\u30E9\u30F3\u30C9\u30A4\u30F3\u30D7\u30EA\u30F3\u30C8\u3068\u3057\u3066\u306E\u307F\u4F7F\u7528\u3002\u3059\u3079\u3066\u306E\u7269\u6599\u3068SNS\u30D7\u30E9\u30C3\u30C8\u30D5\u30A9\u30FC\u30E0\u3067\u7D71\u4E00\u306E\u30C7\u30B6\u30A4\u30F3\u8A00\u8A9E\u3092\u4FDD\u6301\u3059\u308B\u3002",
+  "o2-lbl":"\u30D6\u30E9\u30F3\u30C9\u30DE\u30C6\u30EA\u30A2\u30EB / Brand Materials","o2-head":"\u30D6\u30E9\u30F3\u30C9\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5145\u5206\u306B\u4F1D\u3048\u308B\u7269\u6599\u30C7\u30B6\u30A4\u30F3",
+  "o2-p1":"\u7269\u6599\u30C7\u30B6\u30A4\u30F3\u306F\u30D6\u30E9\u30F3\u30C9\u30E1\u30C3\u30BB\u30FC\u30B8\u3092\u5145\u5206\u306B\u4F1D\u3048\u3001\u30C7\u30B6\u30A4\u30F3\u8A00\u8A9E\u3092\u7D71\u4E00\u3059\u308B\u3002SNS\u30B3\u30F3\u30C6\u30F3\u30C4\u306F\u30D6\u30E9\u30F3\u30C9\u30EC\u30D9\u30EB\u306B\u5F15\u304D\u4E0A\u3052\u3001\u30A4\u30D9\u30F3\u30C8\u306FGM\u306E\u5404\u30BF\u30C3\u30C1\u30DD\u30A4\u30F3\u30C8\u3068\u5F37\u304F\u90A3\u60F3\u3059\u308B\u3002",
+  "back-lbl":"\u30DB\u30FC\u30E0\u3078\u623B\u308B"
+},
+zh:{
+  "nav-ttl":"GMANSIRE品牌策划",
+  "h-cat":"\u54C1\u724C\u8BBE\u8BA1","h-ttl":"GMANSIRE","h-sub":"Brand Planning / \u30D6\u30E9\u30F3\u30C9\u30D7\u30E9\u30F3\u30CB\u30F3\u30B0",
+  "h-yl":"\u5E74\u4EFD","h-ml":"\u7C7B\u522B","h-tl":"\u884C\u4E1A","h-med":"\u54C1\u724C\u7B56\u5212","h-type":"\u65F6\u5C1A / \u6A21\u7279\u7ECF\u7EAA",
+  "h-scroll":"\u4E0A\u4E0B\u6EDA\u52A8\u5207\u6362\u677F\u5757",
+  "c-lbl":"\u6982\u5FF5 / Concept",
+  "c1-head":"\u4E3A\u65F6\u5C1A\u6A21\u7279\u7ECF\u7EAA\u516C\u53F8\u6784\u5EFA\u72EC\u7279\u7684\u54C1\u724C\u6218\u7565\u4E0E\u89C6\u89C9\u8BED\u8A00\u7CFB\u7EDF",
+  "c1-p1":"\u72EC\u7279\u6027\u3001\u9AD8\u7EA7\u611F\u3001\u65F6\u5C1A\u5EA6\u3001\u524D\u6CBF\u6027\u2014\u2014\u8FD9\u56DB\u4E2A\u7EF4\u5EA6\u6784\u6210\u4E86GMANSIRE\u7684\u54C1\u724C\u611F\u53D7\u3002GM\u9996\u5148\u662F\u4E00\u5BB6\u5728\u884C\u4E1A\u5185\u65E0\u6CD5\u754C\u5B9A\u7684\u516C\u53F8\uFF0C\u62E5\u6709\u8DB3\u591F\u7684\u72EC\u7279\u6027\uFF0C\u7ED9\u4EBA\u4EE5\u9AD8\u7EA7\u800C\u4E0D\u4E16\u4FD7\u7684\u6C14\u8D28\uFF0C\u6709\u81EA\u5DF1\u5BF9\u65F6\u5C1A\u7684\u7406\u89E3\u4E0E\u628A\u63A7\uFF0C\u5E76\u59CB\u7EC8\u4FDD\u6301\u5148\u950B\u7684\u524D\u6CBF\u6027\u3002",
+  "c1-p2":"\u5F53\u4ECA\u65F6\u5C1A\u754C\u6B63\u7ECF\u5386\u8BDD\u8BED\u6743\u7684\u8F6C\u79FB\u2014\u2014\u4ECE\u767D\u4EBA\u7CBE\u82F1\u4E3B\u4E49\u5230\u8857\u5934\u6587\u5316\u7684\u51B2\u51FB\uFF0C\u4ECE\u5927\u4F17\u7F51\u7EA2\u7ECF\u6D4E\u5230\u4E2A\u4F53\u81EA\u4E3B\u6027\u7684\u7F3A\u5931\u3002GMANSIRE\u662F\u5BF9\u7CBE\u82F1\u4E3B\u4E49\u6587\u5316\u7684\u79BB\u7ECF\u53DB\u9053\uFF0C\u662F\u5C06\u65F6\u5C1A\u6C11\u4E3B\u5316\u7684\u65D7\u624B\u3002",
+  "ins-sum":"\u80CC\u666F",
+  "c2-p1":"\u73B0\u4EE3\u65F6\u5C1A\u884C\u4E1A\u6B63\u5904\u4E8E\u7C7B\u4F3C\u4F20\u7EDF\u827A\u672F\u8FC7\u6E21\u5230\u5F53\u4EE3\u827A\u672F\u7684\u8FC7\u7A0B\uFF0C\u5373\u8BDD\u8BED\u6743\u7684\u8F6C\u79FB\u8FC7\u7A0B\uFF0C\u4E5F\u662F\u65F6\u5C1A\u6C11\u4E3B\u5316\u7684\u8FC7\u7A0B\u3002\u7F51\u7EDC\u793E\u4EA4\u5A92\u4F53\u7684KOL\u5BF9\u65F6\u5C1A\u8BDD\u8BED\u6743\u7684\u91CD\u65B0\u628A\u63E1\uFF0C\u4E0E\u6B64\u540C\u65F6\u4EBA\u4EEC\u5BF9\u7CBE\u82F1\u6587\u5316\u7684\u4E0D\u6EE1\u3001\u5BF9\u7F51\u7EA2\u7ECF\u6D4E\u7684\u5389\u5026\u540C\u6B65\u663E\u73B0\u3002",
+  "c2-p2":"GMANSIRE\u8981\u4EE5\u5F53\u4EE3\u4E3B\u4E49\u4F5C\u4E3A\u81EA\u5DF1\u7684\u7F8E\u5B66\u7406\u5FF5\u2014\u2014\u5C0F\u7406\u6027\u4E3B\u4E49\u53D6\u4EE3\u5927\u7406\u6027\u4E3B\u4E49\uFF0C\u89C2\u5FF5\u662F\u4E00\u5207\u7684\u4EF7\u5024\uFF0C\u5546\u4E1A\u662F\u6700\u597D\u7684\u6539\u9020\u4E16\u754C\u7684\u65B9\u5F0F\u3002",
+  "c2-med":"\u54C1\u724C\u7B56\u5212",
+  "ch-principles":"\u54C1\u724C\u539F\u5219",
+  "p1-lbl":"\u54C1\u724C\u539F\u5219 / Brand Principles","p1-head":"\u4E0E\u4F17\u4E0D\u540C\u00B7\u8FFD\u6C42\u7F8E\u00B7\u8D85\u8D8A\u4E13\u4E1A\u6027",
+  "p1-a-lbl":"A. \u4E0E\u4F17\u4E0D\u540C","p1-a-p":"GM\u5728\u65E0\u8BBA\u662F\u5728\u8FD0\u8425\u6A21\u5F0F\u4E0B\u8FD8\u662F\u5728\u5BA1\u7F8E\u4E2D\u90FD\u6709\u7279\u7ACB\u72EC\u884C\u7684\u4E00\u9762\u3002\u4E0E\u4F17\u4E0D\u540C\u610F\u5473\u7740\u5728\u4EFB\u4F55\u4E00\u4E2A\u5DE5\u4F5C\u65F6\u523B\u601D\u7EF4\u90FD\u8981\u4EE5\u539F\u70B9\u51FA\u53D1\u91CD\u65B0\u601D\u8003\uFF0C\u53E6\u8F9F\u8E4A\u5F84\u3002\u56E0\u4E3A\u4E0E\u4F17\u4E0D\u540C\u624D\u6709\u53EF\u80FD\u5F15\u9886\u65B0\u7684\u6F6E\u6D41\uFF0C\u5F00\u53D1\u65B0\u7684\u9014\u5F84\u3002",
+  "p1-b-lbl":"B. \u8FFD\u6C42\u7F8E","p1-b-p":"\u4F5C\u4E3A\u4E00\u5BB6\u6A21\u7279\u7ECF\u7EAA\u516C\u53F8\u8FFD\u6C42\u7F8E\u662F\u4E00\u79CD\u5FC5\u7136\u7684\u9009\u62E9\u3002\u5728\u8FFD\u6C42\u7F8E\u5F53\u4E2D\u8981\u6709\u81EA\u5DF1\u7684\u6001\u5EA6\u548C\u8868\u8FBE\u3002",
+  "p1-c-lbl":"C. \u8D85\u8D8A\u4E13\u4E1A\u6027","p1-c-p":"\u5728\u6A21\u7279\u4E13\u4E1A\u6027\u7684\u57FA\u7840\u4E0A\u8FD8\u6709\u66F4\u591A\u5143\u7684\u65B9\u5411\u6027\uFF0C\u5728\u8FD9\u79CD\u65B9\u5411\u6027\u540E\u4E0E\u6A21\u7279\u5F62\u6210\u4E92\u8865\uFF0C\u4EE5\u591A\u7EF4\u591A\u65B9\u5411\u601D\u7EF4\u8FDB\u884C\u601D\u8003\u3002",
+  "p2-lbl":"\u54C1\u724C DNA / Brand DNA","p2-head":"\u4E00\u5207\u54C1\u724C\u51B3\u7B56\u7684\u6839\u636E\u4E0E\u6E90\u5934",
+  "p2-p1":"\u5F53\u6211\u4EEC\u8BA8\u8BBA\u4EFB\u4F55\u4E00\u9879\u65E5\u5E38\u7684\u54C1\u724C\u5DE5\u4F5C\u65F6\uFF0C\u90FD\u53EF\u4EE5\u8FFD\u6EAF\u5230\u8FD9\u4E2A\u6E90\u5934\uFF0C\u5E76\u4EE5\u6B64\u4E3A\u4F9D\u636E\u8FDB\u884C\u8BA8\u8BBA\u3001\u8BC4\u5224\u3001\u51B3\u7B56\u3002\u4EFB\u4F55\u65E0\u6CD5\u627E\u5230\u5177\u4F53\u4F9D\u636E\u7684\u5DE5\u4F5C\u5185\u5BB9\uFF0C\u90FD\u53EF\u4EE5\u8FFD\u6EAF\u662F\u5426\u5177\u6709\u72EC\u7279\u6027\u3001\u662F\u5426\u5177\u6709\u5F15\u9886\u6027\u3002",
+  "p2-il":"GM\u611F\u53D7 / Brand Perception","p2-i1":"\u72EC\u7279\u6027","p2-i2":"\u9AD8\u7EA7\u611F","p2-i3":"\u65F6\u5C1A\u5EA6","p2-i4":"\u524D\u6CBF\u6027",
+  "p3-lbl":"\u72EC\u7279\u6218\u7565 / Unique Strategy","p3-head":"\u98CE\u683C\u6A21\u7279\u00B7\u793E\u4EA4\u53D1\u5C55\u00B7\u5168\u80FD\u7B56\u5212",
+  "p3-p1":"\u98CE\u683C\u6A21\u7279\uFF1A\u5177\u6709\u975E\u5E38\u4E0D\u540C\u65F6\u5C1A\u611F\u548CGM\u6C14\u8D28\u7684\u6A21\u7279\uFF1B\u793E\u4EA4\u7F51\u7EDC\u53D1\u5C55\uFF1A\u901A\u8FC7\u793E\u4EA4\u7F51\u7EDC\u79EF\u7D2F\u6A21\u7279\u672C\u8EAB\u7684\u4EBA\u6C14\uFF0C\u6700\u7EC8\u53D8\u6210GM\u4F5C\u4E3A\u72EC\u7279\u611F\u6A21\u7279\u516C\u53F8\u7684\u4EE3\u540D\u8BCD\u3002",
+  "p3-p2":"\u5168\u80FD\u7B56\u5212\uFF1A\u62E5\u6709\u7B56\u5212\u6D3B\u52A8\u3001\u6587\u6848\u3001\u6574\u4F53\u54C1\u724C\u7B56\u7565\u7684\u80FD\u529B\uFF0C\u4EE5\u591A\u7EF4\u591A\u65B9\u5411\u601D\u7EF4\u8FDB\u884C\u601D\u8003\uFF0C\u5C06\u4E13\u4E1A\u6027\u4E0E\u591A\u5143\u6027\u7ED3\u5408\u3002",
+  "p4-lbl":"\u54C1\u724C\u63A5\u89E6\u70B9 / Brand Touchpoints","p4-head":"\u7EDF\u4E00\u800C\u6709\u529B\u7684\u54C1\u724C\u89E6\u8FBE\u4F53\u7CFB",
+  "p4-r1":"Logo\uFF1A\u53EA\u4F5C\u4E3A\u54C1\u724C\u5370\u8BB0","p4-r2":"\u989C\u8272\uFF1A\u72EC\u7279\u7684\u989C\u8272\uFF0C\u9075\u5FAA\u4E8C\u516B\u539F\u5219","p4-r3":"\u7269\u6599\uFF1A\u5145\u5206\u8868\u8FBE GM \u54C1\u724C\u4FE1\u606F\u70B9\uFF0C\u8BBE\u8BA1\u8BED\u8A00\u7EDF\u4E00","p4-r4":"\u793E\u4EA4\u5A92\u4F53\uFF1A\u7A81\u51FA\u54C1\u724C\u5F62\u8C61\uFF0C\u5185\u5BB9\u4E0A\u5347\u5230\u54C1\u724C\u5C42\u9762","p4-r5":"\u6D3B\u52A8\uFF1A\u5185\u5BB9\u9700\u8981\u5F3A\u5173\u8054GM\u7684\u63A5\u89E6\u70B9","p4-r6":"\u6A21\u7279\uFF1A\u57F9\u517B\u5177\u6709GM\u6C14\u8D28\u7684\u6A21\u7279",
+  "ch-visual":"\u89C6\u89C9\u8BED\u8A00",
+  "v1-lbl":"\u989C\u8272 / Color","v1-head":"\u72EC\u7279\u3001\u9AD8\u7EA7\u3001\u6C38\u6052\u7684\u54C1\u724C\u8272\u5F69",
+  "v1-p1":"\u989C\u8272\u662F\u54C1\u724C\u7684\u8C61\u5F81\uFF0C\u67D0\u4E9B\u60C5\u51B5\u4E0B\uFF0C\u5373\u4F7F\u53EA\u6709\u989C\u8272\u51FA\u73B0\uFF0C\u4E5F\u5E94\u8BE5\u8BA9\u4EBA\u611F\u89C9\u5230\u54C1\u724C\u7684\u6C14\u606F\u3002\u84DD\u8272\u662F\u54C1\u724C\u4F7F\u7528\u7684\u7B2C\u4E00\u540D\uFF0C\u6240\u4EE5\u9700\u8981\u4E00\u4E2A\u975E\u5E38\u4E0D\u540C\u7684\u84DD\u8272\u2014\u2014\u6709\u8FA8\u8BC6\u5EA6\u3001\u597D\u7528\u3001\u9AD8\u7EA7\u3001\u5177\u6709\u524D\u77BB\u6027\u4E14\u7ECF\u5178\u6C38\u6052\u3002",
+  "v1-p2":"\u54C1\u724C\u989C\u8272\u9700\u8981\u542B\u84C4\u3001\u514B\u5236\u5730\u4F7F\u7528\uFF0C\u9075\u5FAA\u4E8C\u516B\u539F\u5219\u2014\u2014\u54C1\u724C\u8272\u5728\u89C6\u89C9\u4E2D\u7684\u5360\u6BD4\u4E0D\u8D85\u8FC720%\uFF0C\u5E94\u4EE5\u70B9\u3001\u7EBF\u7684\u5F62\u5F0F\u51FA\u73B0\uFF0C\u800C\u975E\u5927\u9762\u79EF\u94FA\u5F00\u3002",
+  "v1-il":"\u8272\u5F69\u539F\u5219 / Color Principles","v1-i1":"\u72EC\u7279\u6709\u8FA8\u8BC6\u5EA6","v1-i2":"\u597D\u7528","v1-i3":"\u9AD8\u7EA7","v1-i4":"\u5EF6\u7EED\u6027","v1-i5":"\u524D\u77BB\u6027","v1-i6":"\u7ECF\u5178\u6C38\u6052",
+  "v2-lbl":"\u62C9\u4F38 / Stretch","v2-head":"\u54C1\u724C\u6838\u5FC3\u89C6\u89C9\u8BED\u8A00",
+  "v2-p1":"\u62C9\u4F38\u89C6\u89C9\u7684\u505A\u6CD5\u5C06\u6210\u4E3AGM\u5E38\u7528\u7684\u89C6\u89C9\u7528\u6CD5\uFF0C\u6210\u4E3A\u54C1\u724C\u7684\u91CD\u8981\u89C6\u89C9\u8BED\u8A00\u2014\u2014\u7B80\u6D01\u3001\u72EC\u7279\u4E14\u597D\u7528\u3002",
+  "v2-p2":"\u8FD9\u79CD\u89C6\u89C9\u8BED\u8A00\u5728\u4E0D\u540C\u7684\u7269\u6599\u573A\u666F\u4E2D\u5747\u5177\u6709\u826F\u597D\u7684\u9002\u5E94\u6027\uFF0C\u80FD\u591F\u5728\u4FDD\u6301\u54C1\u724C\u4E00\u81F4\u6027\u7684\u540C\u65F6\uFF0C\u4E3A\u6BCF\u4E00\u6B21\u89C6\u89C9\u5448\u73B0\u6CE8\u5165\u72EC\u7279\u7684\u5F20\u529B\u4E0E\u8BC6\u522B\u5EA6\u3002",
+  "ch-contemp":"\u5F53\u4EE3\u4E3B\u4E49",
+  "ct1-lbl":"\u7F8E\u5B66\u7406\u5FF5 / Aesthetic Philosophy","ct1-head":"\u4EE5\u89C2\u5FF5\u4E3A\u6838\u5FC3\u7684\u5F53\u4EE3\u4E3B\u4E49\u7F8E\u5B66",
+  "ct1-p1":"\u5F53\u4EE3\u6027\u53EF\u4EE5\u6D88\u89E3\u79D1\u5B66\u4E0E\u827A\u672F\u3001\u7406\u6027\u4E0E\u975E\u7406\u6027\u4E4B\u4E89\uFF0C\u56E0\u4E3A\u79D1\u5B66\u552F\u7269\u4E3B\u4E49\u4E0E\u6587\u5316\u552F\u7269\u4E3B\u4E49\u53EA\u4E0D\u8FC7\u662F\u7269\u8D28\u4E3B\u4E49\u7684\u4E0D\u540C\u5F62\u6001\u800C\u5DF2\u3002GMANSIRE\u8981\u4EE5\u5F53\u4EE3\u4E3B\u4E49\u4F5C\u4E3A\u81EA\u5DF1\u7684\u7F8E\u5B66\u7406\u5FF5\u3002",
+  "ct1-p2":"\u5F53\u4EE3\u4E3B\u4E49\u7531\u73B0\u4EE3\u6027\u53CD\u601D\u4E0E\u5F53\u4EE3\u6027\u63CF\u8FF0\u5171\u540C\u6784\u6210\u3002\u524D\u8005\u53CD\u601D\u793E\u4F1A\u73B0\u4EE3\u5316\u4E2D\u7684\u81EA\u6211\uFF0C\u53CD\u601D\u81EA\u6211\u7684\u60EF\u6027\u548C\u884C\u52A8\u5C71\u677F\u7684\u98CE\u9669\uFF0C\u8FDB\u800C\u53D1\u73B0\u73B0\u4EE3\u6027\u5BA1\u7F8E\u5316\u751F\u5B58\u7684\u7B56\u7565\u3002",
+  "ct1-ql":"\u89C2\u5FF5 / Concept","ct1-quote":"\u201C\u89C2\u5FF5\u662F\u521B\u9020\u827A\u672F\u4F5C\u54C1\u7684\u673A\u5668\u201D \u2014 Sol LeWitt",
+  "ct1-p3":"\u89C2\u5FF5\u662F\u4FE1\u606F\u65F6\u4EE3\u4F20\u64AD\u7684\u57FA\u77F3\u3002\u5546\u4E1A\u662F\u6700\u597D\u7684\u6539\u9020\u4E16\u754C\u7684\u65B9\u5F0F\uFF0C\u4EBA\u4EBA\u53C2\u4E0E\uFF0C\u4EBA\u4EBA\u6539\u53D8\u3002\u751F\u6D3B\u65B9\u5F0F\u6700\u7EC8\u6307\u5411\u7684\u662F\u6BCF\u4E2A\u4EBA\u7684\u653F\u6CBF\u6001\u5EA6\u3002",
+  "ct2-lbl":"\u5546\u4E1A\u7B56\u7565 / Commercial Strategy","ct2-head":"\u4EE5\u7F51\u7EA2\u7684\u65B9\u5F0F\u53CD\u5BF9\u7F51\u7EA2",
+  "ct2-p1":"\u4EE5\u7F51\u7EA2\u7684\u65B9\u5F0F\u53CD\u5BF9\u7F51\u7EA2\uFF0C\u4EE5\u548C\u5927\u724C\u5408\u4F5C\u7684\u65B9\u5F0F\u53CD\u5BF9\u7CBE\u82F1\u4E3B\u4E49\u3002\u548C\u5927\u724C\u5408\u4F5C\u7684\u65B9\u5F0F\u662F\u4EE5\u751F\u6D3B\u535A\u4E3B\u7684\u6A21\u7279\u6765\u5C55\u73B0\u7684\u3002",
+  "ct2-p2":"\u901A\u8FC7\u6A21\u7279\u3001\u670D\u88C5\u3001\u751F\u6D3B\u65B9\u5F0F\u6765\u5C55\u73B0\u89C2\u5FF5\u2014\u2014\u6A21\u7279\u662F\u751F\u6D3B\u65B9\u5F0F\u7684\u8F7D\u4F53\uFF0C\u6700\u7EC8\u6240\u5448\u73B0\u7684\u90FD\u662FGMANSIRE\u7684\u89C2\u5FF5\u3002",
+  "ct2-il":"\u89C6\u89C9\u7EF4\u5EA6 / Visual Dimensions","ct2-i1":"\u5F53\u4EE3\u827A\u672F\u6027","ct2-i2":"\u758F\u79BB\u611F","ct2-i3":"\u5C0F\u4F17\u6587\u5316\u5BA1\u7F8E","ct2-i4":"\u73B0\u4EE3\u4E3B\u4E49","ct2-i5":"\u7B80\u6D01\u7559\u767D","ct2-i6":"\u72EC\u7ACB\u6027",
+  "ch-output":"\u8BBE\u8BA1\u8F93\u51FA",
+  "o1-lbl":"\u54C1\u724C\u8BC6\u522B / Brand Identity","o1-head":"Logo\u4E0E\u89C6\u89C9\u7CFB\u7EDF",
+  "o1-p1":"GMANSIRE\u7684Logo\u53EA\u4F5C\u4E3A\u54C1\u724C\u5370\u8BB0\u3002\u5728\u6240\u6709\u7269\u6599\u548C\u793E\u4EA4\u5E73\u53F0\u4E2D\u4FDD\u6301\u7EDF\u4E00\u7684\u8BBE\u8BA1\u8BED\u8A00\uFF0C\u786E\u4FDD\u54C1\u724C\u5F62\u8C61\u7684\u4E00\u81F4\u6027\u4E0E\u8BC6\u522B\u5EA6\u3002",
+  "o2-lbl":"\u54C1\u724C\u7269\u6599 / Brand Materials","o2-head":"\u5145\u5206\u8868\u8FBE\u54C1\u724C\u4FE1\u606F\u7684\u7269\u6599\u8BBE\u8BA1",
+  "o2-p1":"\u7269\u6599\u8BBE\u8BA1\u5145\u5206\u8868\u8FBE GM \u54C1\u724C\u6240\u4F20\u8FBE\u7684\u4FE1\u606F\u70B9\uFF0C\u8BBE\u8BA1\u8BED\u8A00\u8981\u6709\u6240\u7EDF\u4E00\u3002\u793E\u4EA4\u5A92\u4F53\u8981\u7A81\u51FA\u54C1\u724C\u5F62\u8C61\uFF0C\u6240\u6709\u793E\u4EA4\u5E73\u53F0\u5185\u5BB9\u9700\u4E0A\u5347\u5230\u54C1\u724C\u5C42\u9762\u3002",
+  "back-lbl":"\u8FD4\u56DE\u4E3B\u9875"
+},
+en:{
+  "nav-ttl":"GMANSIRE Brand Planning",
+  "h-cat":"Brand Design","h-ttl":"GMANSIRE","h-sub":"Brand Planning / \u54C1\u724C\u7B56\u5212",
+  "h-yl":"Year","h-ml":"Category","h-tl":"Industry","h-med":"Brand Planning","h-type":"Fashion / Model Agency",
+  "h-scroll":"Scroll to navigate",
+  "c-lbl":"Concept",
+  "c1-head":"Building a distinctive brand strategy and visual identity system for a fashion model agency",
+  "c1-p1":"Distinctiveness, sophistication, fashion-forwardness, avant-garde spirit \u2014 these four dimensions define GMANSIRE\u2019s brand perception. GM is first and foremost a company that defies categorisation within the industry, radiating an elevated, un-worldly quality, commanding a unique understanding of fashion, and remaining perpetually at the frontier.",
+  "c1-p2":"The contemporary fashion world is undergoing a shift in power \u2014 from white elitism to the impact of street culture, from mass influencer economies to the disappearance of individual autonomy. GMANSIRE is a rebellion against elite culture and a standard-bearer for the democratisation of fashion.",
+  "ins-sum":"Background",
+  "c2-p1":"The modern fashion industry is undergoing a transition akin to the shift from traditional to contemporary art \u2014 a reallocation of cultural authority. Social media KOLs are reclaiming the narrative, while dissatisfaction with elite culture and fatigue with influencer economies simultaneously surface.",
+  "c2-p2":"GMANSIRE adopts Contemporaryism as its aesthetic philosophy \u2014 where the minor rational displaces the grand rational, concept is the supreme value, and commerce is the finest instrument for reshaping the world.",
+  "c2-med":"Brand Planning",
+  "ch-principles":"Brand Principles",
+  "p1-lbl":"Brand Principles","p1-head":"Distinctiveness \u00B7 Pursuit of Beauty \u00B7 Beyond Professionalism",
+  "p1-a-lbl":"A. Distinctiveness","p1-a-p":"GM treads its own path in both operations and aesthetics. Distinctiveness means rethinking from first principles in every moment of work, forging new routes. Only by being different can one lead new trends and discover new paths.",
+  "p1-b-lbl":"B. Pursuit of Beauty","p1-b-p":"For a model agency, the pursuit of beauty is an inevitable choice. But that pursuit must carry its own attitude and expression.",
+  "p1-c-lbl":"C. Beyond Professionalism","p1-c-p":"On top of the core professionalism of modelling, there are more multidimensional directions to explore. These directions complement the models and allow for multi-axis, multi-directional thinking.",
+  "p2-lbl":"Brand DNA","p2-head":"The origin and basis of every brand decision",
+  "p2-p1":"Any daily brand task can be traced back to this source and evaluated against it. Any work without a clear rationale can be tested against whether it carries sufficient distinctiveness and whether it is genuinely pioneering.",
+  "p2-il":"Brand Perception","p2-i1":"Distinctiveness","p2-i2":"Sophistication","p2-i3":"Fashion","p2-i4":"Avant-Garde",
+  "p3-lbl":"Unique Strategy","p3-head":"Style Models \u00B7 Social Growth \u00B7 Full-Spectrum Planning",
+  "p3-p1":"Cultivate style models with a markedly different fashion sensibility and GM spirit; build their social profiles to ultimately make GM synonymous with a distinctive model agency.",
+  "p3-p2":"Develop full-spectrum capabilities \u2014 event planning, copywriting, and holistic brand strategy \u2014 combining professionalism with pluralism through multi-axis thinking.",
+  "p4-lbl":"Brand Touchpoints","p4-head":"A unified and powerful brand reach system",
+  "p4-r1":"Logo: used solely as a brand imprint","p4-r2":"Colour: a distinctive palette, following the 80/20 rule","p4-r3":"Materials: fully express brand message points; unified design language","p4-r4":"Social Media: elevate all content to the brand level","p4-r5":"Events: content must strongly align with GM touchpoints","p4-r6":"Models: cultivate models that embody the GM spirit",
+  "ch-visual":"Visual Language",
+  "v1-lbl":"Colour","v1-head":"Distinctive, sophisticated, timeless brand colour",
+  "v1-p1":"Colour is the symbol of the brand. In certain contexts, colour alone should evoke the brand\u2019s presence. Blue is the primary brand colour \u2014 but it must be a remarkably unusual blue: identifiable, practical, elevated, forward-looking and classically timeless.",
+  "v1-p2":"Brand colour must be used with restraint and subtlety, following the 80/20 rule \u2014 occupying no more than 20% of any visual, appearing as points and lines rather than large fields of colour.",
+  "v1-il":"Colour Principles","v1-i1":"Distinctive","v1-i2":"Practical","v1-i3":"Sophisticated","v1-i4":"Continuous","v1-i5":"Forward-looking","v1-i6":"Timeless",
+  "v2-lbl":"Stretch","v2-head":"The brand\u2019s core visual language",
+  "v2-p1":"The stretch visual approach becomes GM\u2019s signature visual language \u2014 clean, distinctive, and versatile.",
+  "v2-p2":"This visual language adapts well across material contexts, maintaining brand consistency while injecting distinctive tension and recognisability into every visual execution.",
+  "ch-contemp":"Contemporaryism",
+  "ct1-lbl":"Aesthetic Philosophy","ct1-head":"A concept-led aesthetic of contemporaryism",
+  "ct1-p1":"Contemporaneity can dissolve the opposition between science and art, between rationality and irrationality, since scientific materialism and cultural materialism are merely different forms of materialism. GMANSIRE adopts Contemporaryism as its aesthetic philosophy.",
+  "ct1-p2":"Contemporaryism is formed by the reflection on modernity and the description of contemporaneity: the former reflects on the self within social modernisation, examining the risks of habitual and rote action; the latter maintains close contact with the description of present-day reality, unlike modernity which looks ahead.",
+  "ct1-ql":"Concept","ct1-quote":"\u201cConcept is the machine that makes the work.\u201d \u2014 Sol LeWitt",
+  "ct1-p3":"Concept is the foundation of communication in the information age. Commerce is the finest means of changing the world, in which everyone participates and everyone changes. Lifestyle ultimately points to every individual\u2019s political stance.",
+  "ct2-lbl":"Commercial Strategy","ct2-head":"Opposing influencers in the manner of an influencer",
+  "ct2-p1":"Opposing influencers in the manner of an influencer; opposing elitism through collaboration with major brands. These collaborations are expressed through models who are lifestyle bloggers.",
+  "ct2-p2":"Models, clothing, and lifestyle express concept \u2014 models are vessels of lifestyle, and ultimately what is expressed is GMANSIRE\u2019s concept.",
+  "ct2-il":"Visual Dimensions","ct2-i1":"Contemporary Art","ct2-i2":"Detachment","ct2-i3":"Niche Aesthetics","ct2-i4":"Modernism","ct2-i5":"Minimal & Spare","ct2-i6":"Independence",
+  "ch-output":"Design Output",
+  "o1-lbl":"Brand Identity","o1-head":"Logo and Visual System",
+  "o1-p1":"GMANSIRE\u2019s Logo serves solely as a brand imprint. A unified design language is maintained across all materials and social platforms to ensure consistency and recognisability.",
+  "o2-lbl":"Brand Materials","o2-head":"Material design that fully conveys the brand message",
+  "o2-p1":"Material design fully expresses GM\u2019s brand message points with a unified design language. Social content is elevated to the brand level; events are strongly aligned with each GM brand touchpoint.",
+  "back-lbl":"Back to Home"
+}
+};
+
+let lang="zh";try{lang=localStorage.getItem("hl-lang")||"zh"}catch(e){}
+
+const IDS=[
+  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-ml","h-tl","h-med","h-type","h-scroll",
+  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2","c2-med",
+  "ch-principles",
+  "p1-lbl","p1-head","p1-a-lbl","p1-a-p","p1-b-lbl","p1-b-p","p1-c-lbl","p1-c-p",
+  "p2-lbl","p2-head","p2-p1","p2-il","p2-i1","p2-i2","p2-i3","p2-i4",
+  "p3-lbl","p3-head","p3-p1","p3-p2",
+  "p4-lbl","p4-head","p4-r1","p4-r2","p4-r3","p4-r4","p4-r5","p4-r6",
+  "ch-visual",
+  "v1-lbl","v1-head","v1-p1","v1-p2","v1-il","v1-i1","v1-i2","v1-i3","v1-i4","v1-i5","v1-i6",
+  "v2-lbl","v2-head","v2-p1","v2-p2",
+  "ch-contemp",
+  "ct1-lbl","ct1-head","ct1-p1","ct1-p2","ct1-ql","ct1-quote","ct1-p3",
+  "ct2-lbl","ct2-head","ct2-p1","ct2-p2","ct2-il","ct2-i1","ct2-i2","ct2-i3","ct2-i4","ct2-i5","ct2-i6",
+  "ch-output",
+  "o1-lbl","o1-head","o1-p1",
+  "o2-lbl","o2-head","o2-p1",
+  "back-lbl"
+];
+
+function applyLang(l){
+  lang=l;try{localStorage.setItem("hl-lang",l)}catch(e){}
+  document.documentElement.setAttribute("lang",l==="zh"?"zh-CN":l);
+  document.documentElement.className="lang-"+l;
+  const d=L[l]||L.zh;
+  document.title=(d["h-ttl"]||"Work")+" \u2014 \u4f55\u6881\u5b87";
+  IDS.forEach(id=>{const el=document.getElementById(id);if(el&&d[id]!==undefined)el.textContent=d[id]});
+}
+
+const cycleBtn=document.getElementById("lang-cycle-btn");
+const langs=["zh","ja","en"];
+function cycleLang(){const idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length])}
+if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
+
+function initTrack(id){
+  const track=document.getElementById("track-"+id);if(!track)return;
+  const slides=track.querySelectorAll(".slide");const n=slides.length;
+  const dotsEl=document.getElementById("dots-"+id);
+  if(dotsEl){dotsEl.innerHTML="";for(let i=0;i<n;i++){const d=document.createElement("div");d.className="dot"+(i===0?" on":"");d.onclick=()=>go(i);dotsEl.appendChild(d)}}
+  const curIdx=()=>Math.round(track.scrollLeft/track.clientWidth);
+  const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:"smooth"});
+  function upd(){const i=curIdx();if(dotsEl)dotsEl.querySelectorAll(".dot").forEach((d,j)=>d.classList.toggle("on",j===i))}
+  track.addEventListener("scroll",upd,{passive:true});upd();
+}
+["principles","visual","contemp","output"].forEach(initTrack);
+
+const lb=document.getElementById("lb"),lbi=document.getElementById("lb-img");
+const closeLB=()=>{lb.classList.remove("open");document.body.style.overflow=""};
+document.getElementById("lb-x").addEventListener("click",closeLB);
+lb.addEventListener("click",e=>{if(e.target===lb||e.target===lbi)closeLB()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLB()});
+document.querySelectorAll(".zoomable").forEach(img=>{
+  img.addEventListener("click",()=>{lbi.src=img.src;lb.classList.add("open");document.body.style.overflow="hidden"});
+});
+
+applyLang(lang);
+</script>
+</body>
+</html>

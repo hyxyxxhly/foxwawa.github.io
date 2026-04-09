@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light">
+<title>OPPO Brand Space & Architecture Design Concept — 何梁宇</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{--ink:#000;--ink2:#111;--ink3:#aaa;--rule:rgba(0,0,0,.12);--nav-h:50px;--bar-h:44px;--mono:"Space Mono",monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#fff !important;color:#000 !important;font-family:var(--mono);-webkit-text-size-adjust:100%}
+.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .note-p,.lang-ja .bp,.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+.h-track{flex:1;min-height:0;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:0;background:#e8e8e8}
+.bimg.photo img{object-fit:cover;object-position:center}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(28px,4vw,58px);font-weight:900;line-height:.95;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:1.05}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(22px,3vw,44px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"\25B6";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+.ins-meta{margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.ins-mi{font-family:var(--mono);font-size:8px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;font-weight:700}
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+@media(max-width:768px){
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .b-half .bcell:first-child{border-right:none}
+  .btxt{padding:2rem 1.8rem}
+  .htb,.hcb,.ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(22px,9vw,42px)}
+}
+</style>
+</head>
+<body>
+<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
+<div id="page">
+<!-- HERO -->
+<section class="sec" id="s-hero">
+<nav>
+  <div class="nav-l">
+    <a class="nav-back" href="../index.html">&#8592;</a>
+    <span class="nav-ttl" id="nav-ttl">OPPOブランド空間建築デザインコンセプト</span>
+  </div>
+  <button class="lang-globe" id="lang-cycle-btn" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</nav>
+<div class="hero-g">
+  <div class="hero-img"><img src="hero.jpg" alt="" onerror="this.style.display='none'"></div>
+  <div class="hero-nfo">
+    <div class="htb">
+      <p class="h-cat" id="h-cat">品牌設計</p>
+      <h1 class="h-ttl" id="h-ttl">OPPOブランド空間建築デザインコンセプト</h1>
+      <p class="h-sub" id="h-sub">Flagship Store &amp; Shenzhen HQ / 旗舰店 &amp; 深圳总部</p>
+      <div class="specs">
+        <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2019</span>
+        <span class="sp-l" id="h-tl">形式</span><span class="sp-v" id="h-type">ブランドデザイン / 空間・建築コンセプト</span>
+      </div>
+    </div>
+    <div class="hcb">
+      <span class="blbl" id="c-lbl">概念 / Concept</span>
+      <h2 class="bhead" id="c1-head">品牌遺伝子から空間へ——「詩意美学」の実体化</h2>
+      <p class="bp" id="c1-p1">ふたつのデザインはいずれもOPPOの品牌遺伝子から出発し、空間形態と建築素材を通じてブランド特質を実体化する。フラッグシップストアは「都市の公園」として、深圳本社は「璞玉」として——それぞれ詩意美学の「軽盈」と「宁静」を担う。</p>
+      <p class="bp" id="c1-p2">儒家の「本分」と道家の「至美」——この二軸の弁証法的緊張が、フラッグシップの軽やかな曲面と本社の重厚な漆黒を同時に成立させる。</p>
+    </div>
+    <details class="ins-det">
+      <summary class="ins-sum" id="ins-sum">美学インスピレーション</summary>
+      <div class="ins-body">
+        <p class="note-p" id="c2-p1">「天地に大美あれど言わず」——荘子。宇宙の根底にある美は沈黙の中にこそ宿る。この一句がOPPO詩意美学の出発点であり、ハイデガー「詩的に住まう」とも合流する。</p>
+        <p class="note-p" id="c2-p2">東西の哲思が合流し、現代の焦虑を超越して静謐に帰する究極の状態を指向する。この洞察が旗舰店の曲面と本社の漆黒の根拠となっている。</p>
+        <div class="ins-meta"><span class="ins-mi">2019</span><span class="ins-mi" id="c2-cat">Brand / Space · Architecture</span></div>
+      </div>
+    </details>
+    <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+  </div>
+</div>
+</section>
+
+<!-- RESEARCH -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-research">調査研究</span><div class="dots" id="dots-research"></div></div>
+  <div class="h-track" id="track-research">
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="r1-lbl">背景と核心的主張</span><h3 class="bhead" id="r1-head">現代主義 × 東洋美学</h3></div>
+        <div class="brow"><p class="bp" id="r1-p1">グローバル化の文脈において、モダニズムはOPPOが世界と接続するための基礎的なデザイン言語である。しかし現代の工業文明がもたらす喧騒と不安に対し、ブランドは解毒剤を必要としている。</p><p class="bp" id="r1-p2" style="margin-top:.5rem">OPPOの解毒剤とは「東洋美学」——両者の結合こそがOPPO固有のブランドビジュアル壁を形成する。含蓄・留白・虚実相生の設計手法が世界市場においてOPPOの独自性を確立する。</p></div>
+        <div class="brow"><span class="blbl" id="r1-il">洞察</span><div class="chips"><span class="chip" id="r1-i1">モダニズム = 世界との接続基盤</span><span class="chip" id="r1-i2">東洋美学 = ブランドの解毒剤</span><span class="chip" id="r1-i3">両者の結合 = 固有のビジュアル壁</span></div></div>
+      </div>
+    </div></div>
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="r2-lbl">哲学的源流</span><h3 class="bhead" id="r2-head">価値観から文化的核心へ——儒道互補</h3></div>
+        <div class="brow"><p class="bp" id="r2-p1">「本分」は儒家の秩序と自然法則に対応し、「里仁を美となす」——内敛・克制・事物の客観的法則への回帰を追求する。「至美」は道家の超越と天人合一に対応する。荘子の「天地に大美あれど言わず」——俗世の束縛を超越した自由境地。</p></div>
+        <div class="brow"><p class="bp" id="r2-p2">この東洋意境はハイデガー「詩的に住まう」と呼応し、現代の焦虑を超越して静謐に帰する究極の状態を指向する。東西の哲学的共鳴がOPPO詩意美学の根拠となる。</p></div>
+        <div class="brow"><span class="blbl" id="r2-il">洞察</span><div class="chips"><span class="chip" id="r2-i1">本分 → 儒家 / 宁静・内敛</span><span class="chip" id="r2-i2">至美 → 道家 / 超越・天人合一</span><span class="chip" id="r2-i3">ハイデガー / 詩的に住まう</span></div></div>
+      </div>
+    </div></div>
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="r3-lbl">結論</span><h3 class="bhead" id="r3-head">OPPOの「詩意美学」体系の確立</h3></div>
+        <div class="brow"><p class="bp" id="r3-p1">OPPOのブランド美学を「詩意美学（Poetic Aesthetics）」と正式に定義する。深層的な東洋意境の表現であり、後続するすべての空間・視覚デザインの核心的指針となる。</p><p class="bp" id="r3-p2" style="margin-top:.5rem">設計手法：含蓄・留白・虚実相生。三大視覚特徴：<b>軽盈（Lightness）</b>——拒絶沉重；<b>宁静（Tranquility）</b>——消解喧嚣；<b>自由（Freedom）</b>——打破边界。</p></div>
+        <div class="brow"><span class="blbl" id="r3-il">三大特徵の設計への転化</span><div class="chips"><span class="chip" id="r3-i1">軽盈 → 旗舰店 / 半透明素材</span><span class="chip" id="r3-i2">宁静 → 本社 / 黒色通体建築</span><span class="chip" id="r3-i3">自由 → 旗舰店 / 無境界交互動線</span></div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-concept">概念</span><div class="dots" id="dots-concept"></div></div>
+  <div class="h-track" id="track-concept">
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo"><img src="concept-flagship-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">concept-flagship-1.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="c-s1-lbl">PROJECT 01 — フラッグシップストア</span><h3 class="bhead" id="c-s1-head">都市の公園と霊動の玉</h3></div>
+        <div class="brow"><span class="blbl" id="c-s1-al">空間機能</span><p class="bp" id="c-s1-p1">「都市公園」をコアイメージとし、従来の小売空間の制約を解放する。内部には小型広場を設け、ライブ音楽やコミュニティイベントの場となる。顧客が随意に佇み、もたれ、交わることができる高い空間自由度を実現する。</p></div>
+        <div class="brow"><span class="blbl" id="c-s1-bl">形態と素材</span><p class="bp" id="c-s1-p2">OPPOロゴの「O」を幾何学的に変体し、波打つ円弧状の展示台面を構成。緑色半透明素材の透光性が実体の重さを消解し、空間全体が温かみのある玉石のような様相を呈する。</p></div>
+      </div>
+    </div></div>
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo"><img src="concept-hq-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">concept-hq-1.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="c-s2-lbl">PROJECT 02 — 深圳超級本部</span><h3 class="bhead" id="c-s2-head">璞玉の境地</h3></div>
+        <div class="brow"><span class="blbl" id="c-s2-al">建築的意象</span><p class="bp" id="c-s2-p1">「璞玉（未加工の原石）」を着想源とする。双子の塔楼は漆黒の外観を纏い、大地に根ざした原石のように重厚で内省的なヴォリューム感を醸し出す。</p></div>
+        <div class="brow"><span class="blbl" id="c-s2-bl">視覚的焦点</span><p class="bp" id="c-s2-p2">建築頂部に緑色発光体を設置し、黒い主体との強烈なコントラストを生む。「原石を切ると翠玉が現れる」というイメージが東洋的な奥深さを表現し、都市のスカイラインにOPPOの力強い品牌美学を確立する。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- DERIVATION -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-deriv">設計推導——美学の視覚転訳</span><div class="dots" id="dots-deriv"></div></div>
+  <div class="h-track" id="track-deriv">
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="deriv-flagship-plan.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">deriv-flagship-plan.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="d1-lbl">OPPO 旗舰店——自由 × 軽盈</span><h3 class="bhead" id="d1-head">道家「自由」× 東洋意境「軽盈」の転化</h3></div>
+        <div class="brow"><span class="blbl" id="d1-al">動線と空間属性（道家「自由/天人合一」に対応）</span><p class="bp" id="d1-p1">全面的に「都市公園」コンセプトを植入。室内四周の壁面はギャラリー型の展示インターフェースに後退し、中央コアは完全開放。散在型レイアウトにより使用者に随意停留・参加の高い空間自由度を与える。</p></div>
+        <div class="brow"><span class="blbl" id="d1-bl">形態と素材（東洋意境「軽盈」に対応）</span><p class="bp" id="d1-p2">ブランドコアシンボル「O」を曲面変体し、空間内の展示・交互台面に展開。緑色半透明媒体の透光性により実体の厚重感を消解する。</p></div>
+      </div>
+    </div></div>
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="deriv-hq-elevation.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">deriv-hq-elevation.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="d2-lbl">OPPO 深圳本社——宁静 × 至美</span><h3 class="bhead" id="d2-head">儒家「本分」× 道家「至美/超越」の転化</h3></div>
+        <div class="brow"><span class="blbl" id="d2-al">主体形態（儒家「本分/宁静」に対応）</span><p class="bp" id="d2-p1">「未彫刻の璞玉（原石）」を核心意象として確立。双子塔楼は深色/黒色通体材質を採用し、絶対的に滑らかな有機曲面を呈する。極限までミニマルな幾何ボリュームが都市グリッドに根ざし、強烈な静謐感と秩序の底色を出力する。</p></div>
+        <div class="brow"><span class="blbl" id="d2-bl">視覚焦点（道家「至美/超越」に対応）</span><p class="bp" id="d2-p2">極致の静謐な底色の中に虚実の衝突を創出し、世俗を超越する生命力を具象化する。唯一の視覚ハイライトを塔楼頂部に制御し、緑色グラデーションの発光体とする。「原石を切ると翠玉が現れる」という高コントラストのドラマ性を都市夜景の中に構築する。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-works">制作物</span><div class="dots" id="dots-works"></div></div>
+  <div class="h-track" id="track-works">
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-rows:1fr 1fr;background:#f4f4f4;gap:2px;padding:2px">
+        <div style="overflow:hidden;background:#f4f4f4"><img src="render-flagship-interior-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#e8e8e8'"></div>
+        <div style="overflow:hidden;background:#f4f4f4"><img src="render-flagship-interior-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#e8e8e8'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="w1-lbl">旗舰店 — インテリア</span><h3 class="bhead" id="w1-head">都市公園と霊動之玉——内観レンダリング</h3></div>
+        <div class="brow"><p class="bp" id="w1-p1">室内四周の壁面がギャラリー型展示インターフェースに後退し、中央コアが完全開放された状態。「O」字形から変体した緑色半透明の展示台面が水波紋のように有機的に分布し、空間に浮遊感と軽盈さをもたらす。</p></div>
+      </div>
+    </div></div>
+
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo"><img src="render-hq-night.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">render-hq-night.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="w3-lbl">深圳本社 — 夜景レンダリング</span><h3 class="bhead" id="w3-head">原石を切ると翠玉が現れる</h3></div>
+        <div class="brow"><p class="bp" id="w3-p1">暗色調の都市夜景の中で、双子塔楼の漆黒が都市グリッドに静謐に根ざし、頂部の緑色グラデーション発光体との強烈なコントラストが「切開原石見翠玉」の高対比度ドラマ性を構築する。</p></div>
+        <div class="brow"><p class="bp" id="w3-p2">非対称の有機的双子塔楼と頂部の幽緑の光芒が、都市天際線においてOPPO品牌の東洋美学コーディネートを確立する。</p></div>
+      </div>
+    </div></div>
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;background:#f4f4f4;gap:2px;padding:2px">
+        <div style="overflow:hidden;background:#f4f4f4"><img src="render-hq-detail-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#e8e8e8'"></div>
+        <div style="overflow:hidden;background:#f4f4f4"><img src="render-hq-detail-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#e8e8e8'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="w4-lbl">深圳本社 — ディテール</span><h3 class="bhead" id="w4-head">有機曲面と翠玉発光体</h3></div>
+        <div class="brow"><p class="bp" id="w4-p1">絶対的に滑らかな有機曲面のディテール。漆黒の通体立面に余分な装飾は一切なく、建築の本質的な力そのものが美として立ち現れる。頂部の翠玉発光体のグラデーション処理が、東洋的な「切り出された玉」の意象を具象化する。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- BACK -->
+<section class="sec" id="s-back">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/><polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    <span id="back-lbl">ホームへ戻る</span>
+  </a>
+</section>
+</div>
+<script>
+const L={
+ja:{
+"nav-ttl":"OPPOブランド空間建築デザインコンセプト","h-cat":"品牌設計","h-ttl":"OPPOブランド空間建築デザインコンセプト",
+"h-sub":"Flagship Store & Shenzhen HQ / 旗舰店 & 深圳总部",
+"h-type":"ブランドデザイン / 空間・建築コンセプト","h-yl":"年份","h-tl":"形式",
+"c-lbl":"概念 / Concept","c1-head":"品牌遺伝子から空間へ——「詩意美学」の実体化",
+"c1-p1":"ふたつのデザインはいずれもOPPOの品牌遺伝子から出発し、空間形態と建築素材を通じてブランド特質を実体化する。フラッグシップストアは「都市の公園」として、深圳本社は「璞玉」として——それぞれ詩意美学の「軽盈」と「宁静」を担う。",
+"c1-p2":"儒家の「本分」と道家の「至美」——この二軸の弁証法的緊張が、フラッグシップの軽やかな曲面と本社の重厚な漆黒を同時に成立させる。",
+"ins-sum":"美学インスピレーション",
+"c2-p1":"「天地に大美あれど言わず」——荘子。宇宙の根底にある美は沈黙の中にこそ宿る。この一句がOPPO詩意美学の出発点であり、ハイデガー「詩的に住まう」とも合流する。",
+"c2-p2":"東西の哲思が合流し、現代の焦虑を超越して静謐に帰する究極の状態を指向する。この洞察が旗舰店の曲面と本社の漆黒の根拠となっている。",
+"c2-cat":"Brand / Space \u00B7 Architecture","h-scroll":"上下スクロールで移動",
+"ch-concept":"概念",
+"c-s1-lbl":"PROJECT 01 \u2014 フラッグシップストア","c-s1-head":"都市の公園と霊動の玉","c-s1-al":"空間機能",
+"c-s1-p1":"「都市公園」をコアイメージとし、従来の小売空間の制約を解放する。内部には小型広場を設け、ライブ音楽やコミュニティイベントの場となる。顧客が随意に佇み、もたれ、交わることができる高い空間自由度を実現する。",
+"c-s1-bl":"形態と素材","c-s1-p2":"OPPOロゴの「O」を幾何学的に変体し、波打つ円弧状の展示台面を構成。緑色半透明素材の透光性が実体の重さを消解し、空間全体が温かみのある玉石のような様相を呈する。",
+"c-s2-lbl":"PROJECT 02 \u2014 深圳超級本部","c-s2-head":"璞玉の境地","c-s2-al":"建築的意象",
+"c-s2-p1":"「璞玉（未加工の原石）」を着想源とする。双子の塔楼は漆黒の外観を纏い、大地に根ざした原石のように重厚で内省的なヴォリューム感を醸し出す。",
+"c-s2-bl":"視覚的焦点","c-s2-p2":"建築頂部に緑色発光体を設置し、黒い主体との強烈なコントラストを生む。「原石を切ると翠玉が現れる」というイメージが東洋的な奥深さを表現し、都市のスカイラインにOPPOの品牌美学を確立する。",
+"ch-research":"調査研究","r1-lbl":"背景と核心的主張","r1-head":"現代主義 \u00D7 東洋美学",
+"r1-p1":"グローバル化の文脈において、モダニズムはOPPOが世界と接続するための基礎的なデザイン言語である。しかし現代の工業文明がもたらす喧騒と不安に対し、ブランドは解毒剤を必要としている。",
+"r1-p2":"OPPOの解毒剤とは「東洋美学」——両者の結合こそがOPPO固有のブランドビジュアル壁を形成する。含蓄・留白・虚実相生の設計手法が世界市場においてOPPOの独自性を確立する。",
+"r1-il":"洞察","r1-i1":"モダニズム = 世界との接続基盤","r1-i2":"東洋美学 = ブランドの解毒剤","r1-i3":"両者の結合 = 固有のビジュアル壁",
+"r2-lbl":"哲学的源流","r2-head":"価値観から文化的核心へ——儒道互補",
+"r2-p1":"「本分」は儒家の秩序と自然法則に対応し、「里仁を美となす」——内敛・克制・事物の客観的法則への回帰を追求する。「至美」は道家の超越と天人合一に対応する。荘子の「天地に大美あれど言わず」——俗世の束縛を超越した自由境地。",
+"r2-p2":"この東洋意境はハイデガー「詩的に住まう」と呼応し、現代の焦虑を超越して静謐に帰する究極の状態を指向する。東西の哲学的共鳴がOPPO詩意美学の根拠となる。",
+"r2-il":"洞察","r2-i1":"本分 \u2192 儒家 / 宁静・内敛","r2-i2":"至美 \u2192 道家 / 超越・天人合一","r2-i3":"ハイデガー / 詩的に住まう",
+"r3-lbl":"結論","r3-head":"OPPOの「詩意美学」体系の確立",
+"r3-p1":"OPPOのブランド美学を「詩意美学（Poetic Aesthetics）」と正式に定義する。深層的な東洋意境の表現であり、後続するすべての空間・視覚デザインの核心的指針となる。",
+"r3-p2":"設計手法：含蓄・留白・虚実相生。三大視覚特徴：軽盈（Lightness）——拒絶沉重；宁静（Tranquility）——消解喧嚣；自由（Freedom）——打破边界。",
+"r3-il":"三大特徵の設計への転化","r3-i1":"軽盈 \u2192 旗舰店 / 半透明素材","r3-i2":"宁静 \u2192 本社 / 黒色通体建築","r3-i3":"自由 \u2192 旗舰店 / 無境界交互動線",
+"ch-deriv":"設計推導——美学の視覚転訳",
+"d1-lbl":"OPPO 旗舰店——自由 \u00D7 軽盈","d1-head":"道家「自由」\u00D7 東洋意境「軽盈」の転化","d1-al":"動線と空間属性（道家「自由/天人合一」に対応）",
+"d1-p1":"全面的に「都市公園」コンセプトを植入。室内四周の壁面はギャラリー型の展示インターフェースに後退し、中央コアは完全開放。散在型レイアウトにより使用者に随意停留・参加の高い空間自由度を与える。",
+"d1-bl":"形態と素材（東洋意境「軽盈」に対応）","d1-p2":"ブランドコアシンボル「O」を曲面変体し、空間内の展示・交互台面に展開。緑色半透明媒体の透光性により実体の厚重感を消解する。",
+"d2-lbl":"OPPO 深圳本社——宁静 \u00D7 至美","d2-head":"儒家「本分」\u00D7 道家「至美/超越」の転化","d2-al":"主体形態（儒家「本分/宁静」に対応）",
+"d2-p1":"「未彫刻の璞玉（原石）」を核心意象として確立。双子塔楼は深色/黒色通体材質を採用し、絶対的に滑らかな有機曲面を呈する。極限までミニマルな幾何ボリュームが都市グリッドに根ざし、強烈な静謐感と秩序の底色を出力する。",
+"d2-bl":"視覚焦点（道家「至美/超越」に対応）","d2-p2":"極致の静謐な底色の中に虚実の衝突を創出し、世俗を超越する生命力を具象化する。塔楼頂部に緑色グラデーションの発光体を設定し、「原石を切ると翠玉が現れる」という高コントラストのドラマ性を都市夜景の中に構築する。",
+"ch-works":"制作物",
+"w1-lbl":"旗舰店 \u2014 インテリア","w1-head":"都市公園と霊動之玉——内観レンダリング","w1-p1":"室内四周の壁面がギャラリー型展示インターフェースに後退し、中央コアが完全開放された状態。「O」字形から変体した緑色半透明の展示台面が水波紋のように有機的に分布し、空間に浮遊感と軽盈さをもたらす。",
+
+"w3-lbl":"深圳本社 \u2014 夜景レンダリング","w3-head":"原石を切ると翠玉が現れる","w3-p1":"暗色調の都市夜景の中で、双子塔楼の漆黒が都市グリッドに静謐に根ざし、頂部の緑色グラデーション発光体との強烈なコントラストが「切開原石見翠玉」の高対比度ドラマ性を構築する。","w3-p2":"非対称の有機的双子塔楼と頂部の幽緑の光芒が、都市天際線においてOPPO品牌の東洋美学コーディネートを確立する。",
+"w4-lbl":"深圳本社 \u2014 ディテール","w4-head":"有機曲面と翠玉発光体","w4-p1":"絶対的に滑らかな有機曲面のディテール。漆黒の通体立面に余分な装飾は一切なく、建築の本質的な力そのものが美として立ち現れる。頂部の翠玉発光体のグラデーション処理が、東洋的な「切り出された玉」の意象を具象化する。",
+"back-lbl":"ホームへ戻る"
+},
+zh:{
+"nav-ttl":"OPPO品牌空间建筑设计概念","h-cat":"品牌设计","h-ttl":"OPPO品牌空间建筑设计概念",
+"h-sub":"Flagship Store & Shenzhen HQ / 旗舰店 & 深圳总部",
+"h-type":"品牌设计 / 空间与建筑概念","h-yl":"年份","h-tl":"类别",
+"c-lbl":"概念 / Concept","c1-head":"品牌基因落地为空间——\u201c诗意美学\u201d的实体化",
+"c1-p1":"两项设计均从品牌基因出发，通过具体的空间形态与建筑材质，将OPPO的品牌特质实体化。旗舰店以\u201c城市公园\u201d为意象，总部以\u201c璞玉\u201d为灵感——分别承载诗意美学的\u201c轻盈\u201d与\u201c宁静\u201d两极。",
+"c1-p2":"儒家的\u201c本分\u201d与道家的\u201c至美\u201d——这二轴的辩证张力，正是旗舰店轻盈曲面与总部大楼厚重漆黑同时并存的设计根据。",
+"ins-sum":"美学灵感","c2-p1":"\u201c天地有大美而不言\u201d——庄子。宇宙深处的美，藏于沉默而非雄辩之中。OPPO的诗意美学根植于此，并与海德格尔\u201c诗意地栖居\u201d的西方哲思不谋而合。",
+"c2-p2":"东西方哲思汇流，共同指向超越现代焦虑、回归宁静的终极状态。这一哲学洞察，成为旗舰店曲面与总部漆黑的设计根据。",
+"c2-cat":"Brand / Space \u00B7 Architecture","h-scroll":"上下滚动切换板块",
+"ch-concept":"概念说明",
+"c-s1-lbl":"PROJECT 01 \u2014 旗舰店","c-s1-head":"城市公园与灵动之玉","c-s1-al":"空间功能",
+"c-s1-p1":"以\u201c城市公园\u201d为核心意象，打破传统零售空间的局限。内部置入小型广场，承载Live音乐及社群活动，赋予顾客随性倚靠、停留与交互的极高空间自由度。",
+"c-s1-bl":"形态与材质","c-s1-p2":"提取OPPO品牌标志中的字母\u201cO\u201d进行几何变体，构筑起伏的圆弧形台面。选用绿色半透明材质，利用透光性消解实体厚重感，使整个空间犹如一块温润的玉石，精准传达品牌灵动、轻盈的基因。",
+"c-s2-lbl":"PROJECT 02 \u2014 深圳超级总部","c-s2-head":"璞玉之境","c-s2-al":"建筑意象",
+"c-s2-p1":"以\u201c璞玉\u201d为灵感。双子塔楼采用黑色通体立面，宛如扎根大地的原石，呈现稳重、内敛的体量感。",
+"c-s2-bl":"视觉焦点","c-s2-p2":"建筑顶部设置为绿色发光体，与黑色主体形成强烈对比。通过\u201c切开原石见翠玉\u201d的意象呈现东方韵味，在城市天际线中彰显OPPO极具生命力的品牌设计美学。",
+"ch-research":"设计调研与美学推导","r1-lbl":"背景与核心主张","r1-head":"现代主义 \u00D7 东方美学",
+"r1-p1":"在全球化语境下，现代主义是OPPO与世界接轨的基础设计语言。然而，面对现代工业文明带来的喧嚣与焦虑，品牌需要一种解药。",
+"r1-p2":"OPPO的设计解药即是\u201c东方美学\u201d——两者结合构成了OPPO独有的品牌视觉壁垒。含蓄、留白、虚实相生的设计手法在全球市场中确立OPPO的独特性。",
+"r1-il":"洞察","r1-i1":"现代主义 = 全球接轨基础","r1-i2":"东方美学 = 品牌解药","r1-i3":"两者结合 = 独有视觉壁垒",
+"r2-lbl":"哲学溯源","r2-head":"从价值观到文化内核——儒道互补",
+"r2-p1":"OPPO的核心价值观\u201c本分\u201d与\u201c至美\u201d，可以精准映射到中国传统的\u201c儒道互补\u201d思想体系中。\u201c本分\u201d对应儒家的秩序与自然法则：追求\u201c里仁为美\u201d，强调内敛与克制。",
+"r2-p2":"\u201c至美\u201d对应道家的超越与天人合一：如庄子所言\u201c天地有大美而不言\u201d。这种东方意境与海德格尔\u201c诗意地栖居\u201d的西方哲学不谋而合，共同指向超越现代焦虑、回归宁静的终极状态。",
+"r2-il":"洞察","r2-i1":"本分 \u2192 儒家 / 宁静内敛","r2-i2":"至美 \u2192 道家 / 超越天人合一","r2-i3":"海德格尔 / 诗意地栖居",
+"r3-lbl":"结论","r3-head":"建立OPPO\u201c诗意美学\u201d体系",
+"r3-p1":"基于上述调研推导，将OPPO的品牌美学正式定义为\u201c诗意美学（Poetic Aesthetics）\u201d。它是一种深层次的东方意境表达，是指导后续所有空间与视觉设计的核心准则。",
+"r3-p2":"设计手法：含蓄、留白、虚实相生。三大视觉特征：轻盈（Lightness）——拒绝沉重；宁静（Tranquility）——消解喧嚣；自由（Freedom）——打破边界。",
+"r3-il":"三大特征的设计转化","r3-i1":"轻盈 \u2192 旗舰店 / 半透明材质","r3-i2":"宁静 \u2192 总部 / 黑色通体建筑","r3-i3":"自由 \u2192 旗舰店 / 无边界交互动线",
+"ch-deriv":"设计推导——美学理论的视觉转译",
+"d1-lbl":"OPPO旗舰店——自由 \u00D7 轻盈","d1-head":"道家\u201c自由\u201d \u00D7 东方意境\u201c轻盈\u201d的转化","d1-al":"动线与空间属性（对应道家\u201c自由/天人合一\u201d）",
+"d1-p1":"全面植入\u201c城市公园\u201d概念。室内四周墙面退让为画廊式的展陈界面，中央核心区完全开敞。摒弃固定动线，代之以离散型的布局，赋予使用者随性停留、倚靠或参与微型广场Live的极高空间自由度。",
+"d1-bl":"形态与材质（对应东方意境\u201c轻盈\u201d）","d1-p2":"提取品牌核心符号\u201cO\u201d进行曲面变体，演化为空间内的陈列与交互台面。材质上选用绿色半透明介质，利用透光性消解实体厚重感。",
+"d2-lbl":"OPPO深圳超级总部——宁静 \u00D7 至美","d2-head":"儒家\u201c本分\u201d \u00D7 道家\u201c至美/超越\u201d的转化","d2-al":"主体形态（对应儒家\u201c本分/宁静\u201d）",
+"d2-p1":"确立\u201c未雕琢的璞玉（原石）\u201d为核心意象。渲染图展示的双子塔楼采用深色/黑色通体材质，呈现绝对平滑的有机曲面。建筑以极简、厚重的几何体块扎根于城市网格中，在视觉上输出极强的静谧感与秩序底色。",
+"d2-bl":"视觉焦点（对应道家\u201c至美/超越\u201d）","d2-p2":"在极致宁静的底色中制造虚实冲突，具象化表达超越世俗的生命力。将建筑唯一的视觉高光严格控制在塔楼顶部，设定为绿色渐变发光体，在暗色调的城市夜景中，构筑出\u201c切开原石见翠玉\u201d的高对比度戏剧性。",
+"ch-works":"作品影像",
+"w1-lbl":"旗舰店 \u2014 室内","w1-head":"城市公园与灵动之玉——室内渲染图","w1-p1":"室内四周墙面退让为画廊式展陈界面，中央核心区完全开敞。\u201cO\u201d字形变体而来的绿色半透明展示台面如水波纹般有机分布，为空间带来悬浮感与轻盈感。",
+
+"w3-lbl":"深圳总部 \u2014 夜景渲染图","w3-head":"切开原石见翠玉","w3-p1":"在暗色调的城市夜景中，双子塔楼的漆黑静默地扎根于城市网格，顶部绿色渐变发光体与黑色主体形成强烈对比，构筑出\u201c切开原石见翠玉\u201d的高对比度戏剧性。","w3-p2":"两栋非对称的有机塔楼配合顶部的幽绿光芒，以极高的辨识度确立了OPPO品牌的东方美学天际线坐标。",
+"w4-lbl":"深圳总部 \u2014 细节","w4-head":"有机曲面与翠玉发光体","w4-p1":"绝对平滑的有机曲面细节。漆黑的通体立面没有任何多余的装饰，建筑的本质力量本身作为美而呈现。顶部翠玉发光体的渐变处理，将东方\u201c切出玉石\u201d的意象具象化。",
+"back-lbl":"返回主页"
+},
+en:{
+"nav-ttl":"OPPO Brand Space & Architecture Design Concept","h-cat":"Brand Design","h-ttl":"OPPO Brand Space & Architecture Design Concept",
+"h-sub":"Flagship Store & Shenzhen HQ",
+"h-type":"Brand Design / Spatial & Architectural Concept","h-yl":"Year","h-tl":"Type",
+"c-lbl":"Concept","c1-head":"From Brand DNA to Space \u2014 Materialising the \u201cPoetic Aesthetics\u201d",
+"c1-p1":"Both projects depart from OPPO\u2019s brand DNA, embodying its qualities through spatial form and architectural material. The flagship store as \u201curban park,\u201d the Shenzhen HQ as \u201craw jade\u201d \u2014 each carries one pole of the Poetic Aesthetics: Lightness and Tranquility.",
+"c1-p2":"The tension between Confucian \u201cB\u0113nf\u00e8n\u201d and Taoist \u201cZh\u00ecm\u011bi\u201d is precisely what allows the store\u2019s weightless curves and the HQ\u2019s monolithic darkness to coexist.",
+"ins-sum":"Aesthetic Inspiration",
+"c2-p1":"\u201cHeaven and earth possess great beauty, but do not speak of it\u201d \u2014 Zhuangzi. The deepest beauty lies in silence. This is the starting point of OPPO\u2019s Poetic Aesthetics, converging with Heidegger\u2019s \u201cdwelling poetically.\u201d",
+"c2-p2":"Eastern and Western thought converge toward a state that transcends modern anxiety and returns to stillness. This insight is the design rationale for both the store\u2019s translucent curves and the HQ\u2019s stripped-back darkness.",
+"c2-cat":"Brand / Space \u00B7 Architecture","h-scroll":"Scroll to navigate",
+"ch-concept":"Concept",
+"c-s1-lbl":"PROJECT 01 \u2014 FLAGSHIP STORE","c-s1-head":"Urban Park & the Spirit of Jade","c-s1-al":"Spatial Program",
+"c-s1-p1":"Centered on the \u201curban park\u201d concept, the design liberates retail from conventional constraints. An interior plaza hosts live music and community events, granting visitors total freedom to linger, lean, and interact at will.",
+"c-s1-bl":"Form & Material","c-s1-p2":"The letter \u201cO\u201d from OPPO\u2019s logo is geometrically transformed into undulating curved display surfaces. A green translucent material dissolves physical heaviness through light transmission, rendering the entire space as a luminous piece of warm jade.",
+"c-s2-lbl":"PROJECT 02 \u2014 SHENZHEN SUPER HQ","c-s2-head":"The Realm of Raw Jade","c-s2-al":"Architectural Image",
+"c-s2-p1":"Inspired by \u201craw jade\u201d \u2014 the uncut stone. Twin towers clad entirely in deep black present themselves like primordial rock anchored in the earth, projecting gravity and restraint.",
+"c-s2-bl":"Visual Focal Point","c-s2-p2":"The apex of each tower is set as an emerald luminous body, creating powerful contrast against the dark mass. Through the image of \u201csplitting raw stone to reveal jade within,\u201d Eastern depth is made concrete, establishing OPPO\u2019s vital brand aesthetic on the city skyline.",
+"ch-research":"Research","r1-lbl":"Background & Core Proposition","r1-head":"Modernism \u00D7 Eastern Aesthetics",
+"r1-p1":"In the global context, Modernism is OPPO\u2019s foundational design language. But against the noise and anxiety of modern industrial civilisation, the brand needs an antidote.",
+"r1-p2":"OPPO\u2019s design antidote is \u201cEastern Aesthetics\u201d \u2014 their union forms OPPO\u2019s unique visual moat. Subtlety, negative space, and the coexistence of presence and void establish OPPO\u2019s distinctiveness globally.",
+"r1-il":"Insights","r1-i1":"Modernism = Global connection base","r1-i2":"Eastern Aesthetics = Brand antidote","r1-i3":"Their union = Unique visual moat",
+"r2-lbl":"Philosophical Roots","r2-head":"From Values to Cultural Core \u2014 Confucian-Taoist Complementarity",
+"r2-p1":"OPPO\u2019s core values \u2014 \u201cB\u0113nf\u00e8n\u201d and \u201cZh\u00ecm\u011bi\u201d \u2014 map precisely onto the traditional Chinese framework of Confucian-Taoist complementarity. \u201cB\u0113nf\u00e8n\u201d pursues beauty in benevolence \u2014 restraint and adherence to natural order.",
+"r2-p2":"\u201cZh\u00ecm\u011bi\u201d corresponds to Taoist transcendence and unity with nature. As Zhuangzi said: \u201cgreat beauty lies beyond words.\u201d This Eastern spirit converges with Heidegger\u2019s \u201cdwelling poetically,\u201d pointing toward stillness beyond modern anxiety.",
+"r2-il":"Insights","r2-i1":"B\u0113nf\u00e8n \u2192 Confucian / Tranquility","r2-i2":"Zh\u00ecm\u011bi \u2192 Taoist / Transcendence","r2-i3":"Heidegger / Dwelling Poetically",
+"r3-lbl":"Conclusion","r3-head":"Establishing OPPO\u2019s \u201cPoetic Aesthetics\u201d System",
+"r3-p1":"OPPO\u2019s brand aesthetic is formally defined as \u201cPoetic Aesthetics.\u201d It is a deep expression of Eastern spirit, and the core criterion guiding all subsequent spatial and visual design.",
+"r3-p2":"Design methods: subtlety, negative space, coexistence of presence and void. Three visual characteristics: Lightness \u2014 refuse heaviness; Tranquility \u2014 dissolve noise; Freedom \u2014 break boundaries.",
+"r3-il":"Application to Design","r3-i1":"Lightness \u2192 Flagship / Translucent material","r3-i2":"Tranquility \u2192 HQ / Monolithic black mass","r3-i3":"Freedom \u2192 Flagship / Boundaryless circulation",
+"ch-deriv":"Design Derivation \u2014 Visual Translation of Aesthetic Theory",
+"d1-lbl":"OPPO Flagship \u2014 Freedom \u00D7 Lightness","d1-head":"Taoist \u201cFreedom\u201d \u00D7 Eastern \u201cLightness\u201d Translated","d1-al":"Circulation (Taoist \u201cFreedom / Unity with Nature\u201d)",
+"d1-p1":"The \u201curban park\u201d concept pervades the entire program. Perimeter walls recede into gallery-style display interfaces; the central core is fully open. A dispersed layout grants users total freedom to pause, lean, or join plaza live performances.",
+"d1-bl":"Form & Material (Eastern \u201cLightness\u201d)","d1-p2":"The brand symbol \u201cO\u201d is transformed into curved display surfaces. Green translucent media dissolves physical solidity through light. Viewed from above, surfaces distribute like ripples or scattered jade \u2014 floating, weightless against a pure white ground.",
+"d2-lbl":"OPPO Shenzhen HQ \u2014 Tranquility \u00D7 Supreme Beauty","d2-head":"Confucian \u201cB\u0113nf\u00e8n\u201d \u00D7 Taoist \u201cZh\u00ecm\u011bi / Transcendence\u201d Translated","d2-al":"Main Form (Confucian \u201cB\u0113nf\u00e8n / Tranquility\u201d)",
+"d2-p1":"The core image is \u201cuncarved jade \u2014 raw stone.\u201d Twin towers in all-black material present absolutely smooth organic curves, rooting minimal geometric volumes into the urban grid to project powerful stillness and order.",
+"d2-bl":"Visual Focus (Taoist \u201cZh\u00ecm\u011bi / Transcendence\u201d)","d2-p2":"A presence-void conflict is created within extreme stillness, embodying vitality beyond the mundane. The sole visual highlight is confined to the tower apex \u2014 an emerald luminous gradient \u2014 constructing the drama of \u201csplitting raw stone to reveal jade\u201d in the dark urban night.",
+"ch-works":"Works",
+"w1-lbl":"Flagship Store \u2014 Interior","w1-head":"Urban Park & Spirit of Jade \u2014 Interior Render","w1-p1":"Perimeter walls recede into gallery interfaces; the central core is fully open. Curved display surfaces derived from the \u201cO\u201d symbol distribute organically like ripples, endowing the space with weightlessness and lightness.",
+
+"w3-lbl":"Shenzhen HQ \u2014 Night Render","w3-head":"Splitting Raw Stone to Reveal Jade","w3-p1":"In the dark urban night, the twin towers\u2019 monolithic black anchors into the city grid. The emerald luminous gradient at the apex creates high-contrast drama \u2014 splitting raw stone to reveal jade.","w3-p2":"The asymmetric organic towers crowned with their emerald glow establish OPPO\u2019s Eastern aesthetic skyline coordinates with exceptional recognisability.",
+"w4-lbl":"Shenzhen HQ \u2014 Detail","w4-head":"Organic Curves & the Emerald Luminous Body","w4-p1":"Detail of the absolutely smooth organic surface. The all-black facade carries no superfluous ornament; architecture\u2019s essential force presents itself as beauty. The gradient treatment of the emerald luminous body concretises the Eastern image of \u201cjade carved from stone.\u201d",
+"back-lbl":"Back to Home"
+}
+};
+
+let lang="ja";try{lang=localStorage.getItem("hl-lang")||"ja"}catch(e){}
+
+const IDS=[
+"nav-ttl","h-cat","h-ttl","h-sub","h-type","h-yl","h-tl","h-scroll",
+"c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2","c2-cat",
+"ch-concept","c-s1-lbl","c-s1-head","c-s1-al","c-s1-p1","c-s1-bl","c-s1-p2",
+"c-s2-lbl","c-s2-head","c-s2-al","c-s2-p1","c-s2-bl","c-s2-p2",
+"ch-research","r1-lbl","r1-head","r1-p1","r1-p2","r1-il","r1-i1","r1-i2","r1-i3",
+"r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2","r2-i3",
+"r3-lbl","r3-head","r3-p1","r3-p2","r3-il","r3-i1","r3-i2","r3-i3",
+"ch-deriv","d1-lbl","d1-head","d1-al","d1-p1","d1-bl","d1-p2",
+"d2-lbl","d2-head","d2-al","d2-p1","d2-bl","d2-p2",
+"ch-works","w1-lbl","w1-head","w1-p1",
+"w3-lbl","w3-head","w3-p1","w3-p2","w4-lbl","w4-head","w4-p1","back-lbl"
+];
+
+function applyLang(l){
+  lang=l;try{localStorage.setItem("hl-lang",l)}catch(e){}
+  document.documentElement.setAttribute("lang",l==="zh"?"zh-CN":l);
+  document.documentElement.className="lang-"+l;
+  const d=L[l]||L.ja;
+  document.title=(d["nav-ttl"]||"OPPO")+" \u2014 \u4F55\u6882\u5B87";
+  IDS.forEach(id=>{const el=document.getElementById(id);if(el&&d[id]!==undefined)el.textContent=d[id]});
+}
+
+const cycleBtn=document.getElementById("lang-cycle-btn");
+const langs=["ja","zh","en"];
+function cycleLang(){const idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length])}
+if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
+
+function initTrack(id){
+  const track=document.getElementById("track-"+id);if(!track)return;
+  const slides=track.querySelectorAll(".slide");const n=slides.length;
+  const dotsEl=document.getElementById("dots-"+id);
+  if(dotsEl){dotsEl.innerHTML="";for(let i=0;i<n;i++){const d=document.createElement("div");d.className="dot"+(i===0?" on":"");d.onclick=(()=>{const ii=i;return()=>go(ii)})();dotsEl.appendChild(d)}}
+  const curIdx=()=>Math.round(track.scrollLeft/track.clientWidth);
+  const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:"smooth"});
+  function upd(){const i=curIdx();if(dotsEl)dotsEl.querySelectorAll(".dot").forEach((d,j)=>d.classList.toggle("on",j===i))}
+  track.addEventListener("scroll",upd,{passive:true});upd();
+}
+["concept","research","deriv","works"].forEach(initTrack);
+
+const lb=document.getElementById("lb"),lbi=document.getElementById("lb-img");
+const closeLB=()=>{lb.classList.remove("open");document.body.style.overflow=""};
+document.getElementById("lb-x").addEventListener("click",closeLB);
+lb.addEventListener("click",e=>{if(e.target===lb||e.target===lbi)closeLB()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLB()});
+document.querySelectorAll(".zoomable").forEach(img=>{
+  img.addEventListener("click",()=>{lbi.src=img.src;lb.classList.add("open");document.body.style.overflow="hidden"});
+});
+
+applyLang(lang);
+</script>
+</body>
+</html>
