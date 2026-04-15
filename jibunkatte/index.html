@@ -145,6 +145,10 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .h-line{width:28px;height:1px;background:var(--ink3)}
 
 .bhead,.bp,.prow,.note-p,.sp-v{text-wrap:pretty;-webkit-hyphens:auto;hyphens:auto}
+.lang-ja .bp,.lang-ja .prow,.lang-ja .note-p,.lang-ja .hcb .bp,
+.lang-zh .bp,.lang-zh .prow,.lang-zh .note-p,.lang-zh .hcb .bp{
+  text-align:justify;text-justify:inter-ideograph;
+}
 .hero-nfo,.btxt,.ins-body{-webkit-overflow-scrolling:touch}
 
 @supports (height:100svh){:root{--app-height:100svh}}
@@ -244,7 +248,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 <section class="sec" id="s-hero">
 <nav>
   <div class="nav-l">
-    <a class="nav-back" href="../../index.html">&#8592;</a>
+    <a class="nav-back" href="../index.html">&#8592;</a>
     <span class="nav-ttl" id="nav-ttl">自分勝手</span>
   </div>
   <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
@@ -691,7 +695,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 
 <!-- ══ BACK ════════════════════════════════════ -->
 <section class="sec" id="s-back">
-  <a class="back-btn" href="../../index.html">
+  <a class="back-btn" href="../index.html">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
       <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>

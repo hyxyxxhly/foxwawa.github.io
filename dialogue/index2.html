@@ -2,7 +2,7 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="color-scheme" content="light">
 <title>対話 — 何梁宇</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -14,19 +14,12 @@ html{forced-color-adjust:none}
   --rule:rgba(0,0,0,.12);
   --nav-h:50px;--bar-h:44px;
   --mono:"Space Mono",monospace;
-  --safe-bottom:0px;
-  --browser-bottom-gap:0px;
-  --bottom-clearance:0px;
-  --app-height:100vh;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{
   height:100%;overflow:hidden;
   background:#fff !important;color:#000 !important;
   font-family:var(--mono);-webkit-text-size-adjust:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
 }
 .lang-ja .bhead,.lang-ja .h-ttl,
 .lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
@@ -47,10 +40,10 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1}
 
-#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
 #page::-webkit-scrollbar{display:none}
 
-.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
 .sec>.sec-bar{flex-shrink:0}
 
 .sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
@@ -80,14 +73,14 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .brow:last-child{margin-bottom:0}
 
 .blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
-.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em;text-align:justify}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
 .lang-zh .bhead{letter-spacing:0}
 .lang-ja .bhead{letter-spacing:0;font-weight:400}
 
-.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem;text-align:justify}
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
 .bp:last-child{margin-bottom:0}
 .bp b{color:#000;font-weight:700}
-.bp.poem{white-space:pre-line;line-height:2.2;font-style:italic;text-align:left}
+.bp.poem{white-space:pre-line;line-height:2.2;font-style:italic}
 
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
 .chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
@@ -114,7 +107,7 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .hcb .blbl{margin-bottom:.8rem}
 .hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
 .lang-ja .hcb .bhead{font-weight:400}
-.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem;text-align:justify}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
 
 .ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
 .ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
@@ -123,24 +116,14 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .ins-det[open] .ins-sum::before{transform:rotate(90deg)}
 .ins-sum:hover{color:#000}
 .ins-body{padding:0 3rem 2rem}
-.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic;text-align:justify}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
 .ins-body .note-p:last-of-type{margin-bottom:0}
 
 .h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
 .h-line{width:28px;height:1px;background:var(--ink3)}
 
-.bhead,.bp,.prow,.note-p,.sp-v{
-  text-wrap:pretty;
-  -webkit-hyphens:auto;
-  hyphens:auto;
-}
-.hero-nfo,.btxt,.ins-body{
-  -webkit-overflow-scrolling:touch;
-}
-
-@supports (height:100svh){:root{--app-height:100svh}}
-@supports (height:100dvh){:root{--app-height:100dvh}}
-.work-board{flex:1;min-height:0;height:auto;display:grid;grid-template-columns:40% 60%}
+/* ─ WORK SECTIONS ─ */
+.work-board{flex:1;min-height:0;height:auto;display:grid;grid-template-columns:1fr 1fr}
 .work-board .bcell:first-child{border-right:1px solid var(--rule)}
 .work-r{display:flex;flex-direction:column;overflow:hidden}
 .work-img{flex:1;min-height:0;overflow:hidden;background:#f7f7f7}
@@ -198,51 +181,16 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 #lb-x:hover{color:#fff}
 
 @media(max-width:768px){
-  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
-  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
-  nav{padding:0 1.2rem}
-  .sec-bar{padding:0 1.2rem}
   .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
   .hero-img{border-right:none}
   .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
   .b-half .bcell:first-child{border-right:none;border-bottom:1px solid var(--rule)}
-  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
-  .htxt{padding:1.6rem 1.8rem}
+  .btxt{padding:2rem 1.8rem}
   .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
   .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
-  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
-  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
-  #s-back{padding-bottom:var(--bottom-clearance)}
-  .h-ttl{font-size:clamp(38px,10vw,60px);line-height:1.02}
-
-  /* work sections: image top 62%, text+AR bottom 38% */
-  .work-board{grid-template-columns:1fr;grid-template-rows:62% 38%}
-  .work-board .work-r{order:-1}
-  .work-r{flex-direction:row}
-  .work-img{flex:1;border-bottom:none}
-  .ar-panel{width:80px;flex-shrink:0;height:100%;border-top:none;border-left:1px solid rgba(60,120,200,.15);font-size:0}
-  .ar-panel .ar-icon{display:block}
-  .ar-panel .ar-text{display:none}
-  .work-board .bcell.btxt{border-top:1px solid var(--rule)}
-
-  /* mobile typography */
-  .bp{font-size:15px;line-height:2.06;color:#222;text-align:justify}
-  .hcb .bp{font-size:15px;line-height:2.06;color:#202020;text-align:justify}
-  .ins-body .note-p{font-size:15px;line-height:2.08;color:#2d2d2d;text-align:justify}
-  .bhead{font-size:clamp(20px,5vw,28px);line-height:1.22;color:#050505}
-  .hcb .bhead{font-size:clamp(16px,4vw,20px);line-height:1.34}
-  .blbl{font-size:11px}
-  .chip{font-size:9px;padding:4px 10px}
-  .sp-v{font-size:14px}
-  .nav-ttl{font-size:14px}
-  .bp,.ins-body .note-p,.sp-v{letter-spacing:.01em}
-}
-
-@supports (-webkit-touch-callout:none){
-  @media(max-width:768px){
-    .bp,.hcb .bp,.ins-body .note-p{text-shadow:0 0 .01px rgba(0,0,0,.35)}
-    .btxt,.hero-nfo{transform:translateZ(0)}
-  }
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .work-board{grid-template-columns:1fr;grid-template-rows:1fr 240px}
+  .work-board .bcell:first-child{border-right:none;border-bottom:1px solid var(--rule)}
 }
 </style>
 </head>
@@ -566,7 +514,11 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 <section class="sec">
   <div class="sec-bar"><span class="s-ttl" id="ch-film">映像</span></div>
   <div class="film-wrap">
-    <iframe src="https://www.youtube.com/embed/THiRS9xRXY4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;display:block;border:none;"></iframe>
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/THiRS9xRXY4" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+        <span class="vid-lbl" id="film-lbl">映像 · Documentary Film</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -759,25 +711,6 @@ const langs = ["ja","zh","en"];
 function cycleLang() { const idx = langs.indexOf(lang); applyLang(langs[(idx+1) % langs.length]); }
 if (cycleBtn) cycleBtn.addEventListener("click", cycleLang);
 
-/* ─ VIEWPORT HEIGHT (mobile browser chrome) ─ */
-function syncViewportVars(){
-  const root=document.documentElement;
-  const vv=window.visualViewport;
-  const viewportHeight=vv?vv.height:window.innerHeight;
-  const viewportTop=vv?vv.offsetTop:0;
-  const layoutHeight=Math.max(root.clientHeight,window.innerHeight);
-  const browserBottom=Math.max(0,layoutHeight-viewportHeight-viewportTop);
-  root.style.setProperty("--app-height",`${Math.round(viewportHeight)}px`);
-  root.style.setProperty("--browser-bottom-gap",`${Math.round(browserBottom)}px`);
-}
-syncViewportVars();
-window.addEventListener("resize",syncViewportVars,{passive:true});
-window.addEventListener("orientationchange",syncViewportVars,{passive:true});
-if(window.visualViewport){
-  window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
-  window.visualViewport.addEventListener("scroll",syncViewportVars,{passive:true});
-}
-
 function initTrack(id) {
   const track = document.getElementById("track-" + id); if (!track) return;
   const slides = track.querySelectorAll(".slide"); const n = slides.length;
@@ -798,10 +731,7 @@ function initTrack(id) {
 }
 ["research","concept"].forEach(initTrack);
 
-const vid = document.getElementById("vid"), vov = document.getElementById("vid-ov");
-if (vid && vov) {
-  vov.addEventListener("click", () => { vid.play(); vov.classList.add("gone"); vid.controls = true; });
-  vid.addEventListener("ended", () => { vov.classList.remove("gone"); vid.controls = false; vid.currentTime = 0; });
+
 }
 
 applyLang(lang);
