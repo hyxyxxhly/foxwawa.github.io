@@ -203,11 +203,14 @@ position:absolute;inset:0;
 display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 #bio-model-viewer{
-width:100%;height:100%;display:block;pointer-events:none;
-background:transparent;opacity:0;transform:translate3d(0,0,0) scale(1);
+width:240%;height:240%;
+position:absolute;top:-70%;left:-70%;
+display:block;pointer-events:none;
+background:transparent;opacity:0;
+transform:translate3d(0,0,0) scale(1);
 transition:opacity .45s ease;
 --poster-color:transparent;
-transform-origin:50% 48%;
+transform-origin:50% 50%;
 will-change:transform;
 }
 #bio.open #bio-model-viewer.ready{opacity:1}
@@ -343,6 +346,8 @@ color:rgba(255,241,236,.64);white-space:nowrap
           camera-orbit="-18deg 94deg 7m"
           camera-target="18m 72m 6m"
           field-of-view="11.9deg"
+          min-camera-orbit="auto auto 0%"
+          max-camera-orbit="auto auto Infinity"
           interpolation-decay="120"
           exposure="0.72"
           environment-intensity="0.18"
@@ -791,32 +796,32 @@ if(bioViewer){
     {
       orient:[-8,4,-84],
       orbit:[-18,94],
-      compose:{targetOffsetX:-0.08,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.08,frameY:0.52,distanceScale:0.072},
-      scan:{scanDirection:-1,start:0.34,end:-0.38}
+      compose:{targetOffsetX:-0.08,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.08,frameY:0.52,distanceScale:0.012},
+      scan:{scanDirection:-1,start:0.26,end:-0.38}
     },
     {
       orient:[8,-2,-92],
       orbit:[12,95],
-      compose:{targetOffsetX:-0.06,targetOffsetY:-0.05,targetOffsetZ:0,frameX:0.04,frameY:0.46,distanceScale:0.066},
-      scan:{scanDirection:1,start:-0.34,end:0.38}
+      compose:{targetOffsetX:-0.06,targetOffsetY:-0.05,targetOffsetZ:0,frameX:0.04,frameY:0.46,distanceScale:0.011},
+      scan:{scanDirection:1,start:-0.26,end:0.38}
     },
     {
       orient:[-12,4,-72],
       orbit:[-6,93],
-      compose:{targetOffsetX:-0.09,targetOffsetY:0.08,targetOffsetZ:0,frameX:0.1,frameY:0.58,distanceScale:0.076},
-      scan:{scanDirection:-1,start:0.36,end:-0.4}
+      compose:{targetOffsetX:-0.09,targetOffsetY:0.08,targetOffsetZ:0,frameX:0.1,frameY:0.58,distanceScale:0.013},
+      scan:{scanDirection:-1,start:0.28,end:-0.40}
     },
     {
       orient:[14,5,-98],
       orbit:[24,95],
-      compose:{targetOffsetX:-0.05,targetOffsetY:-0.07,targetOffsetZ:0,frameX:0.02,frameY:0.42,distanceScale:0.064},
-      scan:{scanDirection:1,start:-0.36,end:0.4}
+      compose:{targetOffsetX:-0.05,targetOffsetY:-0.07,targetOffsetZ:0,frameX:0.02,frameY:0.42,distanceScale:0.010},
+      scan:{scanDirection:1,start:-0.28,end:0.40}
     },
     {
       orient:[-10,-2,-82],
       orbit:[-24,94],
-      compose:{targetOffsetX:-0.07,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.06,frameY:0.5,distanceScale:0.07},
-      scan:{scanDirection:-1,start:0.35,end:-0.39}
+      compose:{targetOffsetX:-0.07,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.06,frameY:0.5,distanceScale:0.011},
+      scan:{scanDirection:-1,start:0.27,end:-0.39}
     }
   ];
 
@@ -870,7 +875,7 @@ if(bioViewer){
       scan:baseShot.scan,
       motion:{
         lookXRange:0.065+Math.random()*0.022,
-        scanSpeed:0.000024+Math.random()*0.000006,
+        scanSpeed:0.000013+Math.random()*0.000003,
         lookPhase:Math.random()*Math.PI*2,
         driftSpeed:[
           0.00005+Math.random()*0.000012,
@@ -892,8 +897,8 @@ if(bioViewer){
     return{
       frameXAdjust:aspect<.72?-.02:aspect>1.65?.1:.06,
       frameYAdjust:aspect<.72?.12:aspect>1.65?.04:.08,
-      heightFill:aspect<.72?6.2:4.9,
-      widthFill:aspect<.72?3.35:2.7,
+      heightFill:aspect<.72?9.5:7.2,
+      widthFill:aspect<.72?5.2:4.0,
       fov:11.9+compactRatio*.28+(aspect<.72?.08:0),
       distanceAdjust:compactRatio*.01
     };
@@ -961,7 +966,7 @@ if(bioViewer){
     const fitHeight=bounds.halfHeight/(Math.tan(fovY*.5)*viewport.heightFill);
     const fitWidth=bounds.halfSpan/(Math.tan(fovX*.5)*viewport.widthFill);
     const rawFitDistance=Math.max(fitHeight,fitWidth);
-    const safeDistance=rawFitDistance*(aspect<.72?.095:.075);
+    const safeDistance=rawFitDistance*(aspect<.72?.008:.006);
     const distance=Math.max(rawFitDistance*pose.compose.distanceScale*(1+viewport.distanceAdjust),safeDistance);
     return{
       orbit:[pose.orbit[0],pose.orbit[1],distance],
@@ -1042,7 +1047,7 @@ if(bioViewer){
     const bounds=getModelBounds();
     const motion=activePose?.motion;
     const elapsed=Math.max(0,time-motionStartTime);
-    const settle=Math.min(1,elapsed/900);
+    const settle=Math.min(1,elapsed/60);
     if(motion&&bounds){
       const scanUnit=(Math.sin(elapsed*motion.scanSpeed-Math.PI/2)+1)*.5;
       const crossWave=Math.sin(elapsed*(motion.scanSpeed*.62)+motion.lookPhase);
@@ -1061,6 +1066,7 @@ if(bioViewer){
 
   function startViewerMotion(){
     motionWanted=true;
+    console.log('[bio3d] startViewerMotion — scan.start=',activePose?.scan?.start,'distanceScale=',activePose?.compose?.distanceScale);
     bioViewer.setAttribute('rotation-per-second','1.48deg');
     bioViewer.setAttribute('auto-rotate-delay','0');
     bioViewer.setAttribute('auto-rotate','');
