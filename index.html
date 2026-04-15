@@ -207,7 +207,7 @@ width:100%;height:100%;display:block;pointer-events:none;
 background:transparent;opacity:0;transform:translate3d(0,0,0) scale(1.1);
 transition:opacity .45s ease;
 --poster-color:transparent;
-transform-origin:52% 46%;
+transform-origin:50% 48%;
 will-change:transform;
 }
 #bio.open #bio-model-viewer.ready{opacity:1}
@@ -336,8 +336,8 @@ color:rgba(255,241,236,.64);white-space:nowrap
           data-model-src="bio-model/199245.glb?v=4"
           alt="HE LIANGYU portrait model"
           reveal="auto"
-          loading="lazy"
-          rotation-per-second="0.46deg"
+          loading="eager"
+          rotation-per-second="0.9deg"
           auto-rotate-delay="0"
           orientation="-34deg 0deg -88deg"
           camera-orbit="-134deg 101deg 38m"
@@ -439,7 +439,7 @@ const I18N={
     works:'作品',
     back:'← 戻る', backCat:'← カテゴリへ戻る',
     bio_label:'Profile',
-    bio_name_main:'カ　リョウウ',
+    bio_name_main:'カ\nリョウウ',
     bio_name_sub:'HE LIANGYU',
     bio_practice_label:'領域',
     bio_practice:'ブランド / 空間 / インスタレーション',
@@ -469,7 +469,7 @@ function workTitle(w){ return (WORK_TITLES[w.t]&&WORK_TITLES[w.t][lang])||w.t; }
 
 function applyLang(){
   const L=I18N[lang];
-  document.getElementById('b-name-main').textContent=L.bio_name_main;
+  document.getElementById('b-name-main').innerHTML=L.bio_name_main.replace(/\n/g,'<br>');
   document.getElementById('b-name-sub').textContent=L.bio_name_sub;
   document.getElementById('b-practice-label').textContent=L.bio_practice_label;
   document.getElementById('b-practice').textContent=L.bio_practice;
@@ -783,36 +783,39 @@ if(bioViewer){
   let rafId=0;
   let activePose=null;
   let modelRequested=false;
+  let preloadScheduled=false;
+  let motionStartTime=0;
+  let motionWanted=false;
   const VIEWER_SHOTS=[
     {
-      orient:[-42,4,-104],
-      orbit:[-132,96,38.2],
-      target:[16,73,5],
-      frame:{x:6.4,y:-9.5,scale:1.31}
+      orient:[-22,6,-108],
+      orbit:[-52,97,37.1],
+      target:[16,72,4],
+      frame:{x:-4.8,y:-9.4,scale:1.42}
     },
     {
-      orient:[12,-2,-74],
-      orbit:[52,100,38.5],
-      target:[17,67,3],
-      frame:{x:5.7,y:-8.6,scale:1.29}
+      orient:[12,-4,-102],
+      orbit:[28,97,36.9],
+      target:[17,69,3],
+      frame:{x:-4.2,y:-8.8,scale:1.4}
     },
     {
-      orient:[-8,1,-116],
-      orbit:[-38,92,39.4],
-      target:[11,75,1],
-      frame:{x:6.9,y:-9.9,scale:1.34}
+      orient:[-18,5,-74],
+      orbit:[-8,95,37.6],
+      target:[13,74,2],
+      frame:{x:-5.0,y:-9.8,scale:1.45}
     },
     {
-      orient:[24,3,-126],
-      orbit:[122,97,37.2],
-      target:[22,69,5],
-      frame:{x:6.1,y:-8.9,scale:1.3}
+      orient:[18,6,-114],
+      orbit:[46,97,36.7],
+      target:[20,70,5],
+      frame:{x:-4.4,y:-8.9,scale:1.38}
     },
     {
-      orient:[-28,-1,-62],
-      orbit:[-164,100,36.8],
-      target:[18,73,7],
-      frame:{x:5.4,y:-9.7,scale:1.28}
+      orient:[-24,-3,-96],
+      orbit:[-66,96,37.2],
+      target:[18,72,6],
+      frame:{x:-5.2,y:-9.6,scale:1.41}
     }
   ];
 
@@ -843,40 +846,47 @@ if(bioViewer){
   function randomizePose(baseShot){
     return{
       orientation:[
-        baseShot.orient[0]+(Math.random()*5-2.5),
-        baseShot.orient[1]+(Math.random()*3.6-1.8),
-        baseShot.orient[2]+(Math.random()*8-4),
+        baseShot.orient[0]+(Math.random()*3-1.5),
+        baseShot.orient[1]+(Math.random()*2-1),
+        baseShot.orient[2]+(Math.random()*4-2),
       ],
       orbit:[
-        baseShot.orbit[0]+(Math.random()*4.8-2.4),
-        clampNum(baseShot.orbit[1]+(Math.random()*2.4-1.2),90,102),
-        baseShot.orbit[2]+(Math.random()*1.1-.55),
+        baseShot.orbit[0]+(Math.random()*3-1.5),
+        clampNum(baseShot.orbit[1]+(Math.random()*1.6-.8),92,100),
+        baseShot.orbit[2]+(Math.random()*0.8-.4),
       ],
       target:[
-        baseShot.target[0]+(Math.random()*1.6-.8),
-        baseShot.target[1]+(Math.random()*1.6-.8),
-        baseShot.target[2]+(Math.random()*1-.5),
+        baseShot.target[0]+(Math.random()*1.2-.6),
+        baseShot.target[1]+(Math.random()*1.2-.6),
+        baseShot.target[2]+(Math.random()*0.8-.4),
       ],
       frame:{
-        x:baseShot.frame.x+(Math.random()*0.44-.22),
-        y:baseShot.frame.y+(Math.random()*0.56-.28),
-        scale:baseShot.frame.scale+(Math.random()*0.05-.025),
+        x:baseShot.frame.x+(Math.random()*0.4-.2),
+        y:baseShot.frame.y+(Math.random()*0.44-.22),
+        scale:baseShot.frame.scale+(Math.random()*0.06-.03),
       },
       motion:{
         driftAmp:[
-          1.02+Math.random()*0.26,
-          1.18+Math.random()*0.28
+          1.12+Math.random()*0.32,
+          1.18+Math.random()*0.34
         ],
         driftSpeed:[
-          0.00003+Math.random()*0.000012,
-          0.000026+Math.random()*0.000011
+          0.000078+Math.random()*0.000022,
+          0.000072+Math.random()*0.00002
         ],
         driftPhase:[
           Math.random()*Math.PI*2,
           Math.random()*Math.PI*2
         ],
-        scaleAmp:0.014+Math.random()*0.01,
-        scaleSpeed:0.000052+Math.random()*0.000018,
+        riseAmp:0.62+Math.random()*0.22,
+        riseSpeed:0.000061+Math.random()*0.000016,
+        risePhase:Math.random()*Math.PI*2,
+        wrapAmp:3.2+Math.random()*0.8,
+        wrapSpeed:0.000024+Math.random()*0.000008,
+        wrapPhase:Math.random()*Math.PI*2,
+        wrapXAmp:1.1+Math.random()*0.5,
+        scaleAmp:0.026+Math.random()*0.012,
+        scaleSpeed:0.00009+Math.random()*0.000022,
         scalePhase:Math.random()*Math.PI*2
       }
     };
@@ -886,10 +896,10 @@ if(bioViewer){
     const {minDim,aspect}=getViewportBox();
     const sizeRatio=clampNum((minDim-390)/820,0,1);
     const tinyRatio=clampNum((560-minDim)/220,0,1);
-    const scaleAdjust=.95+sizeRatio*.1-tinyRatio*.06+(aspect>1.6?.02:0);
-    const xAdjust=aspect<.72?-.18:aspect>1.65?-.42:-.08;
-    const yAdjust=aspect<.72?-.36:aspect>1.65?.12:-.06;
-    const orbitDistanceAdjust=tinyRatio*2.6;
+    const scaleAdjust=.985+sizeRatio*.08-tinyRatio*.045+(aspect>1.6?.015:0);
+    const xAdjust=aspect<.72?.18:aspect>1.65?-.34:-.24;
+    const yAdjust=aspect<.72?-.24:aspect>1.65?.08:-.04;
+    const orbitDistanceAdjust=tinyRatio*2.1;
     return{scaleAdjust,xAdjust,yAdjust,orbitDistanceAdjust};
   }
 
@@ -907,13 +917,24 @@ if(bioViewer){
     bioViewer.setAttribute('src',src);
   }
 
+  function scheduleModelPreload(){
+    if(USES_FILE_PROTOCOL||preloadScheduled||modelRequested) return;
+    preloadScheduled=true;
+    const kick=()=>ensureModelRequested();
+    if('requestIdleCallback' in window){
+      window.requestIdleCallback(kick,{timeout:1400});
+      return;
+    }
+    setTimeout(kick,650);
+  }
+
   function poseMetrics(){
     const pose=activePose||randomizePose(VIEWER_SHOTS[0]);
     const viewport=getViewportProfile();
     return{
-      x:clampNum(pose.frame.x+viewport.xAdjust,4.6,7.3),
-      y:clampNum(pose.frame.y+viewport.yAdjust,-10.4,-8.0),
-      scale:clampNum(pose.frame.scale*viewport.scaleAdjust,1.2,1.42)
+      x:clampNum(pose.frame.x+viewport.xAdjust,-5.8,-2.2),
+      y:clampNum(pose.frame.y+viewport.yAdjust,-10.2,-8.0),
+      scale:clampNum(pose.frame.scale*viewport.scaleAdjust,1.18,1.4)
     };
   }
 
@@ -969,38 +990,56 @@ if(bioViewer){
     const motion=activePose?.motion;
     let driftX=0,driftY=0;
     let scaleShift=0;
+    let wrapX=0,wrapRise=0;
+    const elapsed=Math.max(0,time-motionStartTime);
+    const settle=Math.min(1,elapsed/900);
     if(motion){
+      const wrapTime=time*motion.wrapSpeed+motion.wrapPhase;
+      const wrapProgress=((wrapTime%(Math.PI*2))+(Math.PI*2))%(Math.PI*2)/(Math.PI*2);
+      const wrapCycle=Math.floor(wrapTime/(Math.PI*2));
+      const wrapSeed=Math.sin((wrapCycle+1)*12.9898+motion.wrapPhase*78.233)*43758.5453;
+      const wrapRand=wrapSeed-Math.floor(wrapSeed);
       driftX=
         Math.sin(time*motion.driftSpeed[0]+motion.driftPhase[0])*motion.driftAmp[0]
-        +Math.cos(time*(motion.driftSpeed[0]*.58)+motion.driftPhase[1])*(motion.driftAmp[0]*.32);
+        +Math.cos(time*(motion.driftSpeed[0]*.62)+motion.driftPhase[1])*(motion.driftAmp[0]*.36);
       driftY=
         Math.cos(time*motion.driftSpeed[1]+motion.driftPhase[1])*motion.driftAmp[1]
-        +Math.sin(time*(motion.driftSpeed[1]*.54)+motion.driftPhase[0])*(motion.driftAmp[1]*.26);
+        +Math.sin(time*(motion.driftSpeed[1]*.56)+motion.driftPhase[0])*(motion.driftAmp[1]*.3)
+        -Math.abs(Math.sin(time*motion.riseSpeed+motion.risePhase))*motion.riseAmp;
+      wrapRise=wrapProgress*motion.wrapAmp;
+      wrapX=Math.sin(wrapProgress*Math.PI)*(wrapRand-.5)*motion.wrapXAmp;
       scaleShift=
         Math.sin(time*motion.scaleSpeed+motion.scalePhase)*motion.scaleAmp
         +Math.cos(time*(motion.scaleSpeed*.48)+motion.driftPhase[0])*(motion.scaleAmp*.32);
     }
     applyViewerTransform({
-      x:clampNum(baseFrame.x+driftX,4.2,7.8),
-      y:clampNum(baseFrame.y+driftY,-10.9,-7.6),
-      scale:baseFrame.scale+scaleShift
+      x:clampNum(baseFrame.x+(driftX+wrapX)*settle,-6.2,-2.6),
+      y:clampNum(baseFrame.y+(driftY-wrapRise)*settle,-14.4,-7.6),
+      scale:baseFrame.scale+scaleShift*settle
     });
     rafId=requestAnimationFrame(animateViewer);
   }
 
   function startViewerMotion(){
-    bioViewer.setAttribute('rotation-per-second','0.46deg');
+    motionWanted=true;
+    bioViewer.setAttribute('rotation-per-second','0.9deg');
     bioViewer.setAttribute('auto-rotate-delay','0');
     bioViewer.setAttribute('auto-rotate','');
-    if(rafId)return;
+    motionStartTime=performance.now();
+    if(rafId){
+      cancelAnimationFrame(rafId);
+      rafId=0;
+    }
     rafId=requestAnimationFrame(animateViewer);
   }
 
   function stopViewerMotion(){
+    motionWanted=false;
     bioViewer.removeAttribute('auto-rotate');
-    if(!rafId)return;
-    cancelAnimationFrame(rafId);
-    rafId=0;
+    if(rafId){
+      cancelAnimationFrame(rafId);
+      rafId=0;
+    }
     if(activePose) applyViewerOrientation(activePose.orientation);
     if(activePose){
       const viewport=getViewportProfile();
@@ -1023,6 +1062,9 @@ if(bioViewer){
     setStatus('');
     applyViewerPose(false);
     stabilizeViewerPose();
+    if(bio.classList.contains('open')||motionWanted){
+      startViewerMotion();
+    }
   });
 
   bioViewer.addEventListener('error',()=>{
@@ -1031,6 +1073,7 @@ if(bioViewer){
   });
 
   window.openBioPanel3D=()=>{
+    motionWanted=true;
     if(USES_FILE_PROTOCOL){
       setStatus('3D Model Needs Localhost Preview');
       return;
@@ -1041,6 +1084,7 @@ if(bioViewer){
     ensureModelRequested();
     applyViewerPose(true);
     stabilizeViewerPose();
+    motionStartTime=performance.now();
     startViewerMotion();
   };
 
@@ -1049,6 +1093,11 @@ if(bioViewer){
   window.visualViewport?.addEventListener('resize',syncViewerToViewport);
   window.visualViewport?.addEventListener('scroll',syncViewerToViewport);
   new ResizeObserver(syncViewerToViewport).observe(document.documentElement);
+  if(document.readyState==='complete'){
+    scheduleModelPreload();
+  }else{
+    window.addEventListener('load',scheduleModelPreload,{once:true});
+  }
 }
 </script>
 
