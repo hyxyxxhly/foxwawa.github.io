@@ -2,7 +2,7 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="color-scheme" content="light">
 <title>海 — 何梁宇</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -14,19 +14,12 @@ html{forced-color-adjust:none}
   --rule:rgba(0,0,0,.12);
   --nav-h:50px;--bar-h:44px;
   --mono:"Space Mono",monospace;
-  --safe-bottom:0px;
-  --browser-bottom-gap:0px;
-  --bottom-clearance:0px;
-  --app-height:100vh;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{
   height:100%;overflow:hidden;
   background:#fff !important;color:#000 !important;
   font-family:var(--mono);-webkit-text-size-adjust:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
 }
 .lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
 .lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
@@ -47,10 +40,10 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1}
 
-#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
 #page::-webkit-scrollbar{display:none}
 
-.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
 .sec>.sec-bar{flex-shrink:0}
 
 .sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
@@ -98,7 +91,6 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
 .hero-nfo::-webkit-scrollbar{display:none}
-.hero-nfo::after{content:"";display:block;flex:0 0 0}
 
 .htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
 .h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
@@ -129,24 +121,6 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 .h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
 .h-line{width:28px;height:1px;background:var(--ink3)}
 
-.bhead,.bp,.prow,.note-p,.sp-v{
-  text-wrap:pretty;
-  -webkit-hyphens:auto;
-  hyphens:auto;
-}
-
-.hero-nfo,.btxt,.ins-body{
-  -webkit-overflow-scrolling:touch;
-}
-
-@supports (height:100svh){
-  :root{--app-height:100svh}
-}
-
-@supports (height:100dvh){
-  :root{--app-height:100dvh}
-}
-
 /* ─ EXHIBITION GRID ─ */
 .exh-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule)}
 .exh-c{overflow:hidden;background:#f7f7f7;position:relative}
@@ -157,6 +131,13 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 /* ─ FILM ─ */
 .film-wrap{flex:1;min-height:0;background:#000}
 .vid-wrap{position:relative;width:100%;height:100%}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
+.vid-ov.gone{opacity:0;pointer-events:none}
+.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
+.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
+.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
+.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
 
 /* ─ BACK ─ */
 #s-back{background:#fff;display:flex;align-items:center;justify-content:center}
@@ -173,55 +154,16 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
 #lb-x:hover{color:#fff}
 
 @media(max-width:768px){
-  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
-  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
   .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
   .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
   .hero-img{border-right:none}
   .b-half .bcell:first-child{border-right:none}
-  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
+  .btxt{padding:2rem 1.8rem}
   .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
   .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
   .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .nx-t{font-size:clamp(28px,10vw,52px)}
   .exh-grid{grid-template-columns:1fr 1fr}
-
-  .hero-nfo{padding-bottom:0}
-  .hero-nfo::after{flex-basis:calc(4.5rem + var(--bottom-clearance))}
-  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
-  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
-  #s-back{padding-bottom:var(--bottom-clearance)}
-
-  .bp{font-size:15px;line-height:2.06;color:#222}
-  .hcb .bp{font-size:15px;line-height:2.06;color:#202020}
-  .prow{font-size:15px;line-height:2.06;color:#222}
-  .ins-body .note-p{font-size:15px;line-height:2.08;color:#2d2d2d}
-  .bhead{font-size:clamp(20px,5vw,28px)}
-  .hcb .bhead{font-size:clamp(16px,4vw,20px)}
-  .blbl{font-size:11px}
-  .chip{font-size:9px;padding:4px 10px}
-  .sp-v{font-size:14px}
-  .nav-ttl{font-size:14px}
-
-  .bhead{line-height:1.22;color:#050505}
-  .hcb .bhead{line-height:1.34}
-  .h-ttl{line-height:1.02}
-
-  .brow,
-  .htb > *,
-  .hcb > *,
-  .ins-body > *{max-width:31rem}
-
-  .bp,
-  .prow,
-  .ins-body .note-p,
-  .sp-v{letter-spacing:.01em}
-}
-
-@supports (-webkit-touch-callout:none){
-  @media(max-width:768px){
-    .bp,.hcb .bp,.prow,.ins-body .note-p{text-shadow:0 0 .01px rgba(0,0,0,.35)}
-    .btxt,.hero-nfo{transform:translateZ(0)}
-  }
 }
 </style>
 </head>
@@ -412,6 +354,8 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
   <div class="film-wrap">
     <div class="vid-wrap">
       <iframe src="https://www.youtube.com/embed/-h4JwocVl4w" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+        <span class="vid-lbl" id="film-lbl">映像 · Documentary Film</span>
+      </div>
     </div>
   </div>
 </section>
@@ -574,22 +518,7 @@ document.querySelectorAll(".exh-c img").forEach(img => {
   img.addEventListener("click", () => { lbi.src = img.src; lb.classList.add("open"); document.body.style.overflow = "hidden"; });
 });
 
-function syncViewportVars(){
-  const root=document.documentElement;
-  const vv=window.visualViewport;
-  const viewportHeight=vv?vv.height:window.innerHeight;
-  const viewportTop=vv?vv.offsetTop:0;
-  const layoutHeight=Math.max(root.clientHeight,window.innerHeight);
-  const browserBottom=Math.max(0,layoutHeight-viewportHeight-viewportTop);
-  root.style.setProperty("--app-height",`${Math.round(viewportHeight)}px`);
-  root.style.setProperty("--browser-bottom-gap",`${Math.round(browserBottom)}px`);
-}
-syncViewportVars();
-window.addEventListener("resize",syncViewportVars,{passive:true});
-window.addEventListener("orientationchange",syncViewportVars,{passive:true});
-if(window.visualViewport){
-  window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
-  window.visualViewport.addEventListener("scroll",syncViewportVars,{passive:true});
+
 }
 
 applyLang(lang);
