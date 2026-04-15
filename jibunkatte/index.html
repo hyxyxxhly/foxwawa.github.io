@@ -683,11 +683,8 @@ nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-be
   </div>
   <div class="film-wrap">
     <div class="vid-wrap">
-      <video id="vid" src="film.mp4" poster="exhibition-1.jpg" preload="none" playsinline></video>
-      <div class="vid-ov" id="vid-ov">
-        <div class="play-r"><div class="play-t"></div></div>
-        <span class="vid-lbl" id="film-lbl">映画 · Documentary Film</span>
-      </div>
+      <iframe src="https://www.youtube.com/embed/c7eFAmFgp7Y" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+      <span class="vid-lbl" id="film-lbl">映画 · Documentary Film</span>
     </div>
   </div>
 </section>
@@ -1029,9 +1026,6 @@ document.querySelectorAll(".exh-c img").forEach(img=>{
   img.addEventListener("click",()=>{lbi.src=img.src;lb.classList.add("open");document.body.style.overflow="hidden"});
 });
 
-const vid=document.getElementById("vid"),vov=document.getElementById("vid-ov");
-if(vov)vov.addEventListener("click",()=>{vid.play();vov.classList.add("gone");vid.controls=true});
-if(vid)vid.addEventListener("ended",()=>{vov.classList.remove("gone");vid.controls=false;vid.currentTime=0});
 
 applyLang(lang);
 </script>

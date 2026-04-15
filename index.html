@@ -5,18 +5,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>何梁宇 — HE LIANGYU</title>
+<script>
+(() => {
+  if (window.location.protocol !== 'file:') return;
+  const marker = '/foxwawa/';
+  const path = window.location.pathname || '';
+  const idx = path.indexOf(marker);
+  const rel = idx >= 0 ? path.slice(idx + marker.length) : 'index.html';
+  const target = `http://localhost:8000/${rel}${window.location.search}${window.location.hash}`;
+  window.location.replace(target);
+})();
+</script>
 </head>
 <body>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#ebe7df}
 
 #vp{
 width:100%;height:100vh;overflow:hidden;position:relative;
-background:#f7f7f5;font-family:‘Space Mono’,monospace;
+background:#ebe7df;font-family:‘Space Mono’,monospace;
 cursor:grab;transition:background .6s;
 }
-#vp.dark-mode{background:#191919;cursor:grab}
+#vp.dark-mode{background:#ebe7df;cursor:grab}
 #vp.panning{cursor:grabbing}
 
 #world{
@@ -25,12 +37,12 @@ will-change:transform;
 }
 #world::before{
 content:’’;position:absolute;inset:0;
-background-image:radial-gradient(circle,rgba(0,0,0,.07) 1px,transparent 1px);
+background-image:radial-gradient(circle,rgba(0,0,0,.055) 1px,transparent 1px);
 background-size:52px 52px;pointer-events:none;
 transition:opacity .6s;
 }
 #vp.dark-mode #world::before{
-background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
+background-image:radial-gradient(circle,rgba(0,0,0,.055) 1px,transparent 1px);
 }
 
 .obj{position:absolute;cursor:pointer;user-select:none;will-change:transform;
@@ -42,7 +54,7 @@ transition:left .58s,top .58s,width .58s,opacity .3s}
 
 .pile-lbl{position:absolute;font-size:14px;letter-spacing:2.4px;text-transform:uppercase;
 pointer-events:none;transform:translateX(-50%);transition:opacity .4s,color .5s;opacity:0;white-space:nowrap;color:#888}
-#vp.dark-mode .pile-lbl{color:#666}
+#vp.dark-mode .pile-lbl{color:#888}
 .pile-hit{position:absolute;cursor:pointer;z-index:200}
 
 /* ── HUD ── */
@@ -59,7 +71,7 @@ font-family:‘Bebas Neue’,sans-serif;font-size:22px;letter-spacing:2.2px;
 color:#1a1a1a;cursor:pointer;transition:color .4s;background:none;border:none;
 pointer-events:all;
 }
-#vp.dark-mode .logo-btn{color:#e8e8e6}
+#vp.dark-mode .logo-btn{color:#1a1a1a}
 
 /* lang globe */
 .lang-globe{
@@ -70,7 +82,7 @@ transition:opacity .2s;-webkit-tap-highlight-color:transparent;
 pointer-events:all;
 }
 .lang-globe:hover{opacity:1}
-#vp.dark-mode .lang-globe{color:#e8e8e6}
+#vp.dark-mode .lang-globe{color:#1a1a1a}
 
 /* toggle */
 #toggle{
@@ -80,53 +92,133 @@ background:#fff;border:.5px solid rgba(0,0,0,.12);
 cursor:pointer;user-select:none;pointer-events:all;
 transition:background .5s,border-color .5s;
 }
-#vp.dark-mode #toggle{background:rgba(255,255,252,.98);border-color:rgba(255,255,255,.9);box-shadow:0 10px 28px rgba(0,0,0,.12)}
+#toggle.active{background:rgba(255,255,252,.98);border-color:rgba(0,0,0,.16);box-shadow:0 10px 28px rgba(0,0,0,.09)}
 #toggle:hover{border-color:rgba(0,0,0,.3)}
-#vp.dark-mode #toggle:hover{border-color:rgba(255,255,255,.72)}
+#toggle.active:hover{border-color:rgba(0,0,0,.26)}
 .sw{width:40px;height:24px;background:#d8d8d4;border-radius:12px;position:relative;transition:background .28s;flex-shrink:0}
 .sw.on{background:#f3f3ef}
 .sw-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#1a1a1a;transition:left .25s cubic-bezier(.4,0,.2,1),background .28s}
 .sw.on .sw-knob{left:19px}
 .sw-lbl{font-size:14px;letter-spacing:2.2px;text-transform:uppercase;color:#999;white-space:nowrap;transition:color .4s}
-#vp.dark-mode .sw-lbl{color:#3d3d38}
-#vp.dark-mode .sw{background:#cfcfc9}
-#vp.dark-mode .sw.on{background:#fff}
-#vp.dark-mode .sw.on .sw-knob{background:#111}
+#toggle.active .sw-lbl{color:#5a5a55}
+#toggle.active .sw{background:#cfcfc9}
+#toggle.active .sw.on{background:#fff}
+#toggle.active .sw.on .sw-knob{background:#111}
 
 /* ── BIO OVERLAY ── */
 #bio{
 position:absolute;inset:0;z-index:400;
-background:rgba(247,247,245,0);
+background:rgba(104,11,17,0);
 backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
-pointer-events:none;
-transition:background .38s,backdrop-filter .38s,-webkit-backdrop-filter .38s;
+pointer-events:none;opacity:0;visibility:hidden;
+transition:background .38s,backdrop-filter .38s,-webkit-backdrop-filter .38s,opacity .3s,visibility 0s linear .3s;
 display:flex;align-items:center;justify-content:center;
 }
 #bio.open{
-background:rgba(247,247,245,.96);
-backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-pointer-events:all;
+background:#b60d12;
+backdrop-filter:none;-webkit-backdrop-filter:none;
+pointer-events:all;opacity:1;visibility:visible;
+transition:background .38s,backdrop-filter .38s,-webkit-backdrop-filter .38s,opacity .3s;
 }
 #bio-close{
 position:absolute;top:14px;right:14px;width:28px;height:28px;
-border:.5px solid rgba(0,0,0,.13);background:rgba(255,255,255,.85);
-font-size:10px;display:flex;align-items:center;justify-content:center;
+border:.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;
 cursor:pointer;opacity:0;pointer-events:none;transition:opacity .28s .1s;
 }
 #bio.open #bio-close{opacity:1;pointer-events:all}
+#bio-model-bg{
+position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;
+transition:opacity .3s ease;
+}
+#bio.open #bio-model-bg{opacity:1}
+#bio-model-bg::before{content:none}
 #bio-inner{
-max-width:540px;width:100%;padding:0 2rem;
+position:relative;z-index:2;width:100%;height:100%;
+padding:clamp(92px,13vh,132px) clamp(24px,6vw,96px) calc(env(safe-area-inset-bottom,0px) + 36px);
+display:flex;align-items:flex-start;justify-content:flex-start;
+pointer-events:none;
 opacity:0;transform:translateY(14px);
 transition:opacity .32s .1s,transform .32s .1s;
 }
 #bio.open #bio-inner{opacity:1;transform:translateY(0)}
-.bio-tag{font-size:10px;letter-spacing:2.8px;text-transform:uppercase;color:#bbb;margin-bottom:1.2rem}
-.bio-name{font-family:‘Bebas Neue’,sans-serif;font-size:58px;line-height:.92;color:#1a1a1a;margin-bottom:1.8rem;letter-spacing:1px}
-.bio-name span{display:block;-webkit-text-stroke:.5px #1a1a1a;-webkit-text-fill-color:transparent}
-.bio-text{font-size:14px;line-height:2;color:#555;margin-bottom:1.4rem}
-.bio-skills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.6rem}
-.bio-skill{font-size:9px;padding:4px 10px;border:.5px solid rgba(0,0,0,.1);color:#999;letter-spacing:1.8px;text-transform:uppercase}
-.bio-contact{font-size:11px;letter-spacing:1.5px;color:#bbb}
+.bio-copy{
+display:flex;flex-direction:column;align-items:flex-start;
+width:min(470px,calc(100vw - 3rem));position:relative;z-index:2;
+pointer-events:auto
+}
+.bio-name{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:92px;line-height:.88;color:#fff;letter-spacing:1px;
+margin-bottom:2.2rem
+}
+.bio-name span{display:block}
+.bio-name-sub{
+font-size:30px;line-height:1.02;letter-spacing:3px;
+color:rgba(255,241,236,.82);margin-top:.55rem
+}
+.bio-block{width:100%;padding:1rem 0;border-top:.5px solid rgba(255,255,255,.22)}
+.bio-block:last-child{border-bottom:.5px solid rgba(255,255,255,.2)}
+.bio-head{
+font-size:10px;letter-spacing:2.8px;text-transform:uppercase;
+color:rgba(255,241,236,.68);margin-bottom:.8rem
+}
+.bio-practice{
+font-size:24px;line-height:1.45;color:#fff;
+letter-spacing:.04em
+}
+.bio-links{display:flex;flex-wrap:wrap;gap:.65rem}
+.bio-link{
+display:inline-flex;align-items:center;justify-content:center;
+padding:10px 16px;border:.5px solid rgba(255,255,255,.25);
+background:rgba(255,255,255,.08);color:#fff;
+font-size:12px;letter-spacing:2.2px;text-transform:uppercase;
+font-family:‘Space Mono’,monospace;text-decoration:none;cursor:pointer;
+appearance:none;-webkit-appearance:none;outline:none
+}
+.bio-link-email{
+text-transform:none;letter-spacing:.04em;font-size:11px;
+}
+.bio-link:hover{background:rgba(255,255,255,.14)}
+.bio-link:focus-visible{border-color:rgba(255,255,255,.6)}
+#bio-qr{
+position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;
+background:rgba(0,0,0,.28);opacity:0;visibility:hidden;pointer-events:none;
+transition:opacity .24s ease,visibility 0s linear .24s;
+}
+#bio-qr.open{
+opacity:1;visibility:visible;pointer-events:all;
+transition:opacity .24s ease;
+}
+.bio-qr-card{
+width:min(420px,calc(100vw - 2.2rem));background:rgba(255,255,255,.08);
+border:.5px solid rgba(255,255,255,.24);padding:16px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.bio-qr-card img{
+display:block;width:100%;height:auto;background:#fff;
+}
+#bio-model-stage{
+position:absolute;inset:0;
+display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+#bio-model-viewer{
+width:100%;height:100%;display:block;pointer-events:none;
+background:transparent;opacity:0;transform:translate3d(0,0,0) scale(1.1);
+transition:opacity .45s ease;
+--poster-color:transparent;
+transform-origin:72% 40%;
+}
+#bio.open #bio-model-viewer.ready{opacity:1}
+#bio-model-stage canvas{
+width:100%!important;height:100%!important;display:block;pointer-events:none;
+}
+.bio-model-status{
+position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+font-size:12px;letter-spacing:3px;text-transform:uppercase;
+color:rgba(255,241,236,.64);white-space:nowrap
+}
+.bio-model-status.hidden{opacity:0}
 
 /* ── LAUNCHPAD ── */
 #lp{position:absolute;inset:0;z-index:500;background:rgba(25,25,25,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);pointer-events:none;transition:background .36s,backdrop-filter .36s,-webkit-backdrop-filter .36s;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -186,11 +278,16 @@ transition:opacity .32s .1s,transform .32s .1s;
   .sw-knob{top:3px;left:3px;width:22px;height:22px}
   .sw.on .sw-knob{left:21px}
   .sw-lbl{font-size:15px;letter-spacing:1.9px}
-  .bio-tag{font-size:11px}
-  .bio-name{font-size:64px}
-  .bio-text{font-size:15px;line-height:1.95}
-  .bio-skill{font-size:10px}
-  .bio-contact{font-size:12px}
+  #bio-inner{
+    padding:86px 18px calc(env(safe-area-inset-bottom,0px) + 22px)
+  }
+  .bio-copy{width:min(360px,calc(100vw - 2.25rem))}
+  .bio-name{font-size:58px;margin-bottom:1.4rem}
+  .bio-name-sub{font-size:22px;letter-spacing:2px;margin-top:.35rem}
+  .bio-head{font-size:10px;margin-bottom:.6rem}
+  .bio-practice{font-size:18px;line-height:1.5}
+  .bio-link{font-size:11px;padding:10px 14px}
+  .bio-model-status{font-size:11px;letter-spacing:2.4px}
   #lp-cat{font-size:32px}
   #lp-sub{font-size:10px;margin-bottom:2.2rem}
   #lp-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.8rem 1.2rem;width:calc(100vw - 2.5rem)}
@@ -231,19 +328,55 @@ transition:opacity .32s .1s,transform .32s .1s;
   <!-- Bio -->
 
   <div id="bio">
+    <div id="bio-model-bg">
+      <div id="bio-model-stage">
+        <model-viewer
+          id="bio-model-viewer"
+          src="bio-model/199245.glb?v=4"
+          alt="HE LIANGYU portrait model"
+          reveal="auto"
+          loading="eager"
+          auto-rotate
+          auto-rotate-delay="0"
+          rotation-per-second="0.9deg"
+          orientation="-34deg 0deg -88deg"
+          camera-orbit="-134deg 101deg 38m"
+          camera-target="18m 72m 6m"
+          field-of-view="14deg"
+          interpolation-decay="120"
+          exposure="0.72"
+          environment-intensity="0.18"
+          shadow-intensity="0"
+          interaction-prompt="none"
+          disable-zoom
+          disable-pan
+          touch-action="none">
+        </model-viewer>
+      </div>
+      <div class="bio-model-status" id="bio-model-status">3D OBJ Portrait</div>
+    </div>
     <div id="bio-close">✕</div>
     <div id="bio-inner">
-      <p class="bio-tag" id="b-tag">— 当代装置与新媒体 / 中国</p>
-      <h1 class="bio-name">HE LIANGYU<span>何梁宇</span></h1>
-      <p class="bio-text" id="b-text"></p>
-      <div class="bio-skills">
-        <span class="bio-skill">装置艺术</span>
-        <span class="bio-skill">新媒体艺术</span>
-        <span class="bio-skill">AR互动</span>
-        <span class="bio-skill">影像</span>
-        <span class="bio-skill">行为表演</span>
+      <div class="bio-copy">
+        <h1 class="bio-name"><span id="b-name-main">HE LIANGYU</span><span class="bio-name-sub" id="b-name-sub">何梁宇</span></h1>
+        <div class="bio-block">
+          <div class="bio-head" id="b-practice-label">Practice</div>
+          <p class="bio-practice" id="b-practice">品牌 / 空间 / 装置</p>
+        </div>
+        <div class="bio-block">
+          <div class="bio-head" id="b-social-label">Social</div>
+          <div class="bio-links">
+            <a class="bio-link" id="b-instagram" href="https://www.instagram.com/foxwawa?igsh=MW40bXIxdmhnaW5lMQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer noopener">Instagram</a>
+            <button class="bio-link" id="b-wechat" type="button">公众号</button>
+            <a class="bio-link bio-link-email" id="b-email" href="mailto:hyxyxxhly@163.com">hyxyxxhly@163.com</a>
+          </div>
+        </div>
       </div>
-      <p class="bio-contact" id="b-contact">heliangyu.studio</p>
+    </div>
+    <div id="bio-qr">
+      <div class="bio-qr-card">
+        <img src="0abf463a08fdaf869c0a92d967d722a8.jpg" alt="公众号二维码">
+      </div>
     </div>
   </div>
 
@@ -269,10 +402,16 @@ const I18N={
     sort:'整理', scatter:'打散',
     works:'件作品',
     back:'← 返回', backCat:'← 返回分类',
-    bio_tag:'— 当代装置与新媒体 / 中国',
-    bio_text:'',
-    bio_contact:'heliangyu.studio',
-    skills:['装置艺术','新媒体艺术','AR互动','影像','行为表演'],
+    bio_label:'关于',
+    bio_name_main:'何梁宇',
+    bio_name_sub:'HE LIANGYU',
+    bio_practice_label:'涉及领域',
+    bio_practice:'品牌 / 空间 / 装置',
+    bio_social_label:'社交媒体',
+    bio_instagram:'Instagram',
+    bio_wechat:'公众号',
+    bio_model:'OBJ 个人模型',
+    bio_model_file:'199245_9cm_x1.obj',
     dl:'下载图册',share:'分享',inquiry:'联系',ar_launch:'启动 AR 互动体验',
     img:'图像', comingSoon:'即将推出',
     cats:{'装置':'装置','新媒体艺术':'新媒体艺术','品牌设计':'品牌设计'},
@@ -281,10 +420,16 @@ const I18N={
     sort:'Sort', scatter:'Scatter',
     works:'works',
     back:'← Back', backCat:'← Back to category',
-    bio_tag:'— Contemporary Installation & New Media  / China',
-    bio_text:'',
-    bio_contact:'heliangyu.studio',
-    skills:['Installation','New Media Art','AR Interaction','Moving Image','Performance'],
+    bio_label:'Profile',
+    bio_name_main:'HE LIANGYU',
+    bio_name_sub:'何梁宇',
+    bio_practice_label:'Practice',
+    bio_practice:'Brand / Space / Installation',
+    bio_social_label:'Social',
+    bio_instagram:'Instagram',
+    bio_wechat:'WeChat Official Account',
+    bio_model:'OBJ Portrait',
+    bio_model_file:'199245_9cm_x1.obj',
     dl:'Download',share:'Share',inquiry:'Enquire',ar_launch:'Launch AR Experience',
     img:'Image', comingSoon:'Coming Soon',
     cats:{'装置':'Installation','新媒体艺术':'New Media Art','品牌设计':'Branding'},
@@ -293,10 +438,16 @@ const I18N={
     sort:'整理', scatter:'散らす',
     works:'作品',
     back:'← 戻る', backCat:'← カテゴリへ戻る',
-    bio_tag:'— 現代インスタレーション・ニューメディア / 中国',
-    bio_text:'',
-    bio_contact:'heliangyu.studio',
-    skills:['インスタレーション','ニューメディアアート','ARインタラクション','映像','パフォーマンス'],
+    bio_label:'Profile',
+    bio_name_main:'カ　リョウウ',
+    bio_name_sub:'HE LIANGYU',
+    bio_practice_label:'領域',
+    bio_practice:'ブランド / 空間 / インスタレーション',
+    bio_social_label:'SNS',
+    bio_instagram:'Instagram',
+    bio_wechat:'公式WeChat',
+    bio_model:'OBJ ポートレート',
+    bio_model_file:'199245_9cm_x1.obj',
     dl:'DL',share:'共有',inquiry:'問い合わせ',ar_launch:'AR体験を起動',
     img:'画像', comingSoon:'近日公開',
     cats:{'装置':'インスタレーション','新媒体艺术':'ニューメディアアート','品牌设计':'ブランドデザイン'},
@@ -318,11 +469,13 @@ function workTitle(w){ return (WORK_TITLES[w.t]&&WORK_TITLES[w.t][lang])||w.t; }
 
 function applyLang(){
   const L=I18N[lang];
-  document.getElementById('b-tag').textContent=L.bio_tag;
-  document.getElementById('b-text').textContent=L.bio_text;
-  document.getElementById('b-contact').textContent=L.bio_contact;
-  const sk=document.querySelector('.bio-skills');
-  sk.innerHTML=L.skills.map(s=>`<span class="bio-skill">${s}</span>`).join('');
+  document.getElementById('b-name-main').textContent=L.bio_name_main;
+  document.getElementById('b-name-sub').textContent=L.bio_name_sub;
+  document.getElementById('b-practice-label').textContent=L.bio_practice_label;
+  document.getElementById('b-practice').textContent=L.bio_practice;
+  document.getElementById('b-social-label').textContent=L.bio_social_label;
+  document.getElementById('b-instagram').textContent=L.bio_instagram;
+  document.getElementById('b-wechat').textContent=L.bio_wechat;
   document.getElementById('sw-lbl').textContent=sorted?L.sort:L.scatter;
   CATS.forEach((c,i)=>{
     const el=document.getElementById(`lbl-${i}`);
@@ -382,6 +535,7 @@ function sizeWorld(){ world.style.width=getWW()+'px'; world.style.height=getWH()
 
 const swEl=document.getElementById('sw'),toggleEl=document.getElementById('toggle');
 const bio=document.getElementById('bio'),bioClose=document.getElementById('bio-close'),bioBtnEl=document.getElementById('bio-btn');
+const bioQr=document.getElementById('bio-qr'),bioWechatBtn=document.getElementById('b-wechat');
 const lp=document.getElementById('lp'),lpClose=document.getElementById('lp-close'),lpCat=document.getElementById('lp-cat'),lpSub=document.getElementById('lp-sub'),lpGrid=document.getElementById('lp-grid');
 const det=document.getElementById('det'),detBack=document.getElementById('det-back'),detIn=document.getElementById('det-in');
 
@@ -562,8 +716,9 @@ vp.addEventListener('mouseup',onUp);vp.addEventListener('touchend',onUp);
 toggleEl.addEventListener('click',()=>{
   sorted=!sorted;
   swEl.classList.toggle('on',sorted);
+  toggleEl.classList.toggle('active',sorted);
   document.getElementById('sw-lbl').textContent=sorted?t('sort'):t('scatter');
-  vp.classList.toggle('dark-mode',sorted);
+  vp.classList.remove('dark-mode');
   updateHits();
   if(sorted){
     const baseZ=objZ+1,pC=CATS.map(()=>0);
@@ -580,9 +735,18 @@ toggleEl.addEventListener('click',()=>{
 });
 
 // ── bio ──
-bioBtnEl.addEventListener('click',()=>bio.classList.add('open'));
-bioClose.addEventListener('click',()=>bio.classList.remove('open'));
-bio.addEventListener('click',e=>{if(e.target===bio)bio.classList.remove('open');});
+function openBioQr(){ bioQr?.classList.add('open'); }
+function closeBioQr(){ bioQr?.classList.remove('open'); }
+function openBioPanel(){
+  bio.classList.add('open');
+  requestAnimationFrame(()=>window.openBioPanel3D?.());
+}
+function closeBioPanel(){closeBioQr();bio.classList.remove('open');window.closeBioPanel3D?.();}
+bioBtnEl.addEventListener('click',openBioPanel);
+bioClose.addEventListener('click',closeBioPanel);
+bioWechatBtn?.addEventListener('click',openBioQr);
+bioQr?.addEventListener('click',e=>{ if(e.target===bioQr) closeBioQr(); });
+bio.addEventListener('click',e=>{if(e.target===bio)closeBioPanel();});
 
 // ── launchpad ──
 function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat),artSize=Math.min(window.innerWidth<760?148:210,window.innerWidth*.16);currentLpCi=ci;lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w,artSize,'fit')}</div><div class="lp-name">${workTitle(w)}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
@@ -602,9 +766,171 @@ function openDetail(w,fromLp){
   detIn.innerHTML=h;det.classList.add('open');
 }
 detBack.addEventListener('click',()=>{det.classList.remove('open');currentDetail=null;});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open')){det.classList.remove('open');currentDetail=null;}else if(lp.classList.contains('open')){lp.classList.remove('open');currentLpCi=null;}else bio.classList.remove('open');}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open')){det.classList.remove('open');currentDetail=null;}else if(lp.classList.contains('open')){lp.classList.remove('open');currentLpCi=null;}else if(bioQr?.classList.contains('open')){closeBioQr();}else closeBioPanel();}});
 
 updateHits();
+</script>
+
+<script type="module">
+import './vendor/model-viewer.min.js';
+
+const bioPanel=document.getElementById('bio');
+const bioViewer=document.getElementById('bio-model-viewer');
+const bioStatus=document.getElementById('bio-model-status');
+const USES_FILE_PROTOCOL=window.location.protocol==='file:';
+
+if(bioViewer){
+  let rafId=0;
+  let activePose=null;
+  const VIEWER_ANGLES=[
+    [-38,0,-92],
+    [18,0,-72],
+    [-12,0,-108],
+    [28,0,-118]
+  ];
+  const BASE_CAMERA={
+    orbit:[-124,97,38],
+    target:[16,70,3],
+    frame:{x:14.5,y:-11.5,scale:1.48}
+  };
+
+  function clampNum(value,min,max){
+    return Math.min(max,Math.max(min,value));
+  }
+
+  function formatDeg(value){
+    return `${value.toFixed(1)}deg`;
+  }
+
+  function formatM(value){
+    return `${value.toFixed(1)}m`;
+  }
+
+  function randomizePose(baseOrient){
+    return{
+      orientation:[
+        baseOrient[0]+(Math.random()*8-4),
+        baseOrient[1]+(Math.random()*6-3),
+        baseOrient[2]+(Math.random()*12-6),
+      ],
+      orbit:[
+        BASE_CAMERA.orbit[0]+(Math.random()*6-3),
+        clampNum(BASE_CAMERA.orbit[1]+(Math.random()*2-1),90,102),
+        BASE_CAMERA.orbit[2]+(Math.random()*1.2-.6),
+      ],
+      target:[
+        BASE_CAMERA.target[0]+(Math.random()*1.8-.9),
+        BASE_CAMERA.target[1]+(Math.random()*1.8-.9),
+        BASE_CAMERA.target[2]+(Math.random()*1.4-.7),
+      ],
+      frame:{...BASE_CAMERA.frame}
+    };
+  }
+
+  function getViewportProfile(){
+    const minDim=Math.min(window.innerWidth,window.innerHeight);
+    const aspect=window.innerWidth/Math.max(window.innerHeight,1);
+    const sizeRatio=clampNum((minDim-390)/820,0,1);
+    const scaleAdjust=.94+sizeRatio*.14+(aspect>1.6?.03:0)-(aspect<.72?.03:0);
+    const xAdjust=aspect<.72?1.2:aspect>1.65?-.8:0;
+    const yAdjust=aspect<.72?-1.4:aspect>1.65?.5:0;
+    return{scaleAdjust,xAdjust,yAdjust};
+  }
+
+  function setStatus(text){
+    if(!bioStatus)return;
+    bioStatus.textContent=text;
+    bioStatus.classList.toggle('hidden',!text);
+  }
+
+  function poseMetrics(){
+    const pose=activePose||randomizePose(VIEWER_ANGLES[0]);
+    const viewport=getViewportProfile();
+    return{
+      x:pose.frame.x+viewport.xAdjust,
+      y:pose.frame.y+viewport.yAdjust,
+      scale:pose.frame.scale*viewport.scaleAdjust
+    };
+  }
+
+  function applyViewerTransform(frame){
+    bioViewer.style.transform=`translate3d(${frame.x}vw,${frame.y}vh,0) scale(${frame.scale})`;
+  }
+
+  function applyViewerPose(randomize=false){
+    if(randomize||!activePose){
+      activePose=randomizePose(VIEWER_ANGLES[Math.floor(Math.random()*VIEWER_ANGLES.length)]);
+    }
+    bioViewer.setAttribute('orientation',activePose.orientation.map(formatDeg).join(' '));
+    bioViewer.setAttribute('camera-orbit',`${formatDeg(activePose.orbit[0])} ${formatDeg(activePose.orbit[1])} ${formatM(activePose.orbit[2])}`);
+    bioViewer.setAttribute('camera-target',`${formatM(activePose.target[0])} ${formatM(activePose.target[1])} ${formatM(activePose.target[2])}`);
+    bioViewer.jumpCameraToGoal?.();
+    applyViewerTransform(poseMetrics());
+  }
+
+  function tuneViewerMaterial(){
+    const materials=bioViewer.model?.materials||[];
+    materials.forEach(material=>{
+      const pbr=material.pbrMetallicRoughness;
+      if(!pbr)return;
+      try{ pbr.setMetallicFactor(0); }catch(e){}
+      try{ pbr.setRoughnessFactor(1); }catch(e){}
+    });
+  }
+
+  function animateViewer(time){
+    const baseFrame=poseMetrics();
+    const floatX=Math.sin(time*0.00009)*0.26;
+    const floatY=Math.cos(time*0.00013)*0.42;
+    const breath=Math.sin(time*0.00008)*0.008;
+    applyViewerTransform({
+      x:baseFrame.x+floatX,
+      y:baseFrame.y+floatY,
+      scale:baseFrame.scale+breath
+    });
+    rafId=requestAnimationFrame(animateViewer);
+  }
+
+  function startViewerMotion(){
+    bioViewer.setAttribute('auto-rotate','');
+    if(rafId)return;
+    rafId=requestAnimationFrame(animateViewer);
+  }
+
+  function stopViewerMotion(){
+    bioViewer.removeAttribute('auto-rotate');
+    if(!rafId)return;
+    cancelAnimationFrame(rafId);
+    rafId=0;
+    applyViewerTransform(poseMetrics());
+  }
+
+  bioViewer.addEventListener('load',()=>{
+    tuneViewerMaterial();
+    bioViewer.classList.add('ready');
+    setStatus('');
+    applyViewerPose(false);
+  });
+
+  bioViewer.addEventListener('error',()=>{
+    setStatus('3D Model Unavailable');
+  });
+
+  window.openBioPanel3D=()=>{
+    if(USES_FILE_PROTOCOL){
+      setStatus('3D Model Needs Localhost Preview');
+      return;
+    }
+    if(!bioViewer.classList.contains('ready')){
+      setStatus('Loading 3D Portrait...');
+    }
+    applyViewerPose(true);
+    startViewerMotion();
+  };
+
+  window.closeBioPanel3D=()=>{ stopViewerMotion(); };
+  window.addEventListener('resize',()=>{ if(activePose){ applyViewerPose(false); if(!bioPanel?.classList.contains('open')) applyViewerTransform(baseFrame); } });
+}
 </script>
 
 </body>
