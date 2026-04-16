@@ -891,30 +891,22 @@ if(bioViewer){
 
   function getViewportProfile(){
     const {width,height,minDim,aspect}=getViewportBox();
-    // 用 minDim 区分设备，比 aspect 更稳定
-    // phone:  minDim < 500  (iPhone 系列)
-    // tablet: minDim 500–900 (iPad 竖/横, 小桌面)
-    // desktop: minDim > 900
     const isPhone  = minDim < 500;
     const isTablet = minDim >= 500 && minDim < 900;
     const isDesktop= minDim >= 900;
-    // heightFill: 数值越大相机越近、模型在 canvas 里越大
-    // 三档统一用相近的值，靠 modelScale 做最终微调
     const heightFill = isPhone ? 5.5 : isTablet ? 6.0 : 7.2;
     const widthFill  = isPhone ? 3.0 : isTablet ? 3.4 : 4.0;
-    // modelScale: 对渲染结果做 CSS scale，视觉放大
     const modelScale = isPhone ? 1.0 : isTablet ? 1.3 : 2.2;
     const compactRatio=clampNum((720-minDim)/320,0,1);
     return{
-      frameXAdjust: isPhone?-.02:isDesktop?.1:.04,
-      frameYAdjust: isPhone?.10:isDesktop?.04:.07,
+      frameXAdjust: isPhone ? -0.02 : isDesktop ? 0.10 : 0.04,
+      frameYAdjust: isPhone ? 0.10  : isDesktop ? 0.04 : 0.07,
       heightFill,
       widthFill,
-      fov:11.9+compactRatio*.18,
+      fov:11.9+compactRatio*0.18,
       distanceAdjust:0,
       modelScale
     };
-  }
   }
 
   function setStatus(text){
