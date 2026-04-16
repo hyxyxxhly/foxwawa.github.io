@@ -898,7 +898,8 @@ if(bioViewer){
       heightFill:aspect<.72?9.5:7.2,
       widthFill:aspect<.72?5.2:4.0,
       fov:11.9+compactRatio*.28+(aspect<.72?.08:0),
-      distanceAdjust:compactRatio*.01
+      distanceAdjust:compactRatio*.01,
+      modelScale:aspect<.72?1.3:aspect<1.1?1.55:2.2
     };
   }
 
@@ -952,7 +953,7 @@ if(bioViewer){
         frame:{
           x:viewport.frameXAdjust,
           y:viewport.frameYAdjust,
-          scale:2.2
+          scale:viewport.modelScale
         },
         fov:viewport.fov
       };
@@ -976,7 +977,7 @@ if(bioViewer){
       frame:{
         x:pose.compose.frameX+viewport.frameXAdjust,
         y:pose.compose.frameY+viewport.frameYAdjust,
-        scale:2.2
+        scale:viewport.modelScale
       },
       fov
     };
