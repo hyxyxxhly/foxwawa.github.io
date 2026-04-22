@@ -806,14 +806,11 @@ if (vid && vov) {
 
 applyLang(lang);
 
-/* ─ AR: iOS以外はリンク無効化 ─ */
+/* ─ AR: keep target links available on every platform ─ */
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 if (!isIOS) {
   document.querySelectorAll('.ar-panel').forEach(el => {
-    el.removeAttribute('href');
-    el.removeAttribute('rel');
-    el.classList.add('ar-unavail');
-    el.querySelector('.ar-text').textContent = 'AR — iPhone / iPad';
+    el.setAttribute('title', 'Open this AR scene on iPhone / iPad');
   });
 }
 </script>
